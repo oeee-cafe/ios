@@ -1,0 +1,257 @@
+/* Common */
+"common.loading" = "加载中...";
+"common.error" = "错误: %@";
+"common.retry" = "重试";
+"common.done" = "完成";
+"common.cancel" = "取消";
+"common.delete" = "删除";
+"common.create" = "创建";
+
+/* Draw */
+"draw.title" = "画画";
+"draw.canvas_size" = "选择画布大小";
+"draw.drawing_tool" = "绘图工具";
+"draw.width" = "宽度";
+"draw.height" = "高度";
+"draw.preview" = "预览";
+"draw.start_drawing" = "开始绘画";
+"draw.tool_neo" = "PaintBBS NEO";
+"draw.tool_tegaki" = "Tegaki";
+
+/* Collaborate */
+"collaborate.title" = "协作";
+"collaborate.create_session" = "创建会话";
+"collaborate.join_session" = "加入会话";
+"collaborate.no_sessions" = "暂无活跃会话";
+"collaborate.no_sessions_message" = "创建新的协作绘画会话，或等待其他人创建";
+"collaborate.active_sessions" = "活跃会话";
+"collaborate.title_optional" = "标题（可选）";
+"collaborate.session_title" = "会话标题";
+"collaborate.canvas_size" = "画布大小";
+"collaborate.max_participants" = "最大参与人数";
+"collaborate.participants" = "参与者";
+"collaborate.public_session" = "公开会话";
+"collaborate.public_description" = "公开会话任何人都可以加入";
+"collaborate.public_session_description" = "公开会话可从大厅加入";
+"collaborate.session_settings" = "会话设置";
+"collaborate.participants_count" = "%d人参与";
+"collaborate.create_button" = "创建";
+
+/* Tab Bar */
+"tab.home" = "主页";
+"tab.communities" = "社区";
+"tab.drafts" = "草稿";
+"tab.notifications" = "通知";
+"tab.login" = "登录";
+"tab.collaborate" = "协作";
+
+/* Navigation */
+"nav.post_details" = "作品详情";
+"nav.settings" = "设置";
+"nav.search" = "搜索";
+"nav.reactions" = "反应";
+
+/* Settings */
+"settings.title" = "设置";
+"settings.storage" = "存储";
+"settings.image_cache" = "图片缓存";
+"settings.clear_cache" = "清除缓存";
+"settings.account" = "账号";
+"settings.delete_account" = "删除账号";
+"settings.delete_account_confirm" = "删除账号";
+"settings.password" = "密码";
+"settings.delete_account_warning" = "确定要删除您的账号吗？此操作无法撤销，所有数据将被永久删除。";
+"settings.sign_out" = "退出登录";
+"settings.sign_out_confirm" = "确定要退出登录吗？";
+"settings.clear_cache_confirm" = "清除所有缓存的图片？";
+"settings.clear_cache_message" = "这将释放%@的存储空间。";
+"settings.advanced" = "高级设置";
+"settings.server_url" = "服务器URL";
+"settings.current" = "当前：";
+"settings.reset_to_default" = "重置为默认";
+"common.save" = "保存";
+
+/* Email Verification */
+"email_verification.section_title" = "邮箱验证";
+"email_verification.title" = "验证邮箱";
+"email_verification.description" = "输入您的邮箱地址以接收验证码。";
+"email_verification.email_placeholder" = "user@example.com";
+"email_verification.send_code" = "发送验证码";
+"email_verification.verify_title" = "验证邮箱代码";
+"email_verification.code_sent_to" = "6位验证码已发送至 %@";
+"email_verification.code_placeholder" = "123456";
+"email_verification.expires_in" = "验证码有效期: %@";
+"email_verification.code_expired" = "验证码已过期";
+"email_verification.verify" = "验证";
+"email_verification.resend_code" = "重新发送验证码";
+"email_verification.verified" = "已验证";
+"email_verification.not_verified" = "未验证";
+"email_verification.no_email" = "未设置邮箱";
+"email_verification.verify_button" = "验证邮箱";
+"email_verification.change_button" = "更改邮箱";
+"email_verification.success_title" = "邮箱已验证";
+"email_verification.success_message" = "您的邮箱已验证成功！";
+"email_verification.error.token_mismatch" = "验证码不正确";
+"email_verification.error.token_expired" = "验证码已过期";
+"email_verification.error.challenge_not_found" = "找不到验证会话";
+"common.ok" = "确定";
+
+/* Search */
+"search.title" = "搜索";
+"search.placeholder" = "搜索用户和作品";
+"search.users_count" = "用户 (%d位)";
+"search.posts_count" = "作品 (%d篇)";
+"search.no_results" = "未找到结果";
+"search.try_different" = "尝试搜索不同的关键词";
+"search.prompt" = "搜索用户和作品";
+
+/* Profile */
+"profile.loading" = "加载个人资料中...";
+"profile.links" = "链接";
+"profile.following" = "关注 (%d位)";
+"profile.posts" = "作品 (%d篇)";
+"profile.see_all_following" = "查看所有关注";
+
+/* Community */
+"community.loading" = "加载社区中...";
+"community.stats" = "社区统计";
+"community.recent_comments" = "最近的评论";
+"community.recent_posts" = "最近的作品";
+"community.stat_posts" = "帖子";
+"community.stat_contributors" = "贡献者";
+"community.stat_comments" = "评论";
+"community.my_communities" = "我的社区";
+"community.public_communities" = "公开社区";
+"community.search_results" = "搜索结果";
+"community.search_placeholder" = "搜索社区...";
+"community.no_communities" = "未找到社区";
+"community.no_search_results" = "未找到结果";
+
+/* Timeline/Home */
+"home.title" = "黄瓜咖啡馆";
+"home.active_communities" = "活跃社区";
+"home.recent_comments" = "最近的评论";
+"home.recent_posts" = "最近的作品";
+
+/* Post Detail */
+"post.loading" = "加载作品中...";
+"post.published" = "发布时间: %@";
+"post.replying_to" = "回复给:";
+"post.replies" = "回复 (%d条)";
+"post.comments" = "评论 (%d条)";
+"post.by_user" = "作者: %@";
+"post.on_post" = "对于\"%@\"";
+"post.no_title" = "无标题";
+"post.hashtags" = "标签";
+"post.hashtags_placeholder" = "添加标签 (逗号或空格分隔)";
+"post.delete_title" = "删除作品";
+"post.delete_message" = "确定要删除这个作品吗？此操作无法撤销。";
+"post.delete_button" = "删除";
+
+/* Drafts */
+"drafts.title" = "草稿";
+"drafts.empty_title" = "暂无草稿";
+"drafts.empty_message" = "草稿作品会显示在这里";
+"drafts.error_loading" = "加载草稿失败";
+"drafts.untitled" = "无标题";
+"drafts.sensitive_content" = "敏感内容";
+"drafts.allow_relay" = "允许中继";
+
+/* Notifications */
+"notifications.title" = "通知";
+"notifications.loading" = "加载通知中...";
+"notifications.empty" = "暂无通知";
+"notifications.empty_message" = "收到通知时会显示在这里";
+"notifications.mark_read" = "标记为已读";
+"notifications.mark_as_read" = "标记为已读";
+"notifications.mark_all_read" = "全部标记为已读";
+
+/* Reactions */
+"reactions.no_reactions" = "暂无反应";
+
+/* Authentication */
+"auth.app_name" = "Oeee Cafe";
+"auth.username" = "ID";
+"auth.password" = "密码";
+"auth.login_button" = "登录";
+"auth.signup_button" = "注册";
+"auth.signup_link" = "没有账号？ 注册";
+"auth.signup_title" = "注册";
+"auth.display_name" = "昵称";
+"auth.confirm_password" = "确认密码";
+"auth.error_passwords_not_match" = "密码不匹配";
+"auth.error_unexpected" = "发生了意外错误";
+
+/* Time Formats */
+"time.just_now" = "刚刚";
+"time.minute_ago" = "1分钟前";
+"time.minutes_ago" = "%d分钟前";
+"time.hour_ago" = "1小时前";
+"time.hours_ago" = "%d小时前";
+"time.yesterday" = "昨天";
+"time.days_ago" = "%d天前";
+"time.week_ago" = "1周前";
+"time.weeks_ago" = "%d周前";
+"time.month_ago" = "1个月前";
+"time.months_ago" = "%d个月前";
+"time.year_ago" = "1年前";
+"time.years_ago" = "%d年前";
+"time.today" = "今天";
+"time.d_ago" = "%d天前";
+
+/* Community Management */
+"community_management.members" = "成员";
+"community_management.pending_invitations" = "待处理邀请";
+"community_management.invite_user" = "邀请用户";
+"community_management.username" = "用户名";
+"community_management.invite_prompt" = "输入要邀请的用户名";
+"community_management.invite" = "邀请";
+"community_management.invited" = "已邀请";
+"community_management.retract" = "撤回";
+"community_management.remove_member" = "移除成员";
+"community_management.remove" = "移除";
+"community_management.remove_confirm" = "确定要将 %@ 从此社区中移除吗？";
+"community_management.role_owner" = "所有者";
+"community_management.role_moderator" = "版主";
+
+/* Community Invitations */
+"community_invitations.title" = "社区邀请";
+"community_invitations.no_invitations" = "没有待处理邀请";
+"community_invitations.no_invitations_message" = "您目前没有社区邀请。";
+"community_invitations.invited_by" = "邀请者";
+"community_invitations.accept" = "接受";
+"community_invitations.decline" = "拒绝";
+
+/* Create Community */
+"create_community.title" = "创建社区";
+"create_community.basic_info" = "基本信息";
+"create_community.name" = "名称";
+"create_community.slug" = "ID";
+"create_community.slug_hint" = "将用于URL: oeee.cafe/communities/@%@";
+"create_community.description" = "描述";
+"create_community.privacy" = "隐私";
+"create_community.create" = "创建";
+"create_community.visibility_public" = "公开";
+"create_community.visibility_unlisted" = "仅链接";
+"create_community.visibility_private" = "私密";
+"create_community.visibility_public_desc" = "任何人都可以查看和加入此社区。会显示在搜索中。";
+"create_community.visibility_unlisted_desc" = "只有持有链接的人可以查看此社区。不会显示在搜索中。";
+"create_community.visibility_private_desc" = "仅成员可以查看此社区。仅邀请制且不联合。";
+
+/* Edit Community */
+"edit_community.title" = "编辑社区";
+"edit_community.save" = "保存";
+"edit_community.visibility_warning" = "注意：无法将私密社区更改为公开/仅链接，反之亦然。";
+"edit_community.visibility" = "可见性";
+"edit_community.slug_readonly" = "ID无法更改";
+"edit_community.danger_zone" = "危险区域";
+"edit_community.delete_warning" = "删除社区是永久性的，无法撤销。此社区中的所有作品也将被删除。";
+"edit_community.delete_community" = "删除社区";
+"edit_community.delete_button" = "删除";
+"edit_community.type_slug_to_confirm" = "输入ID以确认";
+"edit_community.delete_confirmation_message" = "您确定要删除此社区吗？此操作无法撤销。";
+"community_management.role_member" = "成员";
+
+/* Common UI */
+"common.back" = "返回";
+"common.visibility" = "可见性";

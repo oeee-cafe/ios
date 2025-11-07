@@ -1,0 +1,257 @@
+/* Common */
+"common.loading" = "Loading...";
+"common.error" = "Error: %@";
+"common.retry" = "Retry";
+"common.done" = "Done";
+"common.cancel" = "Cancel";
+"common.delete" = "Delete";
+"common.create" = "Create";
+
+/* Draw */
+"draw.title" = "Draw";
+"draw.canvas_size" = "Select Canvas Size";
+"draw.drawing_tool" = "Drawing Tool";
+"draw.width" = "Width";
+"draw.height" = "Height";
+"draw.preview" = "Preview";
+"draw.start_drawing" = "Start Drawing";
+"draw.tool_neo" = "PaintBBS NEO";
+"draw.tool_tegaki" = "Tegaki";
+
+/* Collaborate */
+"collaborate.title" = "Collaborate";
+"collaborate.create_session" = "Create Session";
+"collaborate.join_session" = "Join Session";
+"collaborate.no_sessions" = "No active sessions";
+"collaborate.no_sessions_message" = "Create a new collaborative drawing session or wait for others to create one";
+"collaborate.active_sessions" = "Active Sessions";
+"collaborate.title_optional" = "Title (optional)";
+"collaborate.session_title" = "Session Title";
+"collaborate.canvas_size" = "Canvas Size";
+"collaborate.max_participants" = "Max Participants";
+"collaborate.participants" = "participants";
+"collaborate.public_session" = "Public Session";
+"collaborate.public_description" = "Public sessions can be joined by anyone";
+"collaborate.public_session_description" = "Public sessions can be joined by anyone from the lobby";
+"collaborate.session_settings" = "Session Settings";
+"collaborate.participants_count" = "%d participants";
+"collaborate.create_button" = "Create";
+
+/* Tab Bar */
+"tab.home" = "Home";
+"tab.communities" = "Communities";
+"tab.drafts" = "Drafts";
+"tab.notifications" = "Notifications";
+"tab.login" = "Login";
+"tab.collaborate" = "Collaborate";
+
+/* Navigation */
+"nav.post_details" = "Post Details";
+"nav.settings" = "Settings";
+"nav.search" = "Search";
+"nav.reactions" = "Reactions";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.storage" = "Storage";
+"settings.image_cache" = "Image Cache";
+"settings.clear_cache" = "Clear Cache";
+"settings.account" = "Account";
+"settings.delete_account" = "Delete Account";
+"settings.delete_account_confirm" = "Delete Account";
+"settings.password" = "Password";
+"settings.delete_account_warning" = "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.";
+"settings.sign_out" = "Sign Out";
+"settings.sign_out_confirm" = "Are you sure you want to sign out?";
+"settings.clear_cache_confirm" = "Clear all cached images?";
+"settings.clear_cache_message" = "This will free up %@ of storage.";
+"settings.advanced" = "Advanced";
+"settings.server_url" = "Server URL";
+"settings.current" = "Current:";
+"settings.reset_to_default" = "Reset to Default";
+"common.save" = "Save";
+
+/* Email Verification */
+"email_verification.section_title" = "Email Verification";
+"email_verification.title" = "Verify Email";
+"email_verification.description" = "Enter your email address to receive a verification code.";
+"email_verification.email_placeholder" = "user@example.com";
+"email_verification.send_code" = "Send Code";
+"email_verification.verify_title" = "Verify Email Code";
+"email_verification.code_sent_to" = "A 6-digit verification code has been sent to %@";
+"email_verification.code_placeholder" = "123456";
+"email_verification.expires_in" = "Code expires in %@";
+"email_verification.code_expired" = "Code has expired";
+"email_verification.verify" = "Verify";
+"email_verification.resend_code" = "Resend Code";
+"email_verification.verified" = "Verified";
+"email_verification.not_verified" = "Not verified";
+"email_verification.no_email" = "No email set";
+"email_verification.verify_button" = "Verify Email";
+"email_verification.change_button" = "Change Email";
+"email_verification.success_title" = "Email Verified";
+"email_verification.success_message" = "Your email has been successfully verified!";
+"email_verification.error.token_mismatch" = "The verification code is incorrect";
+"email_verification.error.token_expired" = "The verification code has expired";
+"email_verification.error.challenge_not_found" = "Verification session not found";
+"common.ok" = "OK";
+
+/* Search */
+"search.title" = "Search";
+"search.placeholder" = "Search users and posts";
+"search.users_count" = "Users (%d)";
+"search.posts_count" = "Posts (%d)";
+"search.no_results" = "No results found";
+"search.try_different" = "Try searching for a different keyword";
+"search.prompt" = "Search for users and posts";
+
+/* Profile */
+"profile.loading" = "Loading profile...";
+"profile.links" = "Links";
+"profile.following" = "Following (%d)";
+"profile.posts" = "Posts (%d)";
+"profile.see_all_following" = "See All Following";
+
+/* Community */
+"community.loading" = "Loading community...";
+"community.stats" = "Community Stats";
+"community.recent_comments" = "Recent Comments";
+"community.recent_posts" = "Recent Posts";
+"community.stat_posts" = "Posts";
+"community.stat_contributors" = "Contributors";
+"community.stat_comments" = "Comments";
+"community.my_communities" = "My Communities";
+"community.public_communities" = "Public Communities";
+"community.search_results" = "Search Results";
+"community.search_placeholder" = "Search communities...";
+"community.no_communities" = "No communities found";
+"community.no_search_results" = "No results found";
+
+/* Timeline/Home */
+"home.title" = "Oeee Cafe";
+"home.active_communities" = "Active Communities";
+"home.recent_comments" = "Recent Comments";
+"home.recent_posts" = "Recent Posts";
+
+/* Post Detail */
+"post.loading" = "Loading post...";
+"post.published" = "Published: %@";
+"post.replying_to" = "Replying to:";
+"post.replies" = "Replies (%d)";
+"post.comments" = "Comments (%d)";
+"post.by_user" = "by %@";
+"post.on_post" = "on \"%@\"";
+"post.no_title" = "Untitled";
+"post.hashtags" = "Hashtags";
+"post.hashtags_placeholder" = "Add hashtags (comma or space separated)";
+"post.delete_title" = "Delete Post";
+"post.delete_message" = "Are you sure you want to delete this post? This action cannot be undone.";
+"post.delete_button" = "Delete";
+
+/* Drafts */
+"drafts.title" = "Drafts";
+"drafts.empty_title" = "No drafts";
+"drafts.empty_message" = "Your draft posts will appear here";
+"drafts.error_loading" = "Failed to load drafts";
+"drafts.untitled" = "Untitled";
+"drafts.sensitive_content" = "Sensitive Content";
+"drafts.allow_relay" = "Allow Relay";
+
+/* Notifications */
+"notifications.title" = "Notifications";
+"notifications.loading" = "Loading notifications...";
+"notifications.empty" = "No notifications";
+"notifications.empty_message" = "When you get notifications, they'll show up here";
+"notifications.mark_read" = "Mark Read";
+"notifications.mark_as_read" = "Mark as Read";
+"notifications.mark_all_read" = "Mark All Read";
+
+/* Reactions */
+"reactions.no_reactions" = "No reactions yet";
+
+/* Authentication */
+"auth.app_name" = "Oeee Cafe";
+"auth.username" = "Username";
+"auth.password" = "Password";
+"auth.login_button" = "Log In";
+"auth.signup_button" = "Sign Up";
+"auth.signup_link" = "Don't have an account? Sign Up";
+"auth.signup_title" = "Sign Up";
+"auth.display_name" = "Display Name";
+"auth.confirm_password" = "Confirm Password";
+"auth.error_passwords_not_match" = "Passwords do not match";
+"auth.error_unexpected" = "An unexpected error occurred";
+
+/* Time Formats */
+"time.just_now" = "just now";
+"time.minute_ago" = "1 minute ago";
+"time.minutes_ago" = "%d minutes ago";
+"time.hour_ago" = "1 hour ago";
+"time.hours_ago" = "%d hours ago";
+"time.yesterday" = "yesterday";
+"time.days_ago" = "%d days ago";
+"time.week_ago" = "1 week ago";
+"time.weeks_ago" = "%d weeks ago";
+"time.month_ago" = "1 month ago";
+"time.months_ago" = "%d months ago";
+"time.year_ago" = "1 year ago";
+"time.years_ago" = "%d years ago";
+"time.today" = "today";
+"time.d_ago" = "%dd ago";
+
+/* Community Management */
+"community_management.members" = "Members";
+"community_management.pending_invitations" = "Pending Invitations";
+"community_management.invite_user" = "Invite User";
+"community_management.username" = "Username";
+"community_management.invite_prompt" = "Enter the username of the person you want to invite";
+"community_management.invite" = "Invite";
+"community_management.invited" = "Invited";
+"community_management.retract" = "Retract";
+"community_management.remove_member" = "Remove Member";
+"community_management.remove" = "Remove";
+"community_management.remove_confirm" = "Are you sure you want to remove %@ from this community?";
+"community_management.role_owner" = "Owner";
+"community_management.role_moderator" = "Moderator";
+"community_management.role_member" = "Member";
+
+/* Community Invitations */
+"community_invitations.title" = "Community Invitations";
+"community_invitations.no_invitations" = "No Pending Invitations";
+"community_invitations.no_invitations_message" = "You don't have any community invitations at the moment.";
+"community_invitations.invited_by" = "Invited by";
+"community_invitations.accept" = "Accept";
+"community_invitations.decline" = "Decline";
+
+/* Create Community */
+"create_community.title" = "Create Community";
+"create_community.basic_info" = "Basic Info";
+"create_community.name" = "Name";
+"create_community.slug" = "ID";
+"create_community.slug_hint" = "The ID is used in the URL: oeee.cafe/communities/@%@";
+"create_community.description" = "Description";
+"create_community.privacy" = "Privacy";
+"create_community.create" = "Create";
+"create_community.visibility_public" = "Public";
+"create_community.visibility_unlisted" = "Unlisted";
+"create_community.visibility_private" = "Private";
+"create_community.visibility_public_desc" = "Anyone can see and join this community. It appears in discovery.";
+"create_community.visibility_unlisted_desc" = "Anyone with the link can see this community. It doesn't appear in discovery.";
+"create_community.visibility_private_desc" = "Only members can see this community. Invite-only and not federated.";
+
+/* Edit Community */
+"edit_community.title" = "Edit Community";
+"edit_community.save" = "Save";
+"edit_community.visibility_warning" = "Note: You cannot change a private community to public/unlisted, or vice versa.";
+"edit_community.visibility" = "Visibility";
+"edit_community.slug_readonly" = "ID cannot be changed";
+"edit_community.danger_zone" = "Danger Zone";
+"edit_community.delete_warning" = "Deleting a community is permanent and cannot be undone. All posts in this community will also be deleted.";
+"edit_community.delete_community" = "Delete Community";
+"edit_community.delete_button" = "Delete";
+"edit_community.type_slug_to_confirm" = "Type slug to confirm";
+"edit_community.delete_confirmation_message" = "Are you sure you want to delete this community? This action cannot be undone.";
+
+/* Common UI */
+"common.back" = "Back";
+"common.visibility" = "Visibility";
