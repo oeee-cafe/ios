@@ -3,6 +3,7 @@ import Foundation
 // MARK: - Notification Type
 enum NotificationType: String, Codable {
     case comment = "Comment"
+    case commentReply = "CommentReply"
     case reaction = "Reaction"
     case follow = "Follow"
     case guestbookEntry = "GuestbookEntry"
@@ -61,6 +62,8 @@ struct NotificationItem: Codable, Identifiable {
         switch notificationType {
         case .comment:
             return "\(actorName) commented on your post"
+        case .commentReply:
+            return "\(actorName) replied to your comment"
         case .reaction:
             if let emoji = reactionEmoji {
                 return "\(actorName) reacted with \(emoji) to your post"
