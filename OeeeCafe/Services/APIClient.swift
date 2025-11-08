@@ -171,15 +171,16 @@ class APIClient {
                 throw APIError.invalidResponse
             }
 
-            // Handle non-success status codes
-            guard (200...299).contains(httpResponse.statusCode) else {
+            // Log response status for debugging
+            if !(200...299).contains(httpResponse.statusCode) {
                 Logger.warning("POST \(path): Status \(httpResponse.statusCode)", category: Logger.network)
                 if let responseBody = String(data: data, encoding: .utf8) {
                     Logger.debug("Response body: \(responseBody)", category: Logger.network)
                 }
-                throw APIError.invalidResponse
             }
 
+            // Try to decode response regardless of status code
+            // This allows endpoints to return structured error messages in the response body
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             decoder.dateDecodingStrategy = Self.customDateDecodingStrategy
