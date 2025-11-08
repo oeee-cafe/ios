@@ -69,8 +69,9 @@ struct CommunityDetailView: View {
                 }
 
                 // Share button - visible to all users
-                if viewModel.communityDetail != nil {
-                    ShareLink(item: URL(string: "https://oeee.cafe/communities/@\(viewModel.slug)")!) {
+                if viewModel.communityDetail != nil,
+                   let shareURL = URL(string: "https://oeee.cafe/communities/@\(viewModel.slug)") {
+                    ShareLink(item: shareURL) {
                         Image(systemName: "square.and.arrow.up")
                             .font(.title3)
                     }

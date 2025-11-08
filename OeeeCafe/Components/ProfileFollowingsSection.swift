@@ -19,34 +19,40 @@ struct ProfileFollowingsSection: View {
                 if !usersWithBanners.isEmpty {
                     LazyVGrid(columns: Constants.twoColumnGrid, spacing: 8) {
                         ForEach(usersWithBanners) { following in
-                            NavigationLink(destination: ProfileView(loginName: following.loginName)
-                                .environmentObject(authService)) {
-                                GeometryReader { geometry in
-                                    KFImage(URL(string: following.bannerImageUrl!))
-                                        .placeholder {
-                                            Rectangle()
-                                                .fill(Color.gray.opacity(0.2))
-                                                .overlay {
-                                                    ProgressView()
-                                                }
-                                        }
-                                        .onFailure { error in
-                                            // Error handling - Kingfisher will display placeholder
-                                        }
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: geometry.size.width, height: geometry.size.height)
-                                        .clipped()
+                            if let bannerURL = following.bannerImageUrl.flatMap({ URL(string: $0) }) {
+                                NavigationLink(destination: ProfileView(loginName: following.loginName)
+                                    .environmentObject(authService)) {
+                                    GeometryReader { geometry in
+                                        KFImage(bannerURL)
+                                            .placeholder {
+                                                Rectangle()
+                                                    .fill(Color.gray.opacity(0.2))
+                                                    .overlay {
+                                                        ProgressView()
+                                                    }
+                                            }
+                                            .onFailure { error in
+                                                // Error handling - Kingfisher will display placeholder
+                                            }
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: geometry.size.width, height: geometry.size.height)
+                                            .clipped()
+                                    }
+                                    .aspectRatio(
+                                        {
+                                            if let width = following.bannerImageWidth,
+                                               let height = following.bannerImageHeight {
+                                                return CGFloat(width) / CGFloat(height)
+                                            }
+                                            return 16.0 / 9.0
+                                        }(),
+                                        contentMode: .fit
+                                    )
+                                    .cornerRadius(8)
                                 }
-                                .aspectRatio(
-                                    following.bannerImageWidth != nil && following.bannerImageHeight != nil
-                                        ? CGFloat(following.bannerImageWidth!) / CGFloat(following.bannerImageHeight!)
-                                        : 16.0 / 9.0,
-                                    contentMode: .fit
-                                )
-                                .cornerRadius(8)
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.horizontal, 8)
