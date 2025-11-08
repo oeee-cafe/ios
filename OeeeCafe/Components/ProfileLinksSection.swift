@@ -11,34 +11,36 @@ struct ProfileLinksSection: View {
                     .padding(.horizontal)
 
                 ForEach(links) { link in
-                    Link(destination: URL(string: link.url)!) {
-                        HStack {
-                            Image(systemName: "link")
-                                .foregroundColor(.blue)
+                    if let linkURL = URL(string: link.url) {
+                        Link(destination: linkURL) {
+                            HStack {
+                                Image(systemName: "link")
+                                    .foregroundColor(.blue)
 
-                            VStack(alignment: .leading, spacing: 2) {
-                                if let description = link.description {
-                                    Text(description)
-                                        .font(.subheadline)
-                                        .foregroundColor(.primary)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    if let description = link.description {
+                                        Text(description)
+                                            .font(.subheadline)
+                                            .foregroundColor(.primary)
+                                    }
+                                    Text(link.url)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(1)
                                 }
-                                Text(link.url)
+
+                                Spacer()
+
+                                Image(systemName: "arrow.up.right")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
-                                    .lineLimit(1)
                             }
-
-                            Spacer()
-
-                            Image(systemName: "arrow.up.right")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            .padding()
+                            .background(Color(uiColor: .secondarySystemGroupedBackground))
+                            .cornerRadius(8)
                         }
-                        .padding()
-                        .background(Color(uiColor: .secondarySystemGroupedBackground))
-                        .cornerRadius(8)
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
             }
         }

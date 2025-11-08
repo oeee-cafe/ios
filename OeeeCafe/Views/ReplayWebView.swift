@@ -46,7 +46,11 @@ struct ReplayWebViewContainer: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        let url = URL(string: "\(APIConfig.shared.baseURL)/posts/\(postId)/replay/mobile")!
+        guard let url = URL(string: "\(APIConfig.shared.baseURL)/posts/\(postId)/replay/mobile") else {
+            Logger.error("Failed to create replay URL for post: \(postId)", category: Logger.app)
+            isLoading = false
+            return
+        }
         let request = URLRequest(url: url)
         uiView.load(request)
     }

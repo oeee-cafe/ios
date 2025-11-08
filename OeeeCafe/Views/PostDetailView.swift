@@ -389,9 +389,10 @@ struct PostDetailView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
             // Share button - visible to all users
-            if let post = viewModel.post {
+            if let post = viewModel.post,
+               let shareURL = URL(string: "https://oeee.cafe/@\(post.author.loginName)/\(post.id)") {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    ShareLink(item: URL(string: "https://oeee.cafe/@\(post.author.loginName)/\(post.id)")!) {
+                    ShareLink(item: shareURL) {
                         Image(systemName: "square.and.arrow.up")
                             .font(.title3)
                     }
