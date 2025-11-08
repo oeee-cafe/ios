@@ -48,13 +48,13 @@ struct EmailVerificationSheet: View {
                     .disabled(isRequestingCode || isVerifyingCode)
                 }
             }
-            .onChange(of: currentStep) { newStep in
+            .onChange(of: currentStep) { _, newStep in
                 if newStep == .enterCode {
                     timeRemaining = expiresInSeconds
                     startTimer()
                 }
             }
-            .onChange(of: expiresInSeconds) { _ in
+            .onChange(of: expiresInSeconds) {
                 if currentStep == .enterCode {
                     timeRemaining = expiresInSeconds
                     startTimer()
@@ -121,7 +121,7 @@ struct EmailVerificationSheet: View {
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
                     .disabled(isVerifyingCode)
-                    .onChange(of: code) { newValue in
+                    .onChange(of: code) { _, newValue in
                         // Only allow digits and max 6 characters
                         let filtered = newValue.filter { $0.isNumber }
                         if filtered.count <= 6 {

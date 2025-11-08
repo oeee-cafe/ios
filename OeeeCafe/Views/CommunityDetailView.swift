@@ -47,7 +47,7 @@ struct CommunityDetailView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 // Members button - visible to authenticated users
-                if let detail = viewModel.communityDetail, canViewMembers {
+                if let _ = viewModel.communityDetail, canViewMembers {
                     NavigationLink(destination: CommunityMembersView(
                         slug: viewModel.slug,
                         isOwner: isOwner,
@@ -59,7 +59,7 @@ struct CommunityDetailView: View {
                 }
 
                 // Settings button - visible to owner only
-                if let detail = viewModel.communityDetail, isOwner {
+                if let _ = viewModel.communityDetail, isOwner {
                     Button(action: {
                         showEditCommunity = true
                     }) {
