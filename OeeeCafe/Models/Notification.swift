@@ -9,6 +9,16 @@ enum NotificationType: String, Codable {
     case guestbookReply = "GuestbookReply"
     case mention = "Mention"
     case postReply = "PostReply"
+    case unknown = "Unknown"
+
+    // Custom decoder to handle unknown notification types
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+
+        // Try to initialize with the raw value, default to .unknown if not recognized
+        self = NotificationType(rawValue: rawValue) ?? .unknown
+    }
 }
 
 // MARK: - Notification
@@ -66,6 +76,8 @@ struct NotificationItem: Codable, Identifiable {
             return "\(actorName) replied to your guestbook entry"
         case .mention:
             return "\(actorName) mentioned you in a comment"
+        case .unknown:
+            return "\(actorName) performed an action"
         }
     }
 
