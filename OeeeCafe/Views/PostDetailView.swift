@@ -231,18 +231,21 @@ struct PostDetailView: View {
                         .foregroundColor(.primary)
                     }
 
-                    NavigationLink {
-                        CommunityDetailView(slug: post.community.slug)
-                    } label: {
-                        HStack {
-                            Image(systemName: "rectangle.stack")
-                            Text(post.community.name)
-                                .font(.subheadline)
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                    // Community (only show if post has community)
+                    if let community = post.community {
+                        NavigationLink {
+                            CommunityDetailView(slug: community.slug)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.stack")
+                                Text(community.name)
+                                    .font(.subheadline)
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .foregroundColor(.primary)
                         }
-                        .foregroundColor(.primary)
                     }
 
                     Divider()
@@ -417,12 +420,14 @@ struct PostDetailView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
             // Share button - visible to all users
-            if let post = viewModel.post,
-               let shareURL = URL(string: "https://oeee.cafe/@\(post.author.loginName)/\(post.id)") {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    ShareLink(item: shareURL) {
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.title3)
+            if let post = viewModel.post {
+                let slug = post.community?.slug ?? post.author.loginName
+                if let shareURL = URL(string: "https://oeee.cafe/@\(slug)/\(post.id)") {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        ShareLink(item: shareURL) {
+                            Image(systemName: "square.and.arrow.up")
+                                .font(.title3)
+                        }
                     }
                 }
             }

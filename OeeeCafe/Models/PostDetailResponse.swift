@@ -56,7 +56,7 @@ struct PostDetail: Identifiable, Codable {
     let image: ImageInfo
     let isSensitive: Bool
     let publishedAtUtc: String?
-    let community: PostCommunityInfo
+    let community: PostCommunityInfo?
     let hashtags: [String]
 
     var publishedAt: Date? {
