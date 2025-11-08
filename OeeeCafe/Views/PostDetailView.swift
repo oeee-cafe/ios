@@ -5,7 +5,10 @@ struct PostDetailView: View {
     @StateObject private var viewModel: PostDetailViewModel
     @State private var showingReactors: ReactionSheet?
     @State private var showingDeleteConfirmation = false
+    @State private var showingCommentDeleteConfirmation = false
+    @State private var commentToDelete: Comment?
     @State private var isDeleting = false
+    @State private var isDeletingComment = false
     @State private var showDimensionPicker = false
     @State private var canvasDimensions: CanvasDimensions?
     @State private var draftPostToPublish: DraftPostIdentifier?
@@ -45,6 +48,23 @@ struct PostDetailView: View {
             }
         } message: {
             Text("post.delete_message".localized)
+        }
+        .alert("Delete Comment", isPresented: $showingCommentDeleteConfirmation) {
+            Button("Cancel", role: .cancel) {
+                commentToDelete = nil
+            }
+            Button("Delete", role: .destructive) {
+                if let comment = commentToDelete {
+                    Task {
+                        isDeletingComment = true
+                        await viewModel.deleteComment(comment)
+                        isDeletingComment = false
+                        commentToDelete = nil
+                    }
+                }
+            }
+        } message: {
+            Text("Are you sure you want to delete this comment? This action cannot be undone.")
         }
         .sheet(item: $showingReactors) { reactionSheet in
             ReactorsListView(postId: reactionSheet.postId, emoji: reactionSheet.emoji)
@@ -313,9 +333,17 @@ struct PostDetailView: View {
                             .padding(.horizontal)
 
                         ForEach(viewModel.comments) { comment in
-                            CommentCard(comment: comment, onReply: { comment in
-                                viewModel.setReplyTarget(comment)
-                            })
+                            CommentCard(
+                                comment: comment,
+                                currentUserLoginName: authService.currentUser?.loginName,
+                                onReply: { comment in
+                                    viewModel.setReplyTarget(comment)
+                                },
+                                onDelete: { comment in
+                                    commentToDelete = comment
+                                    showingCommentDeleteConfirmation = true
+                                }
+                            )
                             .padding(.horizontal)
                         }
                     }

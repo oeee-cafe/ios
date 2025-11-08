@@ -3,7 +3,9 @@ import SwiftUI
 struct CommentCard: View {
     let comment: Comment
     let depth: Int = 0
+    let currentUserLoginName: String?
     let onReply: ((Comment) -> Void)?
+    let onDelete: ((Comment) -> Void)?
 
     private var profileLoginName: String? {
         if comment.isLocal, let loginName = comment.actorLoginName {
@@ -12,10 +14,20 @@ struct CommentCard: View {
         return nil
     }
 
+    private var isOwnComment: Bool {
+        guard let currentUser = currentUserLoginName,
+              comment.isLocal,
+              let authorLoginName = comment.actorLoginName else {
+            return false
+        }
+        return currentUser == authorLoginName
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Main comment
-            HStack(alignment: .top) {
+        if comment.shouldDisplay {
+            VStack(alignment: .leading, spacing: 0) {
+                // Main comment
+                HStack(alignment: .top) {
                 Image(systemName: "person.circle.fill")
                     .font(.title3)
                     .foregroundColor(.gray)
@@ -57,19 +69,40 @@ struct CommentCard: View {
 
                     Text(comment.displayText)
                         .font(.body)
+                        .foregroundColor(comment.isDeleted ? .secondary : .primary)
+                        .italic(comment.isDeleted)
 
-                    // Reply button
-                    if let onReply = onReply {
-                        Button(action: { onReply(comment) }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "arrowshape.turn.up.left")
-                                    .font(.caption)
-                                Text("Reply")
-                                    .font(.caption)
+                    // Action buttons
+                    if !comment.isDeleted {
+                        HStack(spacing: 12) {
+                            // Reply button
+                            if let onReply = onReply {
+                                Button(action: { onReply(comment) }) {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "arrowshape.turn.up.left")
+                                            .font(.caption)
+                                        Text("Reply")
+                                            .font(.caption)
+                                    }
+                                    .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .foregroundColor(.secondary)
+
+                            // Delete button (only for own comments)
+                            if isOwnComment, let onDelete = onDelete {
+                                Button(role: .destructive, action: { onDelete(comment) }) {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "trash")
+                                            .font(.caption)
+                                        Text("Delete")
+                                            .font(.caption)
+                                    }
+                                    .foregroundColor(.red)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
-                        .buttonStyle(.plain)
                         .padding(.top, 4)
                     }
                 }
@@ -82,7 +115,13 @@ struct CommentCard: View {
             if !comment.children.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(comment.children) { child in
-                        ThreadedCommentView(comment: child, depth: depth + 1, onReply: onReply)
+                        ThreadedCommentView(
+                            comment: child,
+                            depth: depth + 1,
+                            currentUserLoginName: currentUserLoginName,
+                            onReply: onReply,
+                            onDelete: onDelete
+                        )
                     }
                 }
                 .padding(.leading, 20)
@@ -96,7 +135,9 @@ struct CommentCard: View {
 struct ThreadedCommentView: View {
     let comment: Comment
     let depth: Int
+    let currentUserLoginName: String?
     let onReply: ((Comment) -> Void)?
+    let onDelete: ((Comment) -> Void)?
 
     private var profileLoginName: String? {
         if comment.isLocal, let loginName = comment.actorLoginName {
@@ -105,15 +146,25 @@ struct ThreadedCommentView: View {
         return nil
     }
 
+    private var isOwnComment: Bool {
+        guard let currentUser = currentUserLoginName,
+              comment.isLocal,
+              let authorLoginName = comment.actorLoginName else {
+            return false
+        }
+        return currentUser == authorLoginName
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Main comment with border
-            HStack(alignment: .top, spacing: 0) {
-                // Thread line indicator
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(width: 2)
-                    .padding(.trailing, 12)
+        if comment.shouldDisplay {
+            VStack(alignment: .leading, spacing: 0) {
+                // Main comment with border
+                HStack(alignment: .top, spacing: 0) {
+                    // Thread line indicator
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 2)
+                        .padding(.trailing, 12)
 
                 HStack(alignment: .top) {
                     Image(systemName: "person.circle.fill")
@@ -157,19 +208,40 @@ struct ThreadedCommentView: View {
 
                         Text(comment.displayText)
                             .font(.callout)
+                            .foregroundColor(comment.isDeleted ? .secondary : .primary)
+                            .italic(comment.isDeleted)
 
-                        // Reply button
-                        if let onReply = onReply {
-                            Button(action: { onReply(comment) }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "arrowshape.turn.up.left")
-                                        .font(.caption2)
-                                    Text("Reply")
-                                        .font(.caption2)
+                        // Action buttons
+                        if !comment.isDeleted {
+                            HStack(spacing: 12) {
+                                // Reply button
+                                if let onReply = onReply {
+                                    Button(action: { onReply(comment) }) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "arrowshape.turn.up.left")
+                                                .font(.caption2)
+                                            Text("Reply")
+                                                .font(.caption2)
+                                        }
+                                        .foregroundColor(.secondary)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .foregroundColor(.secondary)
+
+                                // Delete button (only for own comments)
+                                if isOwnComment, let onDelete = onDelete {
+                                    Button(role: .destructive, action: { onDelete(comment) }) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "trash")
+                                                .font(.caption2)
+                                            Text("Delete")
+                                                .font(.caption2)
+                                        }
+                                        .foregroundColor(.red)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
                             }
-                            .buttonStyle(.plain)
                             .padding(.top, 2)
                         }
                     }
@@ -184,11 +256,19 @@ struct ThreadedCommentView: View {
             if !comment.children.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(comment.children) { child in
-                        ThreadedCommentView(comment: child, depth: depth + 1, onReply: onReply)
+                        ThreadedCommentView(
+                            comment: child,
+                            depth: depth + 1,
+                            currentUserLoginName: currentUserLoginName,
+                            onReply: onReply,
+                            onDelete: onDelete
+                        )
                     }
                 }
                 .padding(.leading, 20)
                 .padding(.top, 8)
+            }
+        }
             }
         }
     }

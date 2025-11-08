@@ -107,6 +107,11 @@ class PostService {
         )
     }
 
+    func deleteComment(commentId: String) async throws {
+        struct EmptyResponse: Codable {}
+        let _: EmptyResponse = try await apiClient.delete(path: "/api/v1/comments/\(commentId)")
+    }
+
     func deletePost(postId: String) async throws {
         let _: DeletePostResponse = try await apiClient.delete(path: "/api/v1/posts/\(postId)")
     }

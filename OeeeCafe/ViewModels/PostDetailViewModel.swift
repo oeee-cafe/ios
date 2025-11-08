@@ -83,10 +83,12 @@ class PostDetailViewModel: ObservableObject {
                 limit: commentsLimit
             )
 
+            let filteredComments = response.comments.compactMap { filterComment($0) }
+
             if commentsOffset == 0 {
-                comments = response.comments
+                comments = filteredComments
             } else {
-                comments.append(contentsOf: response.comments)
+                comments.append(contentsOf: filteredComments)
             }
 
             commentsHasMore = response.pagination.hasMore
@@ -96,6 +98,32 @@ class PostDetailViewModel: ObservableObject {
         }
 
         isLoadingComments = false
+    }
+
+    private func filterComment(_ comment: Comment) -> Comment? {
+        // Filter children recursively
+        let filteredChildren = comment.children.compactMap { filterComment($0) }
+
+        // Create a new comment with filtered children
+        let updatedComment = Comment(
+            id: comment.id,
+            postId: comment.postId,
+            parentCommentId: comment.parentCommentId,
+            actorId: comment.actorId,
+            content: comment.content,
+            contentHtml: comment.contentHtml,
+            actorName: comment.actorName,
+            actorHandle: comment.actorHandle,
+            actorLoginName: comment.actorLoginName,
+            isLocal: comment.isLocal,
+            createdAt: comment.createdAt,
+            updatedAt: comment.updatedAt,
+            deletedAt: comment.deletedAt,
+            children: filteredChildren
+        )
+
+        // Return nil if this comment should not be displayed
+        return updatedComment.shouldDisplay ? updatedComment : nil
     }
 
     func loadMoreComments() async {
@@ -142,6 +170,21 @@ class PostDetailViewModel: ObservableObject {
 
     func deletePost() async throws {
         try await postService.deletePost(postId: postId)
+    }
+
+    func deleteComment(_ comment: Comment) async {
+        error = nil
+
+        do {
+            try await postService.deleteComment(commentId: comment.id)
+
+            // Reload comments to show the deleted state
+            commentsOffset = 0
+            comments = []
+            await loadComments()
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
 
     func toggleReaction(emoji: String) async {

@@ -6,7 +6,7 @@ struct Comment: Identifiable, Codable {
     let postId: String
     let parentCommentId: String?
     let actorId: String
-    let content: String
+    let content: String?
     let contentHtml: String?
     let actorName: String
     let actorHandle: String
@@ -14,13 +14,26 @@ struct Comment: Identifiable, Codable {
     let isLocal: Bool
     let createdAt: Date
     let updatedAt: Date
+    let deletedAt: Date?
     let children: [Comment]
 
     var displayText: String {
+        if deletedAt != nil {
+            return "[deleted]"
+        }
         if let html = contentHtml {
             return html.htmlToPlainText()
         }
-        return content
+        return content ?? "[deleted]"
+    }
+
+    var isDeleted: Bool {
+        return deletedAt != nil
+    }
+
+    var shouldDisplay: Bool {
+        // Show if not deleted, or if deleted but has children (preserve thread structure)
+        return !isDeleted || !children.isEmpty
     }
 }
 
