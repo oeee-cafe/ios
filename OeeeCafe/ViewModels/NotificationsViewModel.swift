@@ -24,7 +24,8 @@ class NotificationsViewModel: ObservableObject {
 
         do {
             let response = try await notificationService.fetchNotifications(limit: pageSize, offset: 0)
-            notifications = response.notifications
+            // Filter out unknown notification types
+            notifications = response.notifications.filter { $0.notificationType != .unknown }
             hasMore = response.hasMore
             currentOffset = pageSize
 
@@ -49,7 +50,9 @@ class NotificationsViewModel: ObservableObject {
                 offset: currentOffset
             )
 
-            notifications.append(contentsOf: response.notifications)
+            // Filter out unknown notification types
+            let filteredNotifications = response.notifications.filter { $0.notificationType != .unknown }
+            notifications.append(contentsOf: filteredNotifications)
             hasMore = response.hasMore
             currentOffset += pageSize
         } catch {
