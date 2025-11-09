@@ -2,7 +2,7 @@ import SwiftUI
 
 struct DraftPostView: View {
     let postId: String
-    let communityId: String
+    let communityId: String?
     let imageUrl: String
     let onPublished: () -> Void
     let onCancel: () -> Void

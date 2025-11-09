@@ -122,7 +122,7 @@ struct CommunityDetailView: View {
                     tool: dimensions.tool,
                     communityId: communityId
                 ) { postId, communityId, imageUrl in
-                    Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId), imageUrl=\(imageUrl)", category: Logger.app)
+                    Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
                     draftPostToPublish = DraftPostIdentifier(
                         postId: postId,
                         communityId: communityId,

@@ -3,7 +3,7 @@ import SwiftUI
 struct DraftPostIdentifier: Identifiable {
     let id = UUID()
     let postId: String
-    let communityId: String
+    let communityId: String?
     let imageUrl: String
 }
 
@@ -139,7 +139,7 @@ struct HomeView: View {
                     height: dimensions.height,
                     tool: dimensions.tool
                 ) { postId, communityId, imageUrl in
-                    Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId), imageUrl=\(imageUrl)", category: Logger.app)
+                    Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
                     draftPostToPublish = DraftPostIdentifier(
                         postId: postId,
                         communityId: communityId,

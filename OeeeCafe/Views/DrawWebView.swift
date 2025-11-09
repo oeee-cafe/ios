@@ -10,7 +10,7 @@ struct DrawWebView: View {
     let tool: DrawingTool
     let communityId: String?
     let parentPostId: String?
-    var onDrawingComplete: ((String, String, String) -> Void)?
+    var onDrawingComplete: ((String, String?, String) -> Void)?
 
     init(
         width: Int = 300,
@@ -18,7 +18,7 @@ struct DrawWebView: View {
         tool: DrawingTool = .neo,
         communityId: String? = nil,
         parentPostId: String? = nil,
-        onDrawingComplete: ((String, String, String) -> Void)? = nil
+        onDrawingComplete: ((String, String?, String) -> Void)? = nil
     ) {
         self.width = width
         self.height = height
@@ -76,7 +76,7 @@ struct WebViewContainer: UIViewRepresentable {
     let communityId: String?
     let parentPostId: String?
     @Binding var isLoading: Bool
-    var onDrawingComplete: ((String, String, String) -> Void)?
+    var onDrawingComplete: ((String, String?, String) -> Void)?
     var dismiss: DismissAction
 
     func makeCoordinator() -> Coordinator {
@@ -310,13 +310,15 @@ struct WebViewContainer: UIViewRepresentable {
                   let type = body["type"] as? String,
                   type == "drawing_complete",
                   let postId = body["postId"] as? String,
-                  let communityId = body["communityId"] as? String,
                   let imageUrl = body["imageUrl"] as? String else {
                 Logger.debug("Received invalid message from webview: \(message.body)", category: Logger.app)
                 return
             }
 
-            Logger.debug("Drawing complete: postId=\(postId), communityId=\(communityId), imageUrl=\(imageUrl)", category: Logger.app)
+            // communityId is optional for personal posts
+            let communityId = body["communityId"] as? String
+
+            Logger.debug("Drawing complete: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
 
             // Clear the drawing session
             if let webView = message.webView {
