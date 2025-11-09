@@ -44,9 +44,9 @@
 
 /* Tab Bar */
 "tab.home" = "Home";
-"tab.communities" = "Communities";
+"tab.communities" = "Community";
 "tab.drafts" = "Drafts";
-"tab.notifications" = "Notifications";
+"tab.notifications" = "Inbox";
 "tab.login" = "Login";
 "tab.collaborate" = "Collaborate";
 
@@ -175,7 +175,7 @@
 "drafts.publish_drawing" = "Publish Drawing";
 
 /* Notifications */
-"notifications.title" = "Notifications";
+"notifications.title" = "Inbox";
 "notifications.loading" = "Loading notifications...";
 "notifications.empty" = "No notifications";
 "notifications.empty_message" = "When you get notifications, they'll show up here";
