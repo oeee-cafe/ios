@@ -222,7 +222,7 @@ struct SettingsView: View {
                 Group {
                     if showDeveloperModeToast {
                         VStack {
-                            Text("Developer mode enabled")
+                            Text("settings.developer_mode_enabled".localized)
                                 .padding()
                                 .background(Color(uiColor: .systemGray))
                                 .foregroundColor(.white)
@@ -234,8 +234,8 @@ struct SettingsView: View {
                     }
                 }
             )
-            .alert("Server URL Error", isPresented: $showServerURLError) {
-                Button("OK", role: .cancel) {}
+            .alert("settings.server_url_error".localized, isPresented: $showServerURLError) {
+                Button("common.ok".localized, role: .cancel) {}
             } message: {
                 Text(serverURLError)
             }
@@ -335,7 +335,7 @@ struct SettingsView: View {
 
     private func deleteAccount() async {
         guard !deleteAccountPassword.isEmpty else {
-            deleteError = "Password is required"
+            deleteError = "settings.password_required".localized
             showDeleteAccountConfirmation = true
             return
         }
@@ -392,7 +392,7 @@ struct SettingsView: View {
     private func saveServerURL() {
         do {
             try APIConfig.shared.setBaseURL(customServerURL)
-            serverURLError = "Server URL updated successfully. Please restart the app."
+            serverURLError = "settings.server_url_updated".localized
             showServerURLError = true
         } catch {
             if let configError = error as? APIConfigError {
@@ -407,7 +407,7 @@ struct SettingsView: View {
     private func resetServerURL() {
         APIConfig.shared.resetToDefault()
         customServerURL = APIConfig.shared.baseURL
-        serverURLError = "Server URL reset to default. Please restart the app."
+        serverURLError = "settings.server_url_reset".localized
         showServerURLError = true
     }
 

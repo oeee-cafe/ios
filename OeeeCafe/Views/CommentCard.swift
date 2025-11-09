@@ -81,7 +81,7 @@ struct CommentCard: View {
                                     HStack(spacing: 4) {
                                         Image(systemName: "arrowshape.turn.up.left")
                                             .font(.caption)
-                                        Text("Reply")
+                                        Text("common.reply".localized)
                                             .font(.caption)
                                     }
                                     .foregroundColor(.secondary)
@@ -95,7 +95,7 @@ struct CommentCard: View {
                                     HStack(spacing: 4) {
                                         Image(systemName: "trash")
                                             .font(.caption)
-                                        Text("Delete")
+                                        Text("common.delete".localized)
                                             .font(.caption)
                                     }
                                     .foregroundColor(.red)
@@ -220,7 +220,7 @@ struct ThreadedCommentView: View {
                                         HStack(spacing: 4) {
                                             Image(systemName: "arrowshape.turn.up.left")
                                                 .font(.caption2)
-                                            Text("Reply")
+                                            Text("common.reply".localized)
                                                 .font(.caption2)
                                         }
                                         .foregroundColor(.secondary)
@@ -234,7 +234,7 @@ struct ThreadedCommentView: View {
                                         HStack(spacing: 4) {
                                             Image(systemName: "trash")
                                                 .font(.caption2)
-                                            Text("Delete")
+                                            Text("common.delete".localized)
                                                 .font(.caption2)
                                         }
                                         .foregroundColor(.red)

@@ -6,6 +6,10 @@
 "common.cancel" = "キャンセル";
 "common.delete" = "削除";
 "common.create" = "作成";
+"common.reply" = "返信";
+"common.publish" = "公開";
+"common.title" = "タイトル";
+"common.publishing" = "公開中...";
 
 /* Draw */
 "draw.title" = "描きましょう";
@@ -17,6 +21,7 @@
 "draw.start_drawing" = "描画を開始";
 "draw.tool_neo" = "PaintBBS NEO";
 "draw.tool_tegaki" = "Tegaki";
+"draw.tool_label" = "ツール";
 
 /* Collaborate */
 "collaborate.title" = "コラボ";
@@ -69,6 +74,11 @@
 "settings.server_url" = "サーバーURL";
 "settings.current" = "現在:";
 "settings.reset_to_default" = "デフォルトに戻す";
+"settings.password_required" = "パスワードを入力してください";
+"settings.developer_mode_enabled" = "開発者モードが有効になりました";
+"settings.server_url_error" = "サーバーURLエラー";
+"settings.server_url_updated" = "サーバーURLが更新されました。アプリを再起動してください。";
+"settings.server_url_reset" = "サーバーURLがデフォルトに戻されました。アプリを再起動してください。";
 "common.save" = "保存";
 
 /* Email Verification */
@@ -147,6 +157,9 @@
 "post.delete_title" = "投稿を削除";
 "post.delete_message" = "この投稿を削除してもよろしいですか？この操作は取り消せません。";
 "post.delete_button" = "削除";
+"post.delete_comment_title" = "コメントを削除";
+"post.delete_comment_message" = "このコメントを削除してもよろしいですか？この操作は取り消せません。";
+"post.replying_to_user" = "%@に返信";
 
 /* Drafts */
 "drafts.title" = "下書き";
@@ -156,6 +169,10 @@
 "drafts.untitled" = "タイトルなし";
 "drafts.sensitive_content" = "センシティブなコンテンツ";
 "drafts.allow_relay" = "リレーを許可";
+"drafts.preview" = "プレビュー";
+"drafts.post_details" = "投稿の詳細";
+"drafts.description_placeholder" = "説明（任意）";
+"drafts.publish_drawing" = "イラストを公開";
 
 /* Notifications */
 "notifications.title" = "お知らせ";
@@ -174,6 +191,7 @@
 "auth.username" = "ID";
 "auth.password" = "パスワード";
 "auth.login_button" = "ログイン";
+"auth.login_title" = "ログイン";
 "auth.signup_button" = "新規登録";
 "auth.signup_link" = "アカウントをお持ちでないですか？ 新規登録";
 "auth.signup_title" = "新規登録";
@@ -255,3 +273,10 @@
 /* Common UI */
 "common.back" = "戻る";
 "common.visibility" = "公開範囲";
+
+/* Error Messages */
+"error.failed_prepare_request" = "リクエストの準備に失敗しました";
+"error.invalid_url" = "無効なURL";
+"error.network_error" = "ネットワークエラー: %@";
+"error.invalid_response" = "無効な応答";
+"error.failed_publish" = "公開に失敗しました（ステータス %d）";

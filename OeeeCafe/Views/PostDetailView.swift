@@ -49,11 +49,11 @@ struct PostDetailView: View {
         } message: {
             Text("post.delete_message".localized)
         }
-        .alert("Delete Comment", isPresented: $showingCommentDeleteConfirmation) {
-            Button("Cancel", role: .cancel) {
+        .alert("post.delete_comment_title".localized, isPresented: $showingCommentDeleteConfirmation) {
+            Button("common.cancel".localized, role: .cancel) {
                 commentToDelete = nil
             }
-            Button("Delete", role: .destructive) {
+            Button("common.delete".localized, role: .destructive) {
                 if let comment = commentToDelete {
                     Task {
                         isDeletingComment = true
@@ -64,7 +64,7 @@ struct PostDetailView: View {
                 }
             }
         } message: {
-            Text("Are you sure you want to delete this comment? This action cannot be undone.")
+            Text("post.delete_comment_message".localized)
         }
         .sheet(item: $showingReactors) { reactionSheet in
             ReactorsListView(postId: reactionSheet.postId, emoji: reactionSheet.emoji)
@@ -362,7 +362,7 @@ struct PostDetailView: View {
                         // Reply indicator
                         if let replyingTo = viewModel.replyingToComment {
                             HStack {
-                                Text("Replying to \(replyingTo.actorName)")
+                                Text("post.replying_to_user".localized(replyingTo.actorName))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
 

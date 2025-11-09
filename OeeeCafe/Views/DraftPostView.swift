@@ -18,7 +18,7 @@ struct DraftPostView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Preview")) {
+                Section(header: Text("drafts.preview".localized)) {
                     AsyncImage(url: URL(string: imageUrl)) { image in
                         image
                             .resizable()
@@ -29,8 +29,8 @@ struct DraftPostView: View {
                     .frame(maxHeight: 200)
                 }
 
-                Section(header: Text("Post Details")) {
-                    TextField("Title", text: $title)
+                Section(header: Text("drafts.post_details".localized)) {
+                    TextField("common.title".localized, text: $title)
                         .autocapitalization(.sentences)
 
                     TextEditor(text: $content)
@@ -38,7 +38,7 @@ struct DraftPostView: View {
                         .overlay(
                             Group {
                                 if content.isEmpty {
-                                    Text("Description (optional)")
+                                    Text("drafts.description_placeholder".localized)
                                         .foregroundColor(.gray.opacity(0.6))
                                         .padding(.top, 8)
                                         .padding(.leading, 4)
@@ -65,18 +65,18 @@ struct DraftPostView: View {
                     }
                 }
             }
-            .navigationTitle("Publish Drawing")
+            .navigationTitle("drafts.publish_drawing".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button("common.cancel".localized) {
                         onCancel()
                     }
                     .disabled(isSubmitting)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Publish") {
+                    Button("common.publish".localized) {
                         publishPost()
                     }
                     .disabled(title.isEmpty || isSubmitting)
@@ -86,7 +86,7 @@ struct DraftPostView: View {
             .overlay(
                 Group {
                     if isSubmitting {
-                        ProgressView("Publishing...")
+                        ProgressView("common.publishing".localized)
                             .padding()
                             .background(Color(UIColor.systemBackground).opacity(0.9))
                             .cornerRadius(10)
@@ -122,14 +122,14 @@ struct DraftPostView: View {
         }
 
         guard let formBody = components.query?.data(using: .utf8) else {
-            errorMessage = "Failed to prepare request"
+            errorMessage = "error.failed_prepare_request".localized
             isSubmitting = false
             return
         }
 
         // Create request
         guard let url = URL(string: "\(APIConfig.shared.baseURL)/posts/publish") else {
-            errorMessage = "Invalid URL"
+            errorMessage = "error.invalid_url".localized
             isSubmitting = false
             return
         }
@@ -152,12 +152,12 @@ struct DraftPostView: View {
                 isSubmitting = false
 
                 if let error = error {
-                    errorMessage = "Network error: \(error.localizedDescription)"
+                    errorMessage = "error.network_error".localized(error.localizedDescription)
                     return
                 }
 
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    errorMessage = "Invalid response"
+                    errorMessage = "error.invalid_response".localized
                     return
                 }
 
@@ -165,7 +165,7 @@ struct DraftPostView: View {
                     // Success
                     onPublished()
                 } else {
-                    errorMessage = "Failed to publish (Status \(httpResponse.statusCode))"
+                    errorMessage = "error.failed_publish".localized(httpResponse.statusCode)
                 }
             }
         }.resume()

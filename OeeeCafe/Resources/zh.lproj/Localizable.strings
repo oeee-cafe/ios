@@ -6,6 +6,10 @@
 "common.cancel" = "取消";
 "common.delete" = "删除";
 "common.create" = "创建";
+"common.reply" = "回复";
+"common.publish" = "发布";
+"common.title" = "标题";
+"common.publishing" = "发布中...";
 
 /* Draw */
 "draw.title" = "画画";
@@ -17,6 +21,7 @@
 "draw.start_drawing" = "开始绘画";
 "draw.tool_neo" = "PaintBBS NEO";
 "draw.tool_tegaki" = "Tegaki";
+"draw.tool_label" = "工具";
 
 /* Collaborate */
 "collaborate.title" = "协作";
@@ -69,6 +74,11 @@
 "settings.server_url" = "服务器URL";
 "settings.current" = "当前：";
 "settings.reset_to_default" = "重置为默认";
+"settings.password_required" = "请输入密码";
+"settings.developer_mode_enabled" = "开发者模式已启用";
+"settings.server_url_error" = "服务器URL错误";
+"settings.server_url_updated" = "服务器URL已更新成功。请重启应用。";
+"settings.server_url_reset" = "服务器URL已重置为默认。请重启应用。";
 "common.save" = "保存";
 
 /* Email Verification */
@@ -147,6 +157,9 @@
 "post.delete_title" = "删除作品";
 "post.delete_message" = "确定要删除这个作品吗？此操作无法撤销。";
 "post.delete_button" = "删除";
+"post.delete_comment_title" = "删除评论";
+"post.delete_comment_message" = "确定要删除这条评论吗？此操作无法撤销。";
+"post.replying_to_user" = "回复 %@";
 
 /* Drafts */
 "drafts.title" = "草稿";
@@ -156,6 +169,10 @@
 "drafts.untitled" = "无标题";
 "drafts.sensitive_content" = "敏感内容";
 "drafts.allow_relay" = "允许中继";
+"drafts.preview" = "预览";
+"drafts.post_details" = "作品详情";
+"drafts.description_placeholder" = "描述（可选）";
+"drafts.publish_drawing" = "发布作品";
 
 /* Notifications */
 "notifications.title" = "通知";
@@ -174,6 +191,7 @@
 "auth.username" = "ID";
 "auth.password" = "密码";
 "auth.login_button" = "登录";
+"auth.login_title" = "登录";
 "auth.signup_button" = "注册";
 "auth.signup_link" = "没有账号？ 注册";
 "auth.signup_title" = "注册";
@@ -255,3 +273,10 @@
 /* Common UI */
 "common.back" = "返回";
 "common.visibility" = "可见性";
+
+/* Error Messages */
+"error.failed_prepare_request" = "请求准备失败";
+"error.invalid_url" = "无效的URL";
+"error.network_error" = "网络错误: %@";
+"error.invalid_response" = "无效的响应";
+"error.failed_publish" = "发布失败（状态 %d）";

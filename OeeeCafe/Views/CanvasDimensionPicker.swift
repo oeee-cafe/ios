@@ -36,7 +36,7 @@ struct CanvasDimensionPicker: View {
         NavigationStack {
             Form {
                 Section(header: Text("draw.drawing_tool".localized)) {
-                    Picker("Tool", selection: $selectedTool) {
+                    Picker("draw.tool_label".localized, selection: $selectedTool) {
                         ForEach(DrawingTool.allCases) { tool in
                             Text(tool.displayName).tag(tool)
                         }
@@ -44,7 +44,7 @@ struct CanvasDimensionPicker: View {
                     .pickerStyle(.segmented)
                 }
 
-                Section(header: Text("Canvas Size")) {
+                Section(header: Text("draw.canvas_size".localized)) {
                     Picker("draw.width".localized, selection: $selectedWidth) {
                         ForEach(availableWidths, id: \.self) { width in
                             Text("\(width)").tag(width)

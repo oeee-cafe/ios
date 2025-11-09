@@ -6,6 +6,10 @@
 "common.cancel" = "취소";
 "common.delete" = "삭제";
 "common.create" = "만들기";
+"common.reply" = "답글";
+"common.publish" = "게시";
+"common.title" = "제목";
+"common.publishing" = "게시하는 중...";
 
 /* Draw */
 "draw.title" = "그리기";
@@ -17,6 +21,7 @@
 "draw.start_drawing" = "그리기 시작";
 "draw.tool_neo" = "PaintBBS NEO";
 "draw.tool_tegaki" = "Tegaki";
+"draw.tool_label" = "도구";
 
 /* Collaborate */
 "collaborate.title" = "함께 그리기";
@@ -69,6 +74,11 @@
 "settings.server_url" = "서버 URL";
 "settings.current" = "현재:";
 "settings.reset_to_default" = "기본값으로 재설정";
+"settings.password_required" = "비밀번호를 입력해주세요";
+"settings.developer_mode_enabled" = "개발자 모드 활성화됨";
+"settings.server_url_error" = "서버 URL 오류";
+"settings.server_url_updated" = "서버 URL이 업데이트되었습니다. 앱을 재시작해주세요.";
+"settings.server_url_reset" = "서버 URL이 기본값으로 재설정되었습니다. 앱을 재시작해주세요.";
 "common.save" = "저장";
 
 /* Email Verification */
@@ -147,6 +157,9 @@
 "post.delete_title" = "게시물 삭제";
 "post.delete_message" = "이 게시물을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
 "post.delete_button" = "삭제";
+"post.delete_comment_title" = "댓글 삭제";
+"post.delete_comment_message" = "이 댓글을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
+"post.replying_to_user" = "%@에게 답글";
 
 /* Drafts */
 "drafts.title" = "임시 저장함";
@@ -156,6 +169,10 @@
 "drafts.untitled" = "제목 없음";
 "drafts.sensitive_content" = "민감한 콘텐츠";
 "drafts.allow_relay" = "릴레이 허용";
+"drafts.preview" = "미리보기";
+"drafts.post_details" = "게시물 상세";
+"drafts.description_placeholder" = "설명 (선택)";
+"drafts.publish_drawing" = "그림 게시";
 
 /* Notifications */
 "notifications.title" = "알림";
@@ -174,6 +191,7 @@
 "auth.username" = "ID";
 "auth.password" = "비밀번호";
 "auth.login_button" = "로그인";
+"auth.login_title" = "로그인";
 "auth.signup_button" = "회원가입";
 "auth.signup_link" = "계정이 없으신가요? 회원가입";
 "auth.signup_title" = "회원가입";
@@ -255,3 +273,10 @@
 /* Common UI */
 "common.back" = "뒤로";
 "common.visibility" = "공개 범위";
+
+/* Error Messages */
+"error.failed_prepare_request" = "요청 준비 실패";
+"error.invalid_url" = "잘못된 URL";
+"error.network_error" = "네트워크 오류: %@";
+"error.invalid_response" = "잘못된 응답";
+"error.failed_publish" = "게시 실패 (상태 %d)";

@@ -6,6 +6,10 @@
 "common.cancel" = "Cancel";
 "common.delete" = "Delete";
 "common.create" = "Create";
+"common.reply" = "Reply";
+"common.publish" = "Publish";
+"common.title" = "Title";
+"common.publishing" = "Publishing...";
 
 /* Draw */
 "draw.title" = "Draw";
@@ -17,6 +21,7 @@
 "draw.start_drawing" = "Start Drawing";
 "draw.tool_neo" = "PaintBBS NEO";
 "draw.tool_tegaki" = "Tegaki";
+"draw.tool_label" = "Tool";
 
 /* Collaborate */
 "collaborate.title" = "Collaborate";
@@ -69,6 +74,11 @@
 "settings.server_url" = "Server URL";
 "settings.current" = "Current:";
 "settings.reset_to_default" = "Reset to Default";
+"settings.password_required" = "Password is required";
+"settings.developer_mode_enabled" = "Developer mode enabled";
+"settings.server_url_error" = "Server URL Error";
+"settings.server_url_updated" = "Server URL updated successfully. Please restart the app.";
+"settings.server_url_reset" = "Server URL reset to default. Please restart the app.";
 "common.save" = "Save";
 
 /* Email Verification */
@@ -147,6 +157,9 @@
 "post.delete_title" = "Delete Post";
 "post.delete_message" = "Are you sure you want to delete this post? This action cannot be undone.";
 "post.delete_button" = "Delete";
+"post.delete_comment_title" = "Delete Comment";
+"post.delete_comment_message" = "Are you sure you want to delete this comment? This action cannot be undone.";
+"post.replying_to_user" = "Replying to %@";
 
 /* Drafts */
 "drafts.title" = "Drafts";
@@ -156,6 +169,10 @@
 "drafts.untitled" = "Untitled";
 "drafts.sensitive_content" = "Sensitive Content";
 "drafts.allow_relay" = "Allow Relay";
+"drafts.preview" = "Preview";
+"drafts.post_details" = "Post Details";
+"drafts.description_placeholder" = "Description (optional)";
+"drafts.publish_drawing" = "Publish Drawing";
 
 /* Notifications */
 "notifications.title" = "Notifications";
@@ -174,6 +191,7 @@
 "auth.username" = "Username";
 "auth.password" = "Password";
 "auth.login_button" = "Log In";
+"auth.login_title" = "Log In";
 "auth.signup_button" = "Sign Up";
 "auth.signup_link" = "Don't have an account? Sign Up";
 "auth.signup_title" = "Sign Up";
@@ -255,3 +273,10 @@
 /* Common UI */
 "common.back" = "Back";
 "common.visibility" = "Visibility";
+
+/* Error Messages */
+"error.failed_prepare_request" = "Failed to prepare request";
+"error.invalid_url" = "Invalid URL";
+"error.network_error" = "Network error: %@";
+"error.invalid_response" = "Invalid response";
+"error.failed_publish" = "Failed to publish (Status %d)";
