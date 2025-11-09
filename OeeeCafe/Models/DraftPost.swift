@@ -5,7 +5,7 @@ struct DraftPost: Identifiable, Codable {
     let title: String?
     let imageUrl: String
     let createdAt: String
-    let communityId: String
+    let communityId: String?
     let width: Int
     let height: Int
 
