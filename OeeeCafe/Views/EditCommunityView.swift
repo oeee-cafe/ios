@@ -19,7 +19,7 @@ struct EditCommunityView: View {
         Form {
             Section {
                 TextField("create_community.name".localized, text: $viewModel.name)
-                Text("ID: @\(viewModel.slug)")
+                Text("common.id_prefix".localized(viewModel.slug))
                     .font(.caption)
                     .foregroundColor(.secondary)
             } header: {

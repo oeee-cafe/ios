@@ -273,6 +273,15 @@
 /* Common UI */
 "common.back" = "Back";
 "common.visibility" = "Visibility";
+"common.by" = "by %@";
+"common.on" = "on \"%@\"";
+"common.id_prefix" = "ID: @%@";
+"common.version" = "Version %@ (%@)";
+"common.app_name_lowercase" = "oeee cafe";
+
+/* Navigation */
+"nav.replay" = "Replay";
+"nav.community_default" = "Community";
 
 /* Error Messages */
 "error.failed_prepare_request" = "Failed to prepare request";
@@ -280,3 +289,6 @@
 "error.network_error" = "Network error: %@";
 "error.invalid_response" = "Invalid response";
 "error.failed_publish" = "Failed to publish (Status %d)";
+"error.failed_request_verification" = "Failed to request verification";
+"error.verification_failed" = "Verification failed";
+"error.failed_resend_code" = "Failed to resend code";

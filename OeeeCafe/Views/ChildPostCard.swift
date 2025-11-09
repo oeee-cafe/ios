@@ -40,7 +40,7 @@ struct ChildPostCard: View {
                             .lineLimit(2)
                     }
 
-                    Text("by \(childPost.author.loginName)")
+                    Text("common.by".localized(childPost.author.loginName))
                         .font(.caption)
                         .foregroundColor(.secondary)
 

@@ -273,6 +273,15 @@
 /* Common UI */
 "common.back" = "뒤로";
 "common.visibility" = "공개 범위";
+"common.by" = "작성자: %@";
+"common.on" = "\"%@\"에 대한";
+"common.id_prefix" = "ID: @%@";
+"common.version" = "버전 %@ (%@)";
+"common.app_name_lowercase" = "오이 카페";
+
+/* Navigation */
+"nav.replay" = "재생";
+"nav.community_default" = "커뮤니티";
 
 /* Error Messages */
 "error.failed_prepare_request" = "요청 준비 실패";
@@ -280,3 +289,6 @@
 "error.network_error" = "네트워크 오류: %@";
 "error.invalid_response" = "잘못된 응답";
 "error.failed_publish" = "게시 실패 (상태 %d)";
+"error.failed_request_verification" = "인증 요청 실패";
+"error.verification_failed" = "인증 실패";
+"error.failed_resend_code" = "코드 재전송 실패";

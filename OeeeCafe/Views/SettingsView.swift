@@ -195,12 +195,12 @@ struct SettingsView: View {
                     HStack {
                         Spacer()
                         VStack(spacing: 4) {
-                            Text("oeee cafe")
+                            Text("common.app_name_lowercase".localized)
                                 .foregroundColor(.secondary)
                                 .font(.caption)
                             if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
                                let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-                                Text("Version \(version) (\(build))")
+                                Text("common.version".localized(version, build))
                                     .foregroundColor(.secondary)
                                     .font(.caption2)
                             }
@@ -426,7 +426,7 @@ struct SettingsView: View {
                     self.expiresInSeconds = response.expiresInSeconds ?? 300
                     self.verificationStep = .enterCode
                 } else {
-                    emailVerificationError = response.error ?? "Failed to request verification"
+                    emailVerificationError = response.error ?? "error.failed_request_verification".localized
                 }
                 isRequestingVerification = false
             }
@@ -469,7 +469,7 @@ struct SettingsView: View {
                     self.verificationStep = .enterEmail
                     self.showSuccessAlert = true
                 } else {
-                    emailVerificationError = response.error ?? "Verification failed"
+                    emailVerificationError = response.error ?? "error.verification_failed".localized
                 }
                 isVerifyingCode = false
             }
@@ -493,7 +493,7 @@ struct SettingsView: View {
                     self.challengeId = newChallengeId
                     self.expiresInSeconds = response.expiresInSeconds ?? 300
                 } else {
-                    emailVerificationError = response.error ?? "Failed to resend code"
+                    emailVerificationError = response.error ?? "error.failed_resend_code".localized
                 }
                 isResendingCode = false
             }

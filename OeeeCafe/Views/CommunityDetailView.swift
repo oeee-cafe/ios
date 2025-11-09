@@ -42,7 +42,7 @@ struct CommunityDetailView: View {
         ScrollView {
             contentView
         }
-        .navigationTitle(viewModel.communityDetail?.community.name ?? "Community")
+        .navigationTitle(viewModel.communityDetail?.community.name ?? "nav.community_default".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

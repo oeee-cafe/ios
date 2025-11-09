@@ -273,6 +273,15 @@
 /* Common UI */
 "common.back" = "戻る";
 "common.visibility" = "公開範囲";
+"common.by" = "作成者: %@";
+"common.on" = "\"%@\"に対して";
+"common.id_prefix" = "ID: @%@";
+"common.version" = "バージョン %@ (%@)";
+"common.app_name_lowercase" = "おいいカフェ";
+
+/* Navigation */
+"nav.replay" = "リプレイ";
+"nav.community_default" = "コミュニティ";
 
 /* Error Messages */
 "error.failed_prepare_request" = "リクエストの準備に失敗しました";
@@ -280,3 +289,6 @@
 "error.network_error" = "ネットワークエラー: %@";
 "error.invalid_response" = "無効な応答";
 "error.failed_publish" = "公開に失敗しました（ステータス %d）";
+"error.failed_request_verification" = "認証リクエストに失敗しました";
+"error.verification_failed" = "認証に失敗しました";
+"error.failed_resend_code" = "コードの再送信に失敗しました";

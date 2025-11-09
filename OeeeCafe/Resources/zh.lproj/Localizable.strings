@@ -273,6 +273,15 @@
 /* Common UI */
 "common.back" = "返回";
 "common.visibility" = "可见性";
+"common.by" = "作者: %@";
+"common.on" = "对于\"%@\"";
+"common.id_prefix" = "ID: @%@";
+"common.version" = "版本 %@ (%@)";
+"common.app_name_lowercase" = "黄瓜咖啡馆";
+
+/* Navigation */
+"nav.replay" = "回放";
+"nav.community_default" = "社区";
 
 /* Error Messages */
 "error.failed_prepare_request" = "请求准备失败";
@@ -280,3 +289,6 @@
 "error.network_error" = "网络错误: %@";
 "error.invalid_response" = "无效的响应";
 "error.failed_publish" = "发布失败（状态 %d）";
+"error.failed_request_verification" = "请求验证失败";
+"error.verification_failed" = "验证失败";
+"error.failed_resend_code" = "重新发送代码失败";

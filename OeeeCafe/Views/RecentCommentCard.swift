@@ -78,7 +78,7 @@ struct RecentCommentCard: View {
                 HStack {
                     if let postTitle = comment.postTitle {
                         NavigationLink(destination: PostDetailView(postId: comment.postId)) {
-                            Text("on \"\(postTitle)\"")
+                            Text("common.on".localized(postTitle))
                                 .font(.caption2)
                                 .foregroundColor(.blue)
                         }

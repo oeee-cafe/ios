@@ -22,7 +22,7 @@ struct ReplayWebView: View {
                     .background(Color(uiColor: .systemBackground))
                 }
             }
-            .navigationTitle("Replay")
+            .navigationTitle("nav.replay".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
