@@ -29,10 +29,6 @@ struct ContentView: View {
                         HomeView()
                     }
 
-                    Tab("tab.search".localized, systemImage: "magnifyingglass", value: "search") {
-                        SearchView()
-                    }
-
                     Tab("tab.communities".localized, systemImage: "person.3.fill", value: "communities") {
                         CommunitiesView()
                     }
@@ -61,6 +57,10 @@ struct ContentView: View {
                                 LoginView()
                             }
                         }
+                    }
+
+                    Tab("tab.search".localized, systemImage: "magnifyingglass", value: "search", role: .search) {
+                        SearchView()
                     }
                 }
             }
