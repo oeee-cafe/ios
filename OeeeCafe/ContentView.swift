@@ -50,11 +50,12 @@ struct ContentView: View {
                         }
 
                         // Show notifications tab when logged in
-                        if notificationsViewModel.unreadCount > 0 {
+                        let totalNotificationBadge = notificationsViewModel.unreadCount + notificationsViewModel.invitationCount
+                        if totalNotificationBadge > 0 {
                             Tab("tab.notifications".localized, systemImage: "bell") {
                                 NotificationsView()
                             }
-                            .badge(notificationsViewModel.unreadCount)
+                            .badge(totalNotificationBadge)
                         } else {
                             Tab("tab.notifications".localized, systemImage: "bell") {
                                 NotificationsView()
@@ -83,7 +84,33 @@ struct ContentView: View {
             // Fetch counts at app startup if authenticated
             if authService.isAuthenticated {
                 await notificationsViewModel.updateUnreadCount()
+                await notificationsViewModel.updateInvitationCount()
                 await draftsViewModel.loadDrafts()
+            }
+        }
+        .onAppear {
+            // Refresh counts when view appears (e.g., returning from background)
+            if authService.isAuthenticated {
+                Task {
+                    await notificationsViewModel.updateUnreadCount()
+                    await notificationsViewModel.updateInvitationCount()
+                    await draftsViewModel.loadDrafts()
+                }
+            }
+        }
+        .onChange(of: authService.isAuthenticated) { _, isAuthenticated in
+            // Refresh counts when authentication state changes
+            if isAuthenticated {
+                Task {
+                    await notificationsViewModel.updateUnreadCount()
+                    await notificationsViewModel.updateInvitationCount()
+                    await draftsViewModel.loadDrafts()
+                }
+            } else {
+                // Clear counts when logged out
+                notificationsViewModel.unreadCount = 0
+                notificationsViewModel.invitationCount = 0
+                draftsViewModel.drafts = []
             }
         }
         .environmentObject(notificationsViewModel)

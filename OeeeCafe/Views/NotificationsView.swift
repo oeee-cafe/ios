@@ -73,10 +73,20 @@ struct NotificationsView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    // Community Invitations button
+                    // Community Invitations button with badge
                     NavigationLink(destination: CommunityInvitationsView()) {
-                        Image(systemName: "envelope")
-                            .font(.title3)
+                        ZStack(alignment: .topTrailing) {
+                            Image(systemName: "envelope")
+                                .font(.title3)
+
+                            // Red dot badge when there are pending invitations
+                            if viewModel.invitationCount > 0 {
+                                Circle()
+                                    .fill(Color.red)
+                                    .frame(width: 8, height: 8)
+                                    .offset(x: 4, y: -4)
+                            }
+                        }
                     }
 
                     // Mark all read button
@@ -106,6 +116,15 @@ struct NotificationsView: View {
             if viewModel.unreadCount > 0 {
                 Logger.debug("Auto-marking \(viewModel.unreadCount) unread notifications as read", category: Logger.app)
                 await viewModel.markAllAsRead()
+            }
+
+            // Load invitation count for badge
+            await viewModel.updateInvitationCount()
+        }
+        .onAppear {
+            // Refresh invitation count when returning to this view
+            Task {
+                await viewModel.updateInvitationCount()
             }
         }
     }

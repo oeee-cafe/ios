@@ -8,8 +8,10 @@ class NotificationsViewModel: ObservableObject {
     @Published var isLoadingMore = false
     @Published var error: String?
     @Published var unreadCount = 0
+    @Published var invitationCount = 0
 
     private let notificationService = NotificationService.shared
+    private let communityService = CommunityService.shared
     private var currentOffset = 0
     private var hasMore = true
     private let pageSize = 50
@@ -75,6 +77,17 @@ class NotificationsViewModel: ObservableObject {
         } catch {
             // Silently fail for unread count updates
             Logger.debug("Failed to update unread count: \(error.localizedDescription)", category: Logger.data)
+        }
+    }
+
+    /// Update invitation count
+    func updateInvitationCount() async {
+        do {
+            let response = try await communityService.getUserInvitations()
+            invitationCount = response.invitations.count
+        } catch {
+            // Silently fail for invitation count updates
+            Logger.debug("Failed to update invitation count: \(error.localizedDescription)", category: Logger.data)
         }
     }
 
