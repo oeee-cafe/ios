@@ -233,6 +233,9 @@
 "community_management.remove_confirm" = "确定要将 %@ 从此社区中移除吗？";
 "community_management.role_owner" = "所有者";
 "community_management.role_moderator" = "版主";
+"community_management.leave_community" = "退出社区";
+"community_management.leave" = "退出";
+"community_management.leave_confirm" = "您确定要退出此社区吗？";
 
 /* Community Invitations */
 "community_invitations.title" = "社区邀请";

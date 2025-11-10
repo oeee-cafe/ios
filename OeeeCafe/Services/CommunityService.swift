@@ -61,6 +61,11 @@ class CommunityService {
         Logger.info("Removed member \(userId) from community @\(slug)", category: Logger.network)
     }
 
+    func leaveCommunity(slug: String) async throws {
+        try await apiClient.post(path: "/api/v1/communities/\(slug)/leave")
+        Logger.info("Left community @\(slug)", category: Logger.network)
+    }
+
     func getCommunityInvitations(slug: String) async throws -> CommunityInvitationsListResponse {
         let invitations: CommunityInvitationsListResponse = try await apiClient.fetch(
             path: "/api/v1/communities/\(slug)/invitations"

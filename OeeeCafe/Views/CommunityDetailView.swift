@@ -51,7 +51,10 @@ struct CommunityDetailView: View {
                     NavigationLink(destination: CommunityMembersView(
                         slug: viewModel.slug,
                         isOwner: isOwner,
-                        isOwnerOrModerator: isOwnerOrModerator
+                        isOwnerOrModerator: isOwnerOrModerator,
+                        onLeave: {
+                            shouldNavigateBack = true
+                        }
                     )) {
                         Image(systemName: "person.2")
                             .font(.title3)
@@ -181,6 +184,11 @@ struct CommunityDetailView: View {
                         }
                     )
                 }
+            }
+        }
+        .onChange(of: shouldNavigateBack) { oldValue, newValue in
+            if newValue {
+                dismiss()
             }
         }
     }

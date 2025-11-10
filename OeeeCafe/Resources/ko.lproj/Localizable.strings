@@ -233,6 +233,9 @@
 "community_management.remove_confirm" = "%@을(를) 이 커뮤니티에서 제거하시겠습니까?";
 "community_management.role_owner" = "소유자";
 "community_management.role_moderator" = "관리자";
+"community_management.leave_community" = "커뮤니티 나가기";
+"community_management.leave" = "나가기";
+"community_management.leave_confirm" = "정말 이 커뮤니티를 나가시겠습니까?";
 
 /* Community Invitations */
 "community_invitations.title" = "커뮤니티 초대";

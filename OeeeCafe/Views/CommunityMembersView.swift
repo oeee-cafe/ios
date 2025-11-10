@@ -3,12 +3,18 @@ import Combine
 
 struct CommunityMembersView: View {
     @StateObject private var viewModel: CommunityMembersViewModel
+    @ObservedObject private var authService = AuthService.shared
     @State private var showInviteSheet = false
     @State private var showingRemoveAlert = false
     @State private var memberToRemove: CommunityMember?
+    @State private var showingLeaveAlert = false
+    @Environment(\.dismiss) private var dismiss
 
-    init(slug: String, isOwner: Bool, isOwnerOrModerator: Bool) {
+    let onLeave: () -> Void
+
+    init(slug: String, isOwner: Bool, isOwnerOrModerator: Bool, onLeave: @escaping () -> Void = {}) {
         _viewModel = StateObject(wrappedValue: CommunityMembersViewModel(slug: slug, isOwner: isOwner, isOwnerOrModerator: isOwnerOrModerator))
+        self.onLeave = onLeave
     }
 
     var body: some View {
@@ -24,9 +30,13 @@ struct CommunityMembersView: View {
                         MemberRow(
                             member: member,
                             canManage: viewModel.isOwnerOrModerator && member.role != "owner",
+                            isCurrentUser: member.userId == authService.currentUser?.id,
                             onRemove: {
                                 memberToRemove = member
                                 showingRemoveAlert = true
+                            },
+                            onLeave: {
+                                showingLeaveAlert = true
                             }
                         )
                     }
@@ -84,6 +94,20 @@ struct CommunityMembersView: View {
         } message: { member in
             Text(String(format: "community_management.remove_confirm".localized, member.displayName))
         }
+        .alert("community_management.leave_community".localized, isPresented: $showingLeaveAlert) {
+            Button("common.cancel".localized, role: .cancel) {}
+            Button("community_management.leave".localized, role: .destructive) {
+                Task {
+                    await viewModel.leaveCommunity()
+                    if !viewModel.showError {
+                        dismiss()
+                        onLeave()
+                    }
+                }
+            }
+        } message: {
+            Text("community_management.leave_confirm".localized)
+        }
         .alert("common.error".localized, isPresented: $viewModel.showError, presenting: viewModel.errorMessage) { _ in
             Button("common.ok".localized) {}
         } message: { message in
@@ -95,7 +119,9 @@ struct CommunityMembersView: View {
 struct MemberRow: View {
     let member: CommunityMember
     let canManage: Bool
+    let isCurrentUser: Bool
     let onRemove: () -> Void
+    let onLeave: () -> Void
 
     var body: some View {
         HStack {
@@ -120,6 +146,13 @@ struct MemberRow: View {
             if canManage {
                 Button(action: onRemove) {
                     Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(.plain)
+            } else if isCurrentUser && member.role != "owner" {
+                Button(action: onLeave) {
+                    Text("community_management.leave".localized)
+                        .font(.caption)
                         .foregroundColor(.red)
                 }
                 .buttonStyle(.plain)
@@ -229,6 +262,16 @@ class CommunityMembersViewModel: ObservableObject {
         do {
             try await communityService.retractInvitation(slug: slug, invitationId: invitationId)
             await loadMembers()
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
+    }
+
+    func leaveCommunity() async {
+        do {
+            try await communityService.leaveCommunity(slug: slug)
+            // Navigation back will be handled by the view
         } catch {
             errorMessage = error.localizedDescription
             showError = true

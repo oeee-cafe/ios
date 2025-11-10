@@ -234,6 +234,9 @@
 "community_management.role_owner" = "Owner";
 "community_management.role_moderator" = "Moderator";
 "community_management.role_member" = "Member";
+"community_management.leave_community" = "Leave Community";
+"community_management.leave" = "Leave";
+"community_management.leave_confirm" = "Are you sure you want to leave this community?";
 
 /* Community Invitations */
 "community_invitations.title" = "Community Invitations";

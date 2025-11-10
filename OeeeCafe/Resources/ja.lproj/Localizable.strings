@@ -233,6 +233,9 @@
 "community_management.remove_confirm" = "%@をこのコミュニティから削除してもよろしいですか？";
 "community_management.role_owner" = "オーナー";
 "community_management.role_moderator" = "モデレーター";
+"community_management.leave_community" = "コミュニティを退出";
+"community_management.leave" = "退出";
+"community_management.leave_confirm" = "本当にこのコミュニティを退出しますか？";
 
 /* Community Invitations */
 "community_invitations.title" = "コミュニティ招待";
