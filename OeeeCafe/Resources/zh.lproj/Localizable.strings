@@ -246,7 +246,7 @@
 "create_community.basic_info" = "基本信息";
 "create_community.name" = "名称";
 "create_community.slug" = "ID";
-"create_community.slug_hint" = "将用于URL: oeee.cafe/communities/@%@";
+"create_community.slug_hint" = "仅限字母、数字、连字符和下划线";
 "create_community.description" = "描述";
 "create_community.privacy" = "隐私";
 "create_community.create" = "创建";

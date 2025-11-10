@@ -247,7 +247,7 @@
 "create_community.basic_info" = "Basic Info";
 "create_community.name" = "Name";
 "create_community.slug" = "ID";
-"create_community.slug_hint" = "The ID is used in the URL: oeee.cafe/communities/@%@";
+"create_community.slug_hint" = "Letters, numbers, hyphens, and underscores only";
 "create_community.description" = "Description";
 "create_community.privacy" = "Privacy";
 "create_community.create" = "Create";

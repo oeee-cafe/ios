@@ -246,7 +246,7 @@
 "create_community.basic_info" = "基本情報";
 "create_community.name" = "名前";
 "create_community.slug" = "ID";
-"create_community.slug_hint" = "URLで使用されます: oeee.cafe/communities/@%@";
+"create_community.slug_hint" = "英数字、ハイフン、アンダースコアのみ使用可能";
 "create_community.description" = "説明";
 "create_community.privacy" = "プライバシー";
 "create_community.create" = "作成";

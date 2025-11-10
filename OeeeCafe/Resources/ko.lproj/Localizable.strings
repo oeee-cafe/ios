@@ -246,7 +246,7 @@
 "create_community.basic_info" = "기본 정보";
 "create_community.name" = "이름";
 "create_community.slug" = "ID";
-"create_community.slug_hint" = "URL에 사용됩니다: oeee.cafe/communities/@%@";
+"create_community.slug_hint" = "영문자, 숫자, 하이픈, 밑줄만 사용 가능";
 "create_community.description" = "설명";
 "create_community.privacy" = "공개 설정";
 "create_community.create" = "만들기";

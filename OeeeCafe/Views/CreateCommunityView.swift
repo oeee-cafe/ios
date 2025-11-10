@@ -13,7 +13,7 @@ struct CreateCommunityView: View {
                     TextField("create_community.slug".localized, text: $viewModel.slug)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
-                    Text(String(format: "create_community.slug_hint".localized, viewModel.slug))
+                    Text("create_community.slug_hint".localized)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 } header: {
