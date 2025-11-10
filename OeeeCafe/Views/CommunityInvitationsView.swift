@@ -3,6 +3,7 @@ import Combine
 
 struct CommunityInvitationsView: View {
     @StateObject private var viewModel = CommunityInvitationsViewModel()
+    @State private var navigateToCommunitySlug: String?
 
     var body: some View {
         List {
@@ -33,6 +34,10 @@ struct CommunityInvitationsView: View {
                         onAccept: {
                             Task {
                                 await viewModel.acceptInvitation(invitation.id)
+                                // Navigate to the accepted community after successful acceptance
+                                if !viewModel.showError {
+                                    navigateToCommunitySlug = invitation.community.slug
+                                }
                             }
                         },
                         onReject: {
@@ -56,6 +61,9 @@ struct CommunityInvitationsView: View {
             Button("common.ok".localized) {}
         } message: { message in
             Text(message)
+        }
+        .navigationDestination(item: $navigateToCommunitySlug) { slug in
+            CommunityDetailView(slug: slug)
         }
     }
 }
