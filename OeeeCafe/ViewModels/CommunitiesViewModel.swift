@@ -70,7 +70,11 @@ class CommunitiesViewModel: ObservableObject {
             let offset = publicCommunities.count
             let response = try await communityService.getPublicCommunities(offset: offset, limit: 20)
 
-            publicCommunities.append(contentsOf: response.communities)
+            // Deduplicate by ID before appending
+            let existingIds = Set(publicCommunities.map { $0.id })
+            let newCommunities = response.communities.filter { !existingIds.contains($0.id) }
+            publicCommunities.append(contentsOf: newCommunities)
+
             hasMore = response.pagination.hasMore
             filterCommunities()
         } catch {
