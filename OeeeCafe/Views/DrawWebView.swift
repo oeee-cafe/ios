@@ -138,6 +138,7 @@ struct WebViewContainer: UIViewRepresentable {
         }
         request.httpBody = postData.data(using: .utf8)
 
+        Logger.debug("DrawWebView: Loading URL=\(url) with POST data=\(postData)", category: Logger.network)
         webView.load(request)
     }
 
@@ -186,6 +187,8 @@ struct WebViewContainer: UIViewRepresentable {
                 return
             }
 
+            Logger.debug("DrawWebView: Navigation to URL=\(url.absoluteString)", category: Logger.network)
+
             // Only handle link clicks in the main frame
             // Ignore iframe navigations and other navigation types
             guard navigationAction.targetFrame?.isMainFrame == true,
@@ -216,6 +219,9 @@ struct WebViewContainer: UIViewRepresentable {
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
+            }
+            if let url = webView.url {
+                Logger.debug("DrawWebView: Finished loading URL=\(url.absoluteString)", category: Logger.network)
             }
         }
 

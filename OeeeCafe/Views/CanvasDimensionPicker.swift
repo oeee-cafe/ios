@@ -3,6 +3,7 @@ import SwiftUI
 enum DrawingTool: String, CaseIterable, Identifiable {
     case neo = "neo"
     case tegaki = "tegaki"
+    case neoCucumberOffline = "neo-cucumber-offline"
 
     var id: String { rawValue }
 
@@ -10,6 +11,7 @@ enum DrawingTool: String, CaseIterable, Identifiable {
         switch self {
         case .neo: return "draw.tool_neo".localized
         case .tegaki: return "draw.tool_tegaki".localized
+        case .neoCucumberOffline: return "Neo Cucumber Offline"
         }
     }
 }
@@ -24,10 +26,20 @@ struct CanvasDimensions: Identifiable {
 struct CanvasDimensionPicker: View {
     let onDimensionsSelected: (Int, Int, DrawingTool) -> Void
     let onCancel: () -> Void
+    let backgroundColor: String?
+    let foregroundColor: String?
 
     @State private var selectedWidth: Int = 300
     @State private var selectedHeight: Int = 300
     @State private var selectedTool: DrawingTool = .neo
+
+    private var hasDefinedColors: Bool {
+        backgroundColor != nil && foregroundColor != nil
+    }
+
+    private var availableTools: [DrawingTool] {
+        DrawingTool.allCases.filter { $0 != .neoCucumberOffline }
+    }
 
     private let availableWidths = [300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000]
     private let availableHeights = [300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800]
@@ -35,13 +47,15 @@ struct CanvasDimensionPicker: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("draw.drawing_tool".localized)) {
-                    Picker("draw.tool_label".localized, selection: $selectedTool) {
-                        ForEach(DrawingTool.allCases) { tool in
-                            Text(tool.displayName).tag(tool)
+                if !hasDefinedColors {
+                    Section(header: Text("draw.drawing_tool".localized)) {
+                        Picker("draw.tool_label".localized, selection: $selectedTool) {
+                            ForEach(availableTools) { tool in
+                                Text(tool.displayName).tag(tool)
+                            }
                         }
+                        .pickerStyle(.segmented)
                     }
-                    .pickerStyle(.segmented)
                 }
 
                 Section(header: Text("draw.canvas_size".localized)) {
@@ -91,6 +105,8 @@ struct CanvasDimensionPicker: View {
         },
         onCancel: {
             print("Cancelled")
-        }
+        },
+        backgroundColor: nil,
+        foregroundColor: nil
     )
 }

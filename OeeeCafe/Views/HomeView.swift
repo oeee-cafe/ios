@@ -130,7 +130,9 @@ struct HomeView: View {
                     },
                     onCancel: {
                         showDimensionPicker = false
-                    }
+                    },
+                    backgroundColor: nil,
+                    foregroundColor: nil
                 )
             }
             .fullScreenCover(item: $canvasDimensions) { dimensions in

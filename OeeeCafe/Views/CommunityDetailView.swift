@@ -49,7 +49,13 @@ struct CommunityDetailView: View {
                 // New post button - always visible
                 if viewModel.communityDetail != nil {
                     Button(action: {
-                        showDimensionPicker = true
+                        // If community has defined colors, skip dimension picker and use fixed 640×480
+                        if let community = viewModel.communityDetail?.community,
+                           community.backgroundColor != nil && community.foregroundColor != nil {
+                            canvasDimensions = CanvasDimensions(width: 640, height: 480, tool: .neoCucumberOffline)
+                        } else {
+                            showDimensionPicker = true
+                        }
                     }) {
                         Image(systemName: "square.and.pencil")
                             .font(.title3)
@@ -120,7 +126,9 @@ struct CommunityDetailView: View {
                 },
                 onCancel: {
                     showDimensionPicker = false
-                }
+                },
+                backgroundColor: viewModel.communityDetail?.community.backgroundColor,
+                foregroundColor: viewModel.communityDetail?.community.foregroundColor
             )
         }
         .fullScreenCover(item: $canvasDimensions) { dimensions in
