@@ -7,6 +7,9 @@ class CommunitiesViewModel: ObservableObject {
     @Published var myCommunities: [ActiveCommunity] = []
     @Published var publicCommunities: [ActiveCommunity] = []
     @Published var filteredMyCommunities: [ActiveCommunity] = []
+    @Published var filteredPrivateCommunities: [ActiveCommunity] = []
+    @Published var filteredUnlistedCommunities: [ActiveCommunity] = []
+    @Published var filteredPublicMyCommunities: [ActiveCommunity] = []
     @Published var filteredPublicCommunities: [ActiveCommunity] = []
     @Published var searchQuery: String = "" {
         didSet {
@@ -105,6 +108,11 @@ class CommunitiesViewModel: ObservableObject {
                 community.slug.lowercased().contains(normalizedQuery) ||
                 (community.description?.lowercased().contains(normalizedQuery) ?? false)
             }
+
+            // Separate filtered my communities by visibility
+            filteredPrivateCommunities = filteredMyCommunities.filter { $0.visibility == "private" }
+            filteredUnlistedCommunities = filteredMyCommunities.filter { $0.visibility == "unlisted" }
+            filteredPublicMyCommunities = filteredMyCommunities.filter { $0.visibility == "public" }
         } catch {
             Logger.error("Failed to search communities: \(error)", category: Logger.network)
             self.error = error
@@ -118,18 +126,24 @@ class CommunitiesViewModel: ObservableObject {
 
         if query.isEmpty {
             filteredMyCommunities = myCommunities
+            // Separate my communities by visibility
+            filteredPrivateCommunities = myCommunities.filter { $0.visibility == "private" }
+            filteredUnlistedCommunities = myCommunities.filter { $0.visibility == "unlisted" }
+            filteredPublicMyCommunities = myCommunities.filter { $0.visibility == "public" }
             filteredPublicCommunities = publicCommunities
         } else {
-            filteredMyCommunities = myCommunities.filter { community in
+            let matchesQuery: (ActiveCommunity) -> Bool = { community in
                 community.name.lowercased().contains(query) ||
                 community.slug.lowercased().contains(query) ||
                 (community.description?.lowercased().contains(query) ?? false)
             }
-            filteredPublicCommunities = publicCommunities.filter { community in
-                community.name.lowercased().contains(query) ||
-                community.slug.lowercased().contains(query) ||
-                (community.description?.lowercased().contains(query) ?? false)
-            }
+
+            filteredMyCommunities = myCommunities.filter(matchesQuery)
+            // Separate filtered my communities by visibility
+            filteredPrivateCommunities = filteredMyCommunities.filter { $0.visibility == "private" }
+            filteredUnlistedCommunities = filteredMyCommunities.filter { $0.visibility == "unlisted" }
+            filteredPublicMyCommunities = filteredMyCommunities.filter { $0.visibility == "public" }
+            filteredPublicCommunities = publicCommunities.filter(matchesQuery)
         }
     }
 }

@@ -133,7 +133,11 @@
 "community.stat_contributors" = "기여자";
 "community.stat_comments" = "댓글";
 "community.my_communities" = "내 커뮤니티";
+"community.private_communities" = "비공개 커뮤니티";
+"community.unlisted_communities" = "링크로만 공개된 커뮤니티";
+"community.my_public_communities" = "내 공개 커뮤니티";
 "community.public_communities" = "공개 커뮤니티";
+"community.other_public_communities" = "다른 공개 커뮤니티";
 "community.search_results" = "검색 결과";
 "community.search_placeholder" = "커뮤니티 검색...";
 "community.no_communities" = "커뮤니티를 찾을 수 없습니다";

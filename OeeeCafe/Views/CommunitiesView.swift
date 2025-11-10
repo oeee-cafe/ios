@@ -44,33 +44,64 @@ struct CommunitiesView: View {
                         .padding(.top, 100)
                     } else {
                         LazyVStack(spacing: 12) {
-                            // My Communities Section
-                            if authService.isAuthenticated && !viewModel.filteredMyCommunities.isEmpty {
-                                Text("community.my_communities".localized)
+                            // Private Communities Section
+                            if authService.isAuthenticated && !viewModel.filteredPrivateCommunities.isEmpty {
+                                Text("community.private_communities".localized)
                                     .font(.title2)
                                     .fontWeight(.bold)
                                     .padding(.horizontal)
                                     .padding(.top, 8)
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                                ForEach(viewModel.filteredMyCommunities) { community in
+                                ForEach(viewModel.filteredPrivateCommunities) { community in
                                     CommunityCard(community: community)
                                         .padding(.horizontal)
                                 }
                             }
 
-                            // Public Communities Section
+                            // Unlisted Communities Section
+                            if authService.isAuthenticated && !viewModel.filteredUnlistedCommunities.isEmpty {
+                                Text("community.unlisted_communities".localized)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal)
+                                    .padding(.top, authService.isAuthenticated && !viewModel.filteredPrivateCommunities.isEmpty ? 24 : 8)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                ForEach(viewModel.filteredUnlistedCommunities) { community in
+                                    CommunityCard(community: community)
+                                        .padding(.horizontal)
+                                }
+                            }
+
+                            // My Public Communities Section
+                            if authService.isAuthenticated && !viewModel.filteredPublicMyCommunities.isEmpty {
+                                Text("community.my_public_communities".localized)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal)
+                                    .padding(.top, authService.isAuthenticated && (!viewModel.filteredPrivateCommunities.isEmpty || !viewModel.filteredUnlistedCommunities.isEmpty) ? 24 : 8)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                ForEach(viewModel.filteredPublicMyCommunities) { community in
+                                    CommunityCard(community: community)
+                                        .padding(.horizontal)
+                                }
+                            }
+
+                            // Other Public Communities Section
                             let allPublicCommunities = viewModel.searchQuery.isEmpty ? viewModel.filteredPublicCommunities : viewModel.searchResults
                             // Filter out communities that are already in My Communities to avoid duplicate IDs
                             let myCommunityIds = Set(viewModel.filteredMyCommunities.map { $0.id })
                             let publicCommunities = allPublicCommunities.filter { !myCommunityIds.contains($0.id) }
 
                             if !publicCommunities.isEmpty {
-                                Text(viewModel.searchQuery.isEmpty ? "community.public_communities".localized : "community.search_results".localized)
+                                let hasAnySectionAbove = authService.isAuthenticated && (!viewModel.filteredPrivateCommunities.isEmpty || !viewModel.filteredUnlistedCommunities.isEmpty || !viewModel.filteredPublicMyCommunities.isEmpty)
+                                Text(viewModel.searchQuery.isEmpty ? "community.other_public_communities".localized : "community.search_results".localized)
                                     .font(.title2)
                                     .fontWeight(.bold)
                                     .padding(.horizontal)
-                                    .padding(.top, authService.isAuthenticated && !viewModel.filteredMyCommunities.isEmpty ? 24 : 8)
+                                    .padding(.top, hasAnySectionAbove ? 24 : 8)
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
                                 ForEach(Array(publicCommunities.enumerated()), id: \.element.id) { index, community in

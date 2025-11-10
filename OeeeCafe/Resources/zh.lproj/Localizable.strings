@@ -133,7 +133,11 @@
 "community.stat_contributors" = "贡献者";
 "community.stat_comments" = "评论";
 "community.my_communities" = "我的社区";
+"community.private_communities" = "私密社区";
+"community.unlisted_communities" = "不公开社区";
+"community.my_public_communities" = "我的公开社区";
 "community.public_communities" = "公开社区";
+"community.other_public_communities" = "其他公开社区";
 "community.search_results" = "搜索结果";
 "community.search_placeholder" = "搜索社区...";
 "community.no_communities" = "未找到社区";

@@ -133,7 +133,11 @@
 "community.stat_contributors" = "寄稿者";
 "community.stat_comments" = "コメント";
 "community.my_communities" = "マイコミュニティ";
+"community.private_communities" = "非公開コミュニティ";
+"community.unlisted_communities" = "限定公開コミュニティ";
+"community.my_public_communities" = "自分の公開コミュニティ";
 "community.public_communities" = "公開コミュニティ";
+"community.other_public_communities" = "他の公開コミュニティ";
 "community.search_results" = "検索結果";
 "community.search_placeholder" = "コミュニティを検索...";
 "community.no_communities" = "コミュニティが見つかりません";

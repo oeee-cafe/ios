@@ -133,7 +133,11 @@
 "community.stat_contributors" = "Contributors";
 "community.stat_comments" = "Comments";
 "community.my_communities" = "My Communities";
+"community.private_communities" = "Private Communities";
+"community.unlisted_communities" = "Unlisted Communities";
+"community.my_public_communities" = "My Public Communities";
 "community.public_communities" = "Public Communities";
+"community.other_public_communities" = "Other Public Communities";
 "community.search_results" = "Search Results";
 "community.search_placeholder" = "Search communities...";
 "community.no_communities" = "No communities found";
