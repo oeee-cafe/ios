@@ -35,21 +35,30 @@ struct ContentView: View {
 
                     if authService.isAuthenticated {
                         // Show drafts tab when logged in
-                        // Keep Tab structure constant - badge is always present but may be empty
-                        let draftBadgeText = draftsViewModel.drafts.count > 0 ? "\(draftsViewModel.drafts.count)" : ""
-                        Tab("tab.drafts".localized, systemImage: "doc.text", value: "drafts") {
-                            DraftsView()
+                        let draftCount = draftsViewModel.drafts.count
+                        if draftCount > 0 {
+                            Tab("tab.drafts".localized, systemImage: "doc.text", value: "drafts") {
+                                DraftsView()
+                            }
+                            .badge(draftCount)
+                        } else {
+                            Tab("tab.drafts".localized, systemImage: "doc.text", value: "drafts") {
+                                DraftsView()
+                            }
                         }
-                        .badge(draftBadgeText)
 
                         // Show notifications tab when logged in
-                        // Keep Tab structure constant - badge is always present but may be empty
                         let totalNotificationBadge = notificationsViewModel.unreadCount + notificationsViewModel.invitationCount
-                        let notificationBadgeText = totalNotificationBadge > 0 ? "\(totalNotificationBadge)" : ""
-                        Tab("tab.notifications".localized, systemImage: "bell", value: "notifications") {
-                            NotificationsView()
+                        if totalNotificationBadge > 0 {
+                            Tab("tab.notifications".localized, systemImage: "bell", value: "notifications") {
+                                NotificationsView()
+                            }
+                            .badge(totalNotificationBadge)
+                        } else {
+                            Tab("tab.notifications".localized, systemImage: "bell", value: "notifications") {
+                                NotificationsView()
+                            }
                         }
-                        .badge(notificationBadgeText)
                     } else {
                         // Show login tab when logged out
                         Tab("tab.login".localized, systemImage: "person.circle", value: "login") {
