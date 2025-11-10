@@ -60,7 +60,10 @@ struct CommunitiesView: View {
                             }
 
                             // Public Communities Section
-                            let publicCommunities = viewModel.searchQuery.isEmpty ? viewModel.filteredPublicCommunities : viewModel.searchResults
+                            let allPublicCommunities = viewModel.searchQuery.isEmpty ? viewModel.filteredPublicCommunities : viewModel.searchResults
+                            // Filter out communities that are already in My Communities to avoid duplicate IDs
+                            let myCommunityIds = Set(viewModel.filteredMyCommunities.map { $0.id })
+                            let publicCommunities = allPublicCommunities.filter { !myCommunityIds.contains($0.id) }
 
                             if !publicCommunities.isEmpty {
                                 Text(viewModel.searchQuery.isEmpty ? "community.public_communities".localized : "community.search_results".localized)
