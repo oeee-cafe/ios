@@ -129,15 +129,18 @@ struct LoginView: View {
             // Login successful - ContentView will automatically switch to ProfileView
             // due to @Published isAuthenticated change
             await MainActor.run {
+                focusedField = nil // Ensure keyboard is dismissed before navigation
                 isLoading = false
             }
         } catch let error as AuthError {
             await MainActor.run {
+                focusedField = nil // Dismiss keyboard when showing error
                 errorMessage = error.localizedDescription
                 isLoading = false
             }
         } catch {
             await MainActor.run {
+                focusedField = nil // Dismiss keyboard when showing error
                 errorMessage = NSLocalizedString("auth.error_unexpected", comment: "An unexpected error occurred")
                 isLoading = false
             }
