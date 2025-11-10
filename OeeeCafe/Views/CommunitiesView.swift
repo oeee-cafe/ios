@@ -9,7 +9,7 @@ struct CommunitiesView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     // Search box
                     HStack {
                         Image(systemName: "magnifyingglass")
@@ -43,57 +43,55 @@ struct CommunitiesView: View {
                         }
                         .padding(.top, 100)
                     } else {
-                        VStack(spacing: 24) {
+                        LazyVStack(spacing: 12) {
                             // My Communities Section
                             if authService.isAuthenticated && !viewModel.filteredMyCommunities.isEmpty {
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text("community.my_communities".localized)
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .padding(.horizontal)
+                                Text("community.my_communities".localized)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal)
+                                    .padding(.top, 8)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                                    ForEach(viewModel.filteredMyCommunities) { community in
-                                        CommunityCard(community: community)
-                                            .padding(.horizontal)
-                                    }
+                                ForEach(viewModel.filteredMyCommunities) { community in
+                                    CommunityCard(community: community)
+                                        .padding(.horizontal)
                                 }
-                                .padding(.top, 8)
                             }
 
                             // Public Communities Section
                             let publicCommunities = viewModel.searchQuery.isEmpty ? viewModel.filteredPublicCommunities : viewModel.searchResults
 
                             if !publicCommunities.isEmpty {
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text(viewModel.searchQuery.isEmpty ? "community.public_communities".localized : "community.search_results".localized)
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .padding(.horizontal)
+                                Text(viewModel.searchQuery.isEmpty ? "community.public_communities".localized : "community.search_results".localized)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal)
+                                    .padding(.top, authService.isAuthenticated && !viewModel.filteredMyCommunities.isEmpty ? 24 : 8)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                                    ForEach(Array(publicCommunities.enumerated()), id: \.element.id) { index, community in
-                                        CommunityCard(community: community)
-                                            .padding(.horizontal)
-                                            .onAppear {
-                                                // Load more when showing one of the last 3 items (only in browse mode)
-                                                if viewModel.searchQuery.isEmpty && index >= publicCommunities.count - 3 {
-                                                    Task {
-                                                        await viewModel.loadMorePublicCommunities()
-                                                    }
+                                ForEach(Array(publicCommunities.enumerated()), id: \.element.id) { index, community in
+                                    CommunityCard(community: community)
+                                        .padding(.horizontal)
+                                        .onAppear {
+                                            // Load more when showing one of the last 3 items (only in browse mode)
+                                            if viewModel.searchQuery.isEmpty && index >= publicCommunities.count - 3 {
+                                                Task {
+                                                    await viewModel.loadMorePublicCommunities()
                                                 }
                                             }
-                                    }
-
-                                    // Loading more or searching indicator
-                                    if viewModel.isLoadingMore || viewModel.isSearching {
-                                        HStack {
-                                            Spacer()
-                                            ProgressView()
-                                            Spacer()
                                         }
-                                        .padding()
-                                    }
                                 }
-                                .padding(.top, authService.isAuthenticated && !viewModel.filteredMyCommunities.isEmpty ? 24 : 8)
+
+                                // Loading more or searching indicator
+                                if viewModel.isLoadingMore || viewModel.isSearching {
+                                    HStack {
+                                        Spacer()
+                                        ProgressView()
+                                        Spacer()
+                                    }
+                                    .padding()
+                                }
                             }
 
                             // Empty state
