@@ -4,6 +4,7 @@ import Combine
 struct CreateCommunityView: View {
     @StateObject private var viewModel = CreateCommunityViewModel()
     @Environment(\.dismiss) private var dismiss
+    let onCommunityCreated: (String) -> Void
 
     var body: some View {
         NavigationView {
@@ -53,7 +54,8 @@ struct CreateCommunityView: View {
                     Button("create_community.create".localized) {
                         Task {
                             await viewModel.createCommunity()
-                            if viewModel.createdSlug != nil {
+                            if let createdSlug = viewModel.createdSlug {
+                                onCommunityCreated(createdSlug)
                                 dismiss()
                             }
                         }

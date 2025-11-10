@@ -4,6 +4,7 @@ struct CommunitiesView: View {
     @StateObject private var viewModel = CommunitiesViewModel()
     @EnvironmentObject var authService: AuthService
     @State private var showCreateCommunity = false
+    @State private var navigateToCommunitySlug: String?
 
     var body: some View {
         NavigationStack {
@@ -141,7 +142,15 @@ struct CommunitiesView: View {
                 }.value
             }
             .sheet(isPresented: $showCreateCommunity) {
-                CreateCommunityView()
+                CreateCommunityView { slug in
+                    // Delay navigation slightly to allow sheet to dismiss
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        navigateToCommunitySlug = slug
+                    }
+                }
+            }
+            .navigationDestination(item: $navigateToCommunitySlug) { slug in
+                CommunityDetailView(slug: slug)
             }
         }
         .task {
