@@ -24,8 +24,21 @@ struct PostDetailView: View {
     }
 
     var body: some View {
-        ScrollView {
-            contentView
+        ZStack {
+            // Hidden NavigationLink for programmatic navigation
+            if let postId = navigateToPost {
+                NavigationLink(
+                    destination: PostDetailView(postId: postId),
+                    isActive: $shouldNavigateToPost
+                ) {
+                    EmptyView()
+                }
+                .hidden()
+            }
+
+            ScrollView {
+                contentView
+            }
         }
         .navigationTitle("nav.post_details".localized)
         .navigationBarTitleDisplayMode(.inline)
@@ -125,9 +138,10 @@ struct PostDetailView: View {
                 }
             )
         }
-        .navigationDestination(isPresented: $shouldNavigateToPost) {
-            if let postId = navigateToPost {
-                PostDetailView(postId: postId)
+        .onChange(of: shouldNavigateToPost) { oldValue, newValue in
+            // Reset navigation state when returning
+            if !newValue {
+                navigateToPost = nil
             }
         }
         .refreshable {

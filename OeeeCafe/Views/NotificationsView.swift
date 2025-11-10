@@ -2,7 +2,7 @@ import SwiftUI
 import UserNotifications
 
 struct NotificationsView: View {
-    @StateObject private var viewModel = NotificationsViewModel()
+    @EnvironmentObject var viewModel: NotificationsViewModel
     @EnvironmentObject var authService: AuthService
 
     var body: some View {
@@ -74,7 +74,7 @@ struct NotificationsView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     // Community Invitations button with badge
-                    NavigationLink(destination: CommunityInvitationsView()) {
+                    NavigationLink(destination: CommunityInvitationsView().environmentObject(viewModel)) {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "envelope")
                                 .font(.title3)
@@ -133,4 +133,5 @@ struct NotificationsView: View {
 #Preview {
     NotificationsView()
         .environmentObject(AuthService.shared)
+        .environmentObject(NotificationsViewModel())
 }

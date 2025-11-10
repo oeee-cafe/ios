@@ -31,8 +31,9 @@ class NotificationsViewModel: ObservableObject {
             hasMore = response.hasMore
             currentOffset = pageSize
 
-            // Also update unread count
+            // Also update unread count and invitation count
             await updateUnreadCount()
+            await updateInvitationCount()
         } catch {
             self.error = error.localizedDescription
         }
@@ -117,6 +118,9 @@ class NotificationsViewModel: ObservableObject {
 
             // Refresh to get updated read status
             await refresh()
+
+            // Explicitly update unread count after refresh to ensure badge is updated
+            await updateUnreadCount()
         } catch {
             self.error = "Failed to mark all as read: \(error.localizedDescription)"
         }
