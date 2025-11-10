@@ -71,8 +71,9 @@ struct CommunityDetailView: View {
                     }
                 }
 
-                // Share button - visible to all users
-                if viewModel.communityDetail != nil,
+                // Share button - visible for public communities only
+                if let detail = viewModel.communityDetail,
+                   detail.community.visibility != "private",
                    let shareURL = URL(string: "https://oeee.cafe/communities/@\(viewModel.slug)") {
                     ShareLink(item: shareURL) {
                         Image(systemName: "square.and.arrow.up")
