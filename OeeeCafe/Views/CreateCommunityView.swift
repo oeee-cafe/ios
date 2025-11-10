@@ -61,7 +61,7 @@ struct CreateCommunityView: View {
                     .disabled(!viewModel.isValid || viewModel.isCreating)
                 }
             }
-            .alert("common.error".localized, isPresented: $viewModel.showError, presenting: viewModel.errorMessage) { _ in
+            .alert("common.error_title".localized, isPresented: $viewModel.showError, presenting: viewModel.errorMessage) { _ in
                 Button("common.ok".localized) {}
             } message: { message in
                 Text(message)

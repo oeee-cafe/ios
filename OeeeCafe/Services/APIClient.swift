@@ -1,12 +1,26 @@
 import Foundation
 import os.log
 
+// MARK: - Error Response Models
+
+struct APIErrorResponse: Codable {
+    let error: APIErrorDetail
+}
+
+struct APIErrorDetail: Codable {
+    let code: String
+    let message: String
+}
+
+// MARK: - API Error
+
 enum APIError: LocalizedError {
     case invalidURL
     case networkError(Error)
     case invalidResponse
     case decodingError(Error)
     case encodingError(Error)
+    case serverError(code: String, message: String)
 
     var errorDescription: String? {
         switch self {
@@ -21,6 +35,15 @@ enum APIError: LocalizedError {
             return "Failed to decode response: \(error.localizedDescription)"
         case .encodingError(let error):
             return "Failed to encode request: \(error.localizedDescription)"
+        case .serverError(let code, let message):
+            // Try to get localized message for error code, fall back to server message
+            let localizedKey = "error.\(code.lowercased())"
+            let localizedMessage = NSLocalizedString(localizedKey, comment: "")
+            // If localization key not found, NSLocalizedString returns the key itself
+            if localizedMessage != localizedKey {
+                return localizedMessage
+            }
+            return message
         }
     }
 }
@@ -189,6 +212,14 @@ class APIClient {
                 let decodedData = try decoder.decode(R.self, from: data)
                 return decodedData
             } catch {
+                // If status code indicates an error, try to decode as APIErrorResponse
+                if !(200...299).contains(httpResponse.statusCode) {
+                    if let errorResponse = try? decoder.decode(APIErrorResponse.self, from: data) {
+                        Logger.error("POST \(path): Server error \(errorResponse.error.code)", category: Logger.network)
+                        throw APIError.serverError(code: errorResponse.error.code, message: errorResponse.error.message)
+                    }
+                }
+
                 Logger.error("POST \(path): Decoding failed", error: error, category: Logger.network)
                 if let responseBody = String(data: data, encoding: .utf8) {
                     Logger.debug("Response body: \(responseBody)", category: Logger.network)

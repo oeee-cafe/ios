@@ -1,6 +1,7 @@
 /* Common */
 "common.loading" = "Loading...";
 "common.error" = "Error: %@";
+"common.error_title" = "Error";
 "common.retry" = "Retry";
 "common.done" = "Done";
 "common.cancel" = "Cancel";
@@ -292,3 +293,8 @@
 "error.failed_request_verification" = "Failed to request verification";
 "error.verification_failed" = "Verification failed";
 "error.failed_resend_code" = "Failed to resend code";
+
+/* API Error Codes */
+"error.unauthorized" = "You must be logged in to perform this action";
+"error.invalid_slug_format" = "The ID must contain only letters, numbers, hyphens, and underscores";
+"error.slug_conflicts_with_user" = "This ID is already taken by a user";

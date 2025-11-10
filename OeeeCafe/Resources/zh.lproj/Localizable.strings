@@ -1,6 +1,7 @@
 /* Common */
 "common.loading" = "加载中...";
 "common.error" = "错误: %@";
+"common.error_title" = "错误";
 "common.retry" = "重试";
 "common.done" = "完成";
 "common.cancel" = "取消";
@@ -292,3 +293,8 @@
 "error.failed_request_verification" = "请求验证失败";
 "error.verification_failed" = "验证失败";
 "error.failed_resend_code" = "重新发送代码失败";
+
+/* API Error Codes */
+"error.unauthorized" = "您必须登录才能执行此操作";
+"error.invalid_slug_format" = "ID只能包含字母、数字、连字符和下划线";
+"error.slug_conflicts_with_user" = "此ID已被用户使用";
