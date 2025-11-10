@@ -45,6 +45,7 @@
 
 /* Tab Bar */
 "tab.home" = "ホーム";
+"tab.search" = "検索";
 "tab.communities" = "コミュニティ";
 "tab.drafts" = "下書き";
 "tab.notifications" = "お知らせ";

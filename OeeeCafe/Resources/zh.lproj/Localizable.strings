@@ -45,6 +45,7 @@
 
 /* Tab Bar */
 "tab.home" = "主页";
+"tab.search" = "搜索";
 "tab.communities" = "社区";
 "tab.drafts" = "草稿";
 "tab.notifications" = "通知";

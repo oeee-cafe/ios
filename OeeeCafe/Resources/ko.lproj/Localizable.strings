@@ -45,6 +45,7 @@
 
 /* Tab Bar */
 "tab.home" = "홈";
+"tab.search" = "검색";
 "tab.communities" = "커뮤니티";
 "tab.drafts" = "임시 저장함";
 "tab.notifications" = "알림";

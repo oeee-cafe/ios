@@ -11,6 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var authService: AuthService
     @StateObject private var notificationsViewModel = NotificationsViewModel()
     @StateObject private var draftsViewModel = DraftsViewModel()
+    @State private var tabSelection: String = "home"
 
     var body: some View {
         Group {
@@ -23,47 +24,39 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                TabView {
-                    Tab("tab.home".localized, systemImage: "house.fill") {
+                TabView(selection: $tabSelection) {
+                    Tab("tab.home".localized, systemImage: "house.fill", value: "home") {
                         HomeView()
                     }
 
-                    Tab(role: .search) {
+                    Tab("tab.search".localized, systemImage: "magnifyingglass", value: "search") {
                         SearchView()
                     }
 
-                    Tab("tab.communities".localized, systemImage: "person.3.fill") {
+                    Tab("tab.communities".localized, systemImage: "person.3.fill", value: "communities") {
                         CommunitiesView()
                     }
 
                     if authService.isAuthenticated {
                         // Show drafts tab when logged in
-                        if draftsViewModel.drafts.count > 0 {
-                            Tab("tab.drafts".localized, systemImage: "doc.text") {
-                                DraftsView()
-                            }
-                            .badge(draftsViewModel.drafts.count)
-                        } else {
-                            Tab("tab.drafts".localized, systemImage: "doc.text") {
-                                DraftsView()
-                            }
+                        // Keep Tab structure constant - badge is always present but may be empty
+                        let draftBadgeText = draftsViewModel.drafts.count > 0 ? "\(draftsViewModel.drafts.count)" : ""
+                        Tab("tab.drafts".localized, systemImage: "doc.text", value: "drafts") {
+                            DraftsView()
                         }
+                        .badge(draftBadgeText)
 
                         // Show notifications tab when logged in
+                        // Keep Tab structure constant - badge is always present but may be empty
                         let totalNotificationBadge = notificationsViewModel.unreadCount + notificationsViewModel.invitationCount
-                        if totalNotificationBadge > 0 {
-                            Tab("tab.notifications".localized, systemImage: "bell") {
-                                NotificationsView()
-                            }
-                            .badge(totalNotificationBadge)
-                        } else {
-                            Tab("tab.notifications".localized, systemImage: "bell") {
-                                NotificationsView()
-                            }
+                        let notificationBadgeText = totalNotificationBadge > 0 ? "\(totalNotificationBadge)" : ""
+                        Tab("tab.notifications".localized, systemImage: "bell", value: "notifications") {
+                            NotificationsView()
                         }
+                        .badge(notificationBadgeText)
                     } else {
                         // Show login tab when logged out
-                        Tab("tab.login".localized, systemImage: "person.circle") {
+                        Tab("tab.login".localized, systemImage: "person.circle", value: "login") {
                             NavigationStack {
                                 LoginView()
                             }

@@ -45,6 +45,7 @@
 
 /* Tab Bar */
 "tab.home" = "Home";
+"tab.search" = "Search";
 "tab.communities" = "Community";
 "tab.drafts" = "Drafts";
 "tab.notifications" = "Inbox";

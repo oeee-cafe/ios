@@ -12,8 +12,6 @@ struct PostDetailView: View {
     @State private var showDimensionPicker = false
     @State private var canvasDimensions: CanvasDimensions?
     @State private var draftPostToPublish: DraftPostIdentifier?
-    @State private var navigateToPost: String?
-    @State private var shouldNavigateToPost = false
     @State private var showLogin = false
     @State private var showReplay = false
     @Environment(\.dismiss) private var dismiss
@@ -24,21 +22,8 @@ struct PostDetailView: View {
     }
 
     var body: some View {
-        ZStack {
-            // Hidden NavigationLink for programmatic navigation
-            if let postId = navigateToPost {
-                NavigationLink(
-                    destination: PostDetailView(postId: postId),
-                    isActive: $shouldNavigateToPost
-                ) {
-                    EmptyView()
-                }
-                .hidden()
-            }
-
-            ScrollView {
-                contentView
-            }
+        ScrollView {
+            contentView
         }
         .navigationTitle("nav.post_details".localized)
         .navigationBarTitleDisplayMode(.inline)
@@ -130,19 +115,15 @@ struct PostDetailView: View {
                 imageUrl: draft.imageUrl,
                 onPublished: {
                     draftPostToPublish = nil
-                    navigateToPost = draft.postId
-                    shouldNavigateToPost = true
+                    // Refresh the current post view to show published state
+                    Task {
+                        await viewModel.refresh()
+                    }
                 },
                 onCancel: {
                     draftPostToPublish = nil
                 }
             )
-        }
-        .onChange(of: shouldNavigateToPost) { oldValue, newValue in
-            // Reset navigation state when returning
-            if !newValue {
-                navigateToPost = nil
-            }
         }
         .refreshable {
             await Task { @MainActor in
