@@ -20,6 +20,17 @@ struct NotificationCard: View {
                         onMarkRead()
                     }
                 })
+            } else if notification.notificationType == .follow, let loginName = notification.actorLoginName {
+                // Navigate to follower's profile (local users only)
+                NavigationLink(destination: ProfileView(loginName: loginName)) {
+                    cardContent
+                }
+                .simultaneousGesture(TapGesture().onEnded {
+                    // Mark as read when tapped
+                    if !notification.isRead {
+                        onMarkRead()
+                    }
+                })
             } else {
                 cardContent
             }
@@ -139,6 +150,7 @@ struct NotificationCard: View {
         actorId: "3",
         actorName: "John Doe",
         actorHandle: "@john@example.com",
+        actorLoginName: "john",
         notificationType: .comment,
         postId: "4",
         commentId: "5",

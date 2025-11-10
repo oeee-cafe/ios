@@ -29,6 +29,7 @@ struct NotificationItem: Codable, Identifiable {
     let actorId: String
     let actorName: String
     let actorHandle: String
+    let actorLoginName: String?
     let notificationType: NotificationType
     let postId: String?
     let commentId: String?
