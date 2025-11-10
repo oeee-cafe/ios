@@ -46,47 +46,52 @@ struct CommunityDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                // Members button - visible to authenticated users
-                if let _ = viewModel.communityDetail, canViewMembers {
-                    NavigationLink(destination: CommunityMembersView(
-                        slug: viewModel.slug,
-                        isOwner: isOwner,
-                        isOwnerOrModerator: isOwnerOrModerator,
-                        onLeave: {
-                            shouldNavigateBack = true
-                        }
-                    )) {
-                        Image(systemName: "person.2")
-                            .font(.title3)
-                    }
-                }
-
-                // Settings button - visible to owner only
-                if let _ = viewModel.communityDetail, isOwner {
-                    Button(action: {
-                        showEditCommunity = true
-                    }) {
-                        Image(systemName: "gear")
-                            .font(.title3)
-                    }
-                }
-
-                // Share button - visible for public communities only
-                if let detail = viewModel.communityDetail,
-                   detail.community.visibility != "private",
-                   let shareURL = URL(string: "https://oeee.cafe/communities/@\(viewModel.slug)") {
-                    ShareLink(item: shareURL) {
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.title3)
-                    }
-                }
-
-                // New post button
+                // New post button - always visible
                 if viewModel.communityDetail != nil {
                     Button(action: {
                         showDimensionPicker = true
                     }) {
                         Image(systemName: "square.and.pencil")
+                            .font(.title3)
+                    }
+                }
+
+                // Menu with other actions
+                if viewModel.communityDetail != nil {
+                    Menu {
+                        // Members button - visible to authenticated users
+                        if canViewMembers {
+                            NavigationLink(destination: CommunityMembersView(
+                                slug: viewModel.slug,
+                                isOwner: isOwner,
+                                isOwnerOrModerator: isOwnerOrModerator,
+                                onLeave: {
+                                    shouldNavigateBack = true
+                                }
+                            )) {
+                                Label("Members", systemImage: "person.2")
+                            }
+                        }
+
+                        // Settings button - visible to owner only
+                        if isOwner {
+                            Button(action: {
+                                showEditCommunity = true
+                            }) {
+                                Label("Settings", systemImage: "gear")
+                            }
+                        }
+
+                        // Share button - visible for public communities only
+                        if let detail = viewModel.communityDetail,
+                           detail.community.visibility != "private",
+                           let shareURL = URL(string: "https://oeee.cafe/communities/@\(viewModel.slug)") {
+                            ShareLink(item: shareURL) {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
                             .font(.title3)
                     }
                 }

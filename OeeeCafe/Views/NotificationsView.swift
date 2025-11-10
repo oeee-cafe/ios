@@ -73,7 +73,7 @@ struct NotificationsView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    // Community Invitations button with badge
+                    // Community Invitations button with badge - always visible
                     NavigationLink(destination: CommunityInvitationsView().environmentObject(viewModel)) {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "envelope")
@@ -89,12 +89,19 @@ struct NotificationsView: View {
                         }
                     }
 
-                    // Mark all read button
+                    // Menu with other actions
                     if !viewModel.notifications.isEmpty {
-                        Button("notifications.mark_all_read".localized) {
-                            Task {
-                                await viewModel.markAllAsRead()
+                        Menu {
+                            Button(action: {
+                                Task {
+                                    await viewModel.markAllAsRead()
+                                }
+                            }) {
+                                Label("notifications.mark_all_read".localized, systemImage: "checkmark.circle")
                             }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                                .font(.title3)
                         }
                     }
                 }

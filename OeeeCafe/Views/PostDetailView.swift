@@ -414,64 +414,57 @@ struct PostDetailView: View {
 
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
-            // Share button - visible to all users
+        ToolbarItemGroup(placement: .navigationBarTrailing) {
+            // Share button - always visible
             if let post = viewModel.post {
                 let slug = post.community?.slug ?? post.author.loginName
                 if let shareURL = URL(string: "https://oeee.cafe/@\(slug)/\(post.id)") {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        ShareLink(item: shareURL) {
-                            Image(systemName: "square.and.arrow.up")
-                                .font(.title3)
-                        }
-                    }
-                }
-            }
-
-            // Replay button - hide for neo-cucumber posts
-            if let post = viewModel.post, post.image.tool != "neo-cucumber" {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        if authService.isAuthenticated {
-                            showReplay = true
-                        } else {
-                            showLogin = true
-                        }
-                    }) {
-                        Image(systemName: "play.rectangle")
+                    ShareLink(item: shareURL) {
+                        Image(systemName: "square.and.arrow.up")
                             .font(.title3)
                     }
                 }
             }
 
-            // Reply button - visible to all users
-            if viewModel.post != nil {
-                ToolbarItem(placement: .navigationBarTrailing) {
+            // Menu with other actions
+            if let post = viewModel.post {
+                Menu {
+                    // Replay button - hide for neo-cucumber posts
+                    if post.image.tool != "neo-cucumber" {
+                        Button(action: {
+                            if authService.isAuthenticated {
+                                showReplay = true
+                            } else {
+                                showLogin = true
+                            }
+                        }) {
+                            Label("Replay", systemImage: "play.rectangle")
+                        }
+                    }
+
+                    // Reply button
                     Button(action: {
                         showDimensionPicker = true
                     }) {
-                        Image(systemName: "arrowshape.turn.up.left.2")
-                            .font(.title3)
+                        Label("Reply", systemImage: "arrowshape.turn.up.left.2")
                     }
-                }
-            }
 
-            // Delete button - only visible to post owner
-            if let post = viewModel.post,
-               let currentUser = authService.currentUser,
-               post.author.id == currentUser.id {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(role: .destructive, action: {
-                        showingDeleteConfirmation = true
-                    }) {
-                        if isDeleting {
-                            ProgressView()
-                        } else {
-                            Image(systemName: "trash")
+                    // Delete button - only visible to post owner
+                    if let currentUser = authService.currentUser,
+                       post.author.id == currentUser.id {
+                        Button(role: .destructive, action: {
+                            showingDeleteConfirmation = true
+                        }) {
+                            Label("Delete", systemImage: "trash")
                         }
+                        .disabled(isDeleting)
                     }
-                    .disabled(isDeleting)
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.title3)
                 }
             }
+        }
     }
 }
 
