@@ -298,3 +298,4 @@
 "error.unauthorized" = "この操作を実行するにはログインが必要です";
 "error.invalid_slug_format" = "IDには英数字、ハイフン、アンダースコアのみ使用できます";
 "error.slug_conflicts_with_user" = "このIDは既にユーザーによって使用されています";
+"error.slug_already_exists" = "このIDのコミュニティは既に存在します";

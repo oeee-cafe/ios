@@ -298,3 +298,4 @@
 "error.unauthorized" = "You must be logged in to perform this action";
 "error.invalid_slug_format" = "The ID must contain only letters, numbers, hyphens, and underscores";
 "error.slug_conflicts_with_user" = "This ID is already taken by a user";
+"error.slug_already_exists" = "A community with this ID already exists";

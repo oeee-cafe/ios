@@ -298,3 +298,4 @@
 "error.unauthorized" = "您必须登录才能执行此操作";
 "error.invalid_slug_format" = "ID只能包含字母、数字、连字符和下划线";
 "error.slug_conflicts_with_user" = "此ID已被用户使用";
+"error.slug_already_exists" = "具有此ID的社区已存在";
