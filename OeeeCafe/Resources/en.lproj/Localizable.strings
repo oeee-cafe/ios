@@ -299,3 +299,4 @@
 "error.invalid_slug_format" = "The ID must contain only letters, numbers, hyphens, and underscores";
 "error.slug_conflicts_with_user" = "This ID is already taken by a user";
 "error.slug_already_exists" = "A community with this ID already exists";
+"error.invalid_visibility_change" = "Cannot change visibility between private and public/unlisted";

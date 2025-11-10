@@ -299,3 +299,4 @@
 "error.invalid_slug_format" = "IDには英数字、ハイフン、アンダースコアのみ使用できます";
 "error.slug_conflicts_with_user" = "このIDは既にユーザーによって使用されています";
 "error.slug_already_exists" = "このIDのコミュニティは既に存在します";
+"error.invalid_visibility_change" = "非公開と公開/リンクのみの間で公開設定を変更できません";

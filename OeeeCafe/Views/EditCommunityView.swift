@@ -33,24 +33,20 @@ struct EditCommunityView: View {
                 Text("create_community.description".localized)
             }
 
-            Section {
-                Picker("edit_community.visibility".localized, selection: $viewModel.visibility) {
-                    ForEach(viewModel.allowedVisibilities, id: \.self) { vis in
-                        Text(localizedVisibility(vis)).tag(vis)
+            // Only show visibility section for non-private communities
+            if !viewModel.isPrivate {
+                Section {
+                    Picker("edit_community.visibility".localized, selection: $viewModel.visibility) {
+                        ForEach(viewModel.allowedVisibilities, id: \.self) { vis in
+                            Text(localizedVisibility(vis)).tag(vis)
+                        }
                     }
-                }
-                .pickerStyle(.segmented)
-                .disabled(viewModel.allowedVisibilities.count == 1)
+                    .pickerStyle(.segmented)
 
-                visibilityDescription
-
-                if viewModel.isPrivate {
-                    Text("edit_community.visibility_warning".localized)
-                        .font(.caption)
-                        .foregroundColor(.orange)
+                    visibilityDescription
+                } header: {
+                    Text("create_community.privacy".localized)
                 }
-            } header: {
-                Text("create_community.privacy".localized)
             }
 
             // Danger Zone
@@ -140,10 +136,6 @@ struct EditCommunityView: View {
             Text("create_community.visibility_unlisted_desc".localized)
                 .font(.caption)
                 .foregroundColor(.secondary)
-        case "private":
-            Text("create_community.visibility_private_desc".localized)
-                .font(.caption)
-                .foregroundColor(.secondary)
         default:
             EmptyView()
         }
@@ -153,7 +145,6 @@ struct EditCommunityView: View {
         switch visibility {
         case "public": return "create_community.visibility_public".localized
         case "unlisted": return "create_community.visibility_unlisted".localized
-        case "private": return "create_community.visibility_private".localized
         default: return visibility.capitalized
         }
     }

@@ -299,3 +299,4 @@
 "error.invalid_slug_format" = "ID는 영문자, 숫자, 하이픈, 밑줄만 포함할 수 있습니다";
 "error.slug_conflicts_with_user" = "이 ID는 이미 사용자가 사용 중입니다";
 "error.slug_already_exists" = "이 ID를 가진 커뮤니티가 이미 존재합니다";
+"error.invalid_visibility_change" = "비공개와 공개/링크 전용 간의 공개 범위 변경은 불가능합니다";
