@@ -326,9 +326,9 @@ struct WebViewContainer: UIViewRepresentable {
 
             Logger.debug("Drawing complete: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
 
-            // Clear the drawing session
+            // Clear the drawing session (only for legacy Neo painter)
             if let webView = message.webView {
-                webView.evaluateJavaScript("Neo.painter.clearSession();") { _, error in
+                webView.evaluateJavaScript("if (typeof Neo !== 'undefined' && Neo.painter) { Neo.painter.clearSession(); }") { _, error in
                     if let error = error {
                         Logger.error("Failed to clear drawing session", error: error, category: Logger.app)
                     }
