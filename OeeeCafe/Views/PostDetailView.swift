@@ -98,6 +98,7 @@ struct PostDetailView: View {
                     width: dimensions.width,
                     height: dimensions.height,
                     tool: dimensions.tool,
+                    communityId: viewModel.post?.community?.id,
                     parentPostId: parentPostId
                 ) { postId, communityId, imageUrl in
                     Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
@@ -446,7 +447,14 @@ struct PostDetailView: View {
 
                     // Reply button
                     Button(action: {
-                        showDimensionPicker = true
+                        if let community = post.community,
+                           let backgroundColor = community.backgroundColor,
+                           let foregroundColor = community.foregroundColor {
+                            // Two-tone community: skip dimension picker, use fixed 640×480
+                            canvasDimensions = CanvasDimensions(width: 640, height: 480, tool: .neoCucumberOffline)
+                        } else {
+                            showDimensionPicker = true
+                        }
                     }) {
                         Label("Reply", systemImage: "arrowshape.turn.up.left.2")
                     }

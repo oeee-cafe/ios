@@ -45,6 +45,8 @@ struct PostCommunityInfo: Codable {
     let id: String
     let name: String
     let slug: String
+    let backgroundColor: String?
+    let foregroundColor: String?
 }
 
 struct PostDetail: Identifiable, Codable {
