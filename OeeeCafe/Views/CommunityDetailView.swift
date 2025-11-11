@@ -4,6 +4,7 @@ import Kingfisher
 struct CommunityDetailView: View {
     @StateObject private var viewModel: CommunityDetailViewModel
     @State private var showDimensionPicker = false
+    @State private var showOrientationPicker = false
     @State private var showEditCommunity = false
     @State private var canvasDimensions: CanvasDimensions?
     @State private var draftPostToPublish: DraftPostIdentifier?
@@ -49,10 +50,10 @@ struct CommunityDetailView: View {
                 // New post button - always visible
                 if viewModel.communityDetail != nil {
                     Button(action: {
-                        // If community has defined colors, skip dimension picker and use fixed 640×480
+                        // If community has defined colors, show orientation picker
                         if let community = viewModel.communityDetail?.community,
                            community.backgroundColor != nil && community.foregroundColor != nil {
-                            canvasDimensions = CanvasDimensions(width: 640, height: 480, tool: .neoCucumberOffline)
+                            showOrientationPicker = true
                         } else {
                             showDimensionPicker = true
                         }
@@ -129,6 +130,20 @@ struct CommunityDetailView: View {
                 },
                 backgroundColor: viewModel.communityDetail?.community.backgroundColor,
                 foregroundColor: viewModel.communityDetail?.community.foregroundColor
+            )
+        }
+        .sheet(isPresented: $showOrientationPicker) {
+            OrientationPicker(
+                onOrientationSelected: { width, height in
+                    showOrientationPicker = false
+                    // Use a small delay to ensure the sheet is dismissed before showing fullScreenCover
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        canvasDimensions = CanvasDimensions(width: width, height: height, tool: .neoCucumberOffline)
+                    }
+                },
+                onCancel: {
+                    showOrientationPicker = false
+                }
             )
         }
         .fullScreenCover(item: $canvasDimensions) { dimensions in

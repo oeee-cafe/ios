@@ -10,6 +10,7 @@ struct PostDetailView: View {
     @State private var isDeleting = false
     @State private var isDeletingComment = false
     @State private var showDimensionPicker = false
+    @State private var showOrientationPicker = false
     @State private var canvasDimensions: CanvasDimensions?
     @State private var draftPostToPublish: DraftPostIdentifier?
     @State private var showLogin = false
@@ -90,6 +91,19 @@ struct PostDetailView: View {
                 },
                 backgroundColor: nil,
                 foregroundColor: nil
+            )
+        }
+        .sheet(isPresented: $showOrientationPicker) {
+            OrientationPicker(
+                onOrientationSelected: { width, height in
+                    showOrientationPicker = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        canvasDimensions = CanvasDimensions(width: width, height: height, tool: .neoCucumberOffline)
+                    }
+                },
+                onCancel: {
+                    showOrientationPicker = false
+                }
             )
         }
         .fullScreenCover(item: $canvasDimensions) { dimensions in
@@ -450,8 +464,8 @@ struct PostDetailView: View {
                         if let community = post.community,
                            let backgroundColor = community.backgroundColor,
                            let foregroundColor = community.foregroundColor {
-                            // Two-tone community: skip dimension picker, use fixed 640×480
-                            canvasDimensions = CanvasDimensions(width: 640, height: 480, tool: .neoCucumberOffline)
+                            // Two-tone community: show orientation picker
+                            showOrientationPicker = true
                         } else {
                             showDimensionPicker = true
                         }
