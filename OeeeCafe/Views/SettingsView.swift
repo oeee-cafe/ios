@@ -17,6 +17,7 @@ struct SettingsView: View {
     @State private var tapCount = 0
     @State private var isDeveloperMode = APIConfig.shared.isDeveloperModeEnabled
     @State private var showDeveloperModeToast = false
+    @State private var showDeveloperModeDisabledToast = false
     @State private var customServerURL = ""
     @State private var showServerURLError = false
     @State private var serverURLError = ""
@@ -193,6 +194,14 @@ struct SettingsView: View {
                             }
                             .buttonStyle(.bordered)
                         }
+
+                        Button(role: .destructive, action: {
+                            turnOffDeveloperMode()
+                        }) {
+                            Text("settings.turn_off_developer_mode".localized)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
                     }
                 }
 
@@ -240,6 +249,19 @@ struct SettingsView: View {
                     if showDeveloperModeToast {
                         VStack {
                             Text("settings.developer_mode_enabled".localized)
+                                .padding()
+                                .background(Color(uiColor: .systemGray))
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                                .padding(.top, 50)
+                            Spacer()
+                        }
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                    }
+
+                    if showDeveloperModeDisabledToast {
+                        VStack {
+                            Text("settings.developer_mode_disabled".localized)
                                 .padding()
                                 .background(Color(uiColor: .systemGray))
                                 .foregroundColor(.white)
@@ -429,6 +451,25 @@ struct SettingsView: View {
         customServerURL = APIConfig.shared.baseURL
         serverURLError = "settings.server_url_reset".localized
         showServerURLError = true
+    }
+
+    private func turnOffDeveloperMode() {
+        // Disable developer mode and reset to default
+        APIConfig.shared.disableDeveloperMode()
+
+        // Update UI state
+        withAnimation {
+            isDeveloperMode = false
+            customServerURL = ""
+            showDeveloperModeDisabledToast = true
+        }
+
+        // Hide toast after 2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation {
+                showDeveloperModeDisabledToast = false
+            }
+        }
     }
 
     // MARK: - Email Verification Methods

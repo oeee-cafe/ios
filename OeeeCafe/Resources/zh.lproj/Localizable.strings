@@ -82,6 +82,8 @@
 "settings.reset_to_default" = "重置为默认";
 "settings.password_required" = "请输入密码";
 "settings.developer_mode_enabled" = "开发者模式已启用";
+"settings.developer_mode_disabled" = "开发者模式已禁用";
+"settings.turn_off_developer_mode" = "关闭开发者模式";
 "settings.server_url_error" = "服务器URL错误";
 "settings.server_url_updated" = "服务器URL已更新成功。请重启应用。";
 "settings.server_url_reset" = "服务器URL已重置为默认。请重启应用。";

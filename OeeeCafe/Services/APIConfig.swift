@@ -42,6 +42,16 @@ class APIConfig {
         defaults.removeObject(forKey: baseURLKey)
     }
 
+    func disableDeveloperMode() {
+        // Disable developer mode
+        isDeveloperModeEnabled = false
+
+        // Reset URL to default
+        clearAuthState()
+        clearCookies()
+        defaults.removeObject(forKey: baseURLKey)
+    }
+
     private func isValidURL(_ urlString: String) -> Bool {
         // Check if URL starts with http:// or https://
         guard urlString.lowercased().hasPrefix("http://") || urlString.lowercased().hasPrefix("https://") else {

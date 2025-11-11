@@ -82,6 +82,8 @@
 "settings.reset_to_default" = "Reset to Default";
 "settings.password_required" = "Password is required";
 "settings.developer_mode_enabled" = "Developer mode enabled";
+"settings.developer_mode_disabled" = "Developer mode disabled";
+"settings.turn_off_developer_mode" = "Turn Off Developer Mode";
 "settings.server_url_error" = "Server URL Error";
 "settings.server_url_updated" = "Server URL updated successfully. Please restart the app.";
 "settings.server_url_reset" = "Server URL reset to default. Please restart the app.";

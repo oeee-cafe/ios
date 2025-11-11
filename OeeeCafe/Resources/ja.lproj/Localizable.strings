@@ -82,6 +82,8 @@
 "settings.reset_to_default" = "デフォルトに戻す";
 "settings.password_required" = "パスワードを入力してください";
 "settings.developer_mode_enabled" = "開発者モードが有効になりました";
+"settings.developer_mode_disabled" = "開発者モードが無効になりました";
+"settings.turn_off_developer_mode" = "開発者モードをオフにする";
 "settings.server_url_error" = "サーバーURLエラー";
 "settings.server_url_updated" = "サーバーURLが更新されました。アプリを再起動してください。";
 "settings.server_url_reset" = "サーバーURLがデフォルトに戻されました。アプリを再起動してください。";

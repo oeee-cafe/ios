@@ -82,6 +82,8 @@
 "settings.reset_to_default" = "기본값으로 재설정";
 "settings.password_required" = "비밀번호를 입력해주세요";
 "settings.developer_mode_enabled" = "개발자 모드 활성화됨";
+"settings.developer_mode_disabled" = "개발자 모드 비활성화됨";
+"settings.turn_off_developer_mode" = "개발자 모드 끄기";
 "settings.server_url_error" = "서버 URL 오류";
 "settings.server_url_updated" = "서버 URL이 업데이트되었습니다. 앱을 재시작해주세요.";
 "settings.server_url_reset" = "서버 URL이 기본값으로 재설정되었습니다. 앱을 재시작해주세요.";
