@@ -23,6 +23,10 @@
 "draw.tool_neo" = "PaintBBS NEO";
 "draw.tool_tegaki" = "Tegaki";
 "draw.tool_label" = "Tool";
+"draw.canvas_orientation" = "Canvas Orientation";
+"draw.select_orientation" = "Select canvas orientation";
+"draw.orientation_landscape" = "Landscape";
+"draw.orientation_portrait" = "Portrait";
 
 /* Collaborate */
 "collaborate.title" = "Collaborate";

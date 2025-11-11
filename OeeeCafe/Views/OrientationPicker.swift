@@ -7,7 +7,7 @@ struct OrientationPicker: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
-                Text("Select canvas orientation")
+                Text("draw.select_orientation".localized)
                     .font(.headline)
                     .padding(.top, 24)
 
@@ -20,7 +20,7 @@ struct OrientationPicker: View {
                             Image(systemName: "rectangle")
                                 .font(.system(size: 48))
                                 .frame(width: 80, height: 60)
-                            Text("Landscape")
+                            Text("draw.orientation_landscape".localized)
                                 .font(.subheadline)
                             Text("640 × 480")
                                 .font(.caption)
@@ -40,7 +40,7 @@ struct OrientationPicker: View {
                             Image(systemName: "rectangle.portrait")
                                 .font(.system(size: 48))
                                 .frame(width: 60, height: 80)
-                            Text("Portrait")
+                            Text("draw.orientation_portrait".localized)
                                 .font(.subheadline)
                             Text("480 × 640")
                                 .font(.caption)
@@ -56,7 +56,7 @@ struct OrientationPicker: View {
 
                 Spacer()
             }
-            .navigationTitle("Canvas Orientation")
+            .navigationTitle("draw.canvas_orientation".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

@@ -23,6 +23,10 @@
 "draw.tool_neo" = "PaintBBS NEO";
 "draw.tool_tegaki" = "Tegaki";
 "draw.tool_label" = "도구";
+"draw.canvas_orientation" = "캔버스 방향";
+"draw.select_orientation" = "캔버스 방향을 선택하세요";
+"draw.orientation_landscape" = "가로";
+"draw.orientation_portrait" = "세로";
 
 /* Collaborate */
 "collaborate.title" = "함께 그리기";
