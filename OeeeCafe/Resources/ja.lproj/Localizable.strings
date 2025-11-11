@@ -170,6 +170,17 @@
 "post.delete_comment_title" = "コメントを削除";
 "post.delete_comment_message" = "このコメントを削除してもよろしいですか？この操作は取り消せません。";
 "post.replying_to_user" = "%@に返信";
+"post.move_to_community" = "コミュニティに移動";
+"post.move_loading" = "コミュニティを読み込み中...";
+"post.move_error" = "エラー";
+"post.move_cannot_move_title" = "投稿を移動できません";
+"post.move_cannot_move_message" = "この投稿は移動できません。スレッドの一部であるか、制限されたコミュニティにある可能性があります。";
+"post.move_personal_post" = "個人投稿";
+"post.move_moving" = "投稿を移動中...";
+"move.section.unlisted" = "投稿したコミュニティ";
+"move.section.public_participated" = "投稿したパブリックコミュニティ";
+"move.section.public_other" = "その他のパブリックコミュニティ";
+"move.search.placeholder" = "コミュニティを検索...";
 
 /* Drafts */
 "drafts.title" = "下書き";

@@ -15,6 +15,7 @@ struct PostDetailView: View {
     @State private var draftPostToPublish: DraftPostIdentifier?
     @State private var showLogin = false
     @State private var showReplay = false
+    @State private var showMoveSheet = false
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authService: AuthService
 
@@ -71,6 +72,11 @@ struct PostDetailView: View {
         .sheet(isPresented: $showLogin) {
             NavigationView {
                 LoginView()
+            }
+        }
+        .sheet(isPresented: $showMoveSheet) {
+            if let post = viewModel.post {
+                MovePostSheet(postId: post.id)
             }
         }
         .fullScreenCover(isPresented: $showReplay) {
@@ -471,6 +477,16 @@ struct PostDetailView: View {
                         }
                     }) {
                         Label("Reply", systemImage: "arrowshape.turn.up.left.2")
+                    }
+
+                    // Move to Community button - only visible to post owner
+                    if let currentUser = authService.currentUser,
+                       post.author.id == currentUser.id {
+                        Button(action: {
+                            showMoveSheet = true
+                        }) {
+                            Label("post.move_to_community".localized, systemImage: "folder")
+                        }
                     }
 
                     // Delete button - only visible to post owner

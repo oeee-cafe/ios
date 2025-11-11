@@ -170,6 +170,17 @@
 "post.delete_comment_title" = "댓글 삭제";
 "post.delete_comment_message" = "이 댓글을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
 "post.replying_to_user" = "%@에게 답글";
+"post.move_to_community" = "커뮤니티로 이동";
+"post.move_loading" = "커뮤니티 불러오는 중...";
+"post.move_error" = "오류";
+"post.move_cannot_move_title" = "게시물 이동 불가";
+"post.move_cannot_move_message" = "이 게시물을 이동할 수 없습니다. 스레드의 일부이거나 제한된 커뮤니티에 있을 수 있습니다.";
+"post.move_personal_post" = "개인 게시물";
+"post.move_moving" = "게시물 이동 중...";
+"move.section.unlisted" = "참여한 커뮤니티";
+"move.section.public_participated" = "참여한 공개 커뮤니티";
+"move.section.public_other" = "다른 공개 커뮤니티";
+"move.search.placeholder" = "커뮤니티 검색...";
 
 /* Drafts */
 "drafts.title" = "임시 저장함";

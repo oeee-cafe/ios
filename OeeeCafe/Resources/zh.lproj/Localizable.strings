@@ -170,6 +170,17 @@
 "post.delete_comment_title" = "删除评论";
 "post.delete_comment_message" = "确定要删除这条评论吗？此操作无法撤销。";
 "post.replying_to_user" = "回复 %@";
+"post.move_to_community" = "移至社区";
+"post.move_loading" = "加载社区中...";
+"post.move_error" = "错误";
+"post.move_cannot_move_title" = "无法移动作品";
+"post.move_cannot_move_message" = "无法移动此作品。它可能是话题串的一部分或位于受限社区中。";
+"post.move_personal_post" = "个人作品";
+"post.move_moving" = "移动作品中...";
+"move.section.unlisted" = "您参与过的社区";
+"move.section.public_participated" = "您参与过的公开社区";
+"move.section.public_other" = "其他公开社区";
+"move.search.placeholder" = "搜索社区...";
 
 /* Drafts */
 "drafts.title" = "草稿";

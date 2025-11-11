@@ -170,6 +170,17 @@
 "post.delete_comment_title" = "Delete Comment";
 "post.delete_comment_message" = "Are you sure you want to delete this comment? This action cannot be undone.";
 "post.replying_to_user" = "Replying to %@";
+"post.move_to_community" = "Move to Community";
+"post.move_loading" = "Loading communities...";
+"post.move_error" = "Error";
+"post.move_cannot_move_title" = "Cannot Move Post";
+"post.move_cannot_move_message" = "This post cannot be moved. It may be part of a thread or in a restricted community.";
+"post.move_personal_post" = "Personal Post";
+"post.move_moving" = "Moving post...";
+"move.section.unlisted" = "Communities You've Posted In";
+"move.section.public_participated" = "Public Communities You've Posted In";
+"move.section.public_other" = "Other Public Communities";
+"move.search.placeholder" = "Search communities...";
 
 /* Drafts */
 "drafts.title" = "Drafts";

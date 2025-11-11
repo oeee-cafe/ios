@@ -152,4 +152,23 @@ extension PostService {
     func unfollowProfile(loginName: String) async throws {
         try await apiClient.post(path: "/api/v1/profiles/\(loginName)/unfollow")
     }
+
+    // MARK: - Move Post Methods
+
+    /// Fetch list of communities that a post can be moved to
+    func fetchMovableCommunities(postId: String) async throws -> MovableCommunitiesResponse {
+        return try await apiClient.fetch(
+            path: "/api/v1/posts/\(postId)/movable-communities",
+            queryItems: nil
+        )
+    }
+
+    /// Move a post to a different community (or to personal posts if communityId is nil)
+    func movePostToCommunity(postId: String, communityId: String?) async throws {
+        let request = MoveCommunityRequest(communityId: communityId)
+        try await apiClient.put(
+            path: "/api/v1/posts/\(postId)/community",
+            body: request
+        )
+    }
 }
