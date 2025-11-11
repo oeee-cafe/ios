@@ -11,6 +11,7 @@ struct SettingsView: View {
     @State private var deleteError: String?
     @State private var cacheSize: UInt = 0
     @State private var isLoadingCacheSize = false
+    @State private var showBannerManagement = false
 
     // Developer mode
     @State private var tapCount = 0
@@ -99,6 +100,22 @@ struct SettingsView: View {
                             }
                         }
                     }
+                }
+
+                Section(header: Text("Profile")) {
+                    Button(action: {
+                        showBannerManagement = true
+                    }) {
+                        HStack {
+                            Image(systemName: "photo.on.rectangle.angled")
+                            Text("Banner Management")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                        }
+                    }
+                    .foregroundColor(.primary)
                 }
 
                 Section(header: Text("settings.storage".localized)) {
@@ -310,6 +327,9 @@ struct SettingsView: View {
                         }
                     }
                 )
+            }
+            .sheet(isPresented: $showBannerManagement) {
+                BannerManagementView()
             }
             .alert("email_verification.success_title".localized, isPresented: $showSuccessAlert) {
                 Button("common.ok".localized, role: .cancel) {}
