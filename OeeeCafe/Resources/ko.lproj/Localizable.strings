@@ -179,6 +179,10 @@
 "post.move_cannot_move_message" = "이 게시물을 이동할 수 없습니다. 스레드의 일부이거나 제한된 커뮤니티에 있을 수 있습니다.";
 "post.move_personal_post" = "개인 게시물";
 "post.move_moving" = "게시물 이동 중...";
+"post.image_saved" = "이미지가 사진 라이브러리에 저장되었습니다";
+"post.image_save_failed" = "이미지 저장 실패";
+"post.image_download_failed" = "이미지 다운로드 실패";
+"post.image_permission_denied" = "권한이 거부되었습니다. 설정에서 사진 라이브러리 액세스를 허용해 주세요.";
 "move.section.unlisted" = "참여한 커뮤니티";
 "move.section.public_participated" = "참여한 공개 커뮤니티";
 "move.section.public_other" = "다른 공개 커뮤니티";

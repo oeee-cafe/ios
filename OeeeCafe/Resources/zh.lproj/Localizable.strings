@@ -179,6 +179,10 @@
 "post.move_cannot_move_message" = "无法移动此作品。它可能是话题串的一部分或位于受限社区中。";
 "post.move_personal_post" = "个人作品";
 "post.move_moving" = "移动作品中...";
+"post.image_saved" = "图片已保存到相册";
+"post.image_save_failed" = "保存图片失败";
+"post.image_download_failed" = "下载图片失败";
+"post.image_permission_denied" = "权限被拒绝。请在设置中允许访问相册。";
 "move.section.unlisted" = "您参与过的社区";
 "move.section.public_participated" = "您参与过的公开社区";
 "move.section.public_other" = "其他公开社区";

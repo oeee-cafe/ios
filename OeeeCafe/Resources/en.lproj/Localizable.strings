@@ -179,6 +179,10 @@
 "post.move_cannot_move_message" = "This post cannot be moved. It may be part of a thread or in a restricted community.";
 "post.move_personal_post" = "Personal Post";
 "post.move_moving" = "Moving post...";
+"post.image_saved" = "Image saved to photo library";
+"post.image_save_failed" = "Failed to save image";
+"post.image_download_failed" = "Failed to download image";
+"post.image_permission_denied" = "Permission denied. Please enable photo library access in Settings.";
 "move.section.unlisted" = "Communities You've Posted In";
 "move.section.public_participated" = "Public Communities You've Posted In";
 "move.section.public_other" = "Other Public Communities";

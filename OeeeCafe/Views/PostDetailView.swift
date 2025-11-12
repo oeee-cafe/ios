@@ -16,6 +16,10 @@ struct PostDetailView: View {
     @State private var showLogin = false
     @State private var showReplay = false
     @State private var showMoveSheet = false
+    @StateObject private var imageSaver = ImageSaver()
+    @State private var showSaveSuccess = false
+    @State private var showSaveError = false
+    @State private var saveErrorMessage = ""
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authService: AuthService
 
@@ -65,6 +69,16 @@ struct PostDetailView: View {
             }
         } message: {
             Text("post.delete_comment_message".localized)
+        }
+        .alert("common.ok".localized, isPresented: $showSaveSuccess) {
+            Button("common.ok".localized) { }
+        } message: {
+            Text("post.image_saved".localized)
+        }
+        .alert("common.error_title".localized, isPresented: $showSaveError) {
+            Button("common.ok".localized) { }
+        } message: {
+            Text(saveErrorMessage)
         }
         .sheet(item: $showingReactors) { reactionSheet in
             ReactorsListView(postId: reactionSheet.postId, emoji: reactionSheet.emoji)
@@ -447,6 +461,30 @@ struct PostDetailView: View {
                             .font(.title3)
                     }
                 }
+            }
+
+            // Save Image button - always visible
+            if let post = viewModel.post {
+                Button(action: {
+                    imageSaver.saveImage(from: post.image.url) { result in
+                        switch result {
+                        case .success:
+                            showSaveSuccess = true
+                        case .failure(let error):
+                            saveErrorMessage = error.localizedDescription
+                            showSaveError = true
+                        }
+                    }
+                }) {
+                    if imageSaver.isSaving {
+                        ProgressView()
+                            .frame(width: 24, height: 24)
+                    } else {
+                        Image(systemName: "arrow.down.to.line")
+                            .font(.title3)
+                    }
+                }
+                .disabled(imageSaver.isSaving)
             }
 
             // Menu with other actions

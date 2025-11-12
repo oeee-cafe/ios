@@ -179,6 +179,10 @@
 "post.move_cannot_move_message" = "この投稿は移動できません。スレッドの一部であるか、制限されたコミュニティにある可能性があります。";
 "post.move_personal_post" = "個人投稿";
 "post.move_moving" = "投稿を移動中...";
+"post.image_saved" = "画像をフォトライブラリに保存しました";
+"post.image_save_failed" = "画像の保存に失敗しました";
+"post.image_download_failed" = "画像のダウンロードに失敗しました";
+"post.image_permission_denied" = "アクセス拒否されました。設定でフォトライブラリへのアクセスを許可してください。";
 "move.section.unlisted" = "投稿したコミュニティ";
 "move.section.public_participated" = "投稿したパブリックコミュニティ";
 "move.section.public_other" = "その他のパブリックコミュニティ";
