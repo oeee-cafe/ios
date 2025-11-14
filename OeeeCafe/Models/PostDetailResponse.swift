@@ -57,6 +57,7 @@ struct PostDetail: Identifiable, Codable {
     let viewerCount: Int
     let image: ImageInfo
     let isSensitive: Bool
+    let allowRelay: Bool
     let publishedAtUtc: String?
     let community: PostCommunityInfo?
     let hashtags: [String]

@@ -134,7 +134,7 @@ struct PostDetailView: View {
                         initialContent: post.content ?? "",
                         initialHashtags: post.hashtags.joined(separator: ", "),
                         initialIsSensitive: post.isSensitive,
-                        initialAllowRelay: true, // Default value since it's not in PostDetail
+                        initialAllowRelay: post.allowRelay,
                         onSaved: {
                             showEditSheet = false
                             // Refresh post data
