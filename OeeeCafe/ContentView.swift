@@ -103,6 +103,9 @@ struct ContentView: View {
         .onChange(of: authService.isAuthenticated) { _, isAuthenticated in
             // Refresh counts when authentication state changes
             if isAuthenticated {
+                // Dismiss keyboard after successful authentication (especially important for autofill)
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
                 Task {
                     await notificationsViewModel.updateUnreadCount()
                     await notificationsViewModel.updateInvitationCount()

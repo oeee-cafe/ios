@@ -72,6 +72,14 @@ struct SignupView: View {
                     .focused($focusedField, equals: .passwordConfirm)
                     .onSubmit {
                         if isFormValid && !isLoading {
+                            // Immediately hide keyboard before any async work
+                            focusedField = nil
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                               let window = windowScene.windows.first {
+                                window.endEditing(true)
+                            }
+
                             Task {
                                 await handleSignup()
                             }
@@ -89,7 +97,14 @@ struct SignupView: View {
                 }
 
                 Button(action: {
-                    focusedField = nil // Dismiss keyboard
+                    // Immediately hide keyboard before any async work
+                    focusedField = nil
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let window = windowScene.windows.first {
+                        window.endEditing(true)
+                    }
+
                     Task {
                         await handleSignup()
                     }
@@ -117,7 +132,7 @@ struct SignupView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             // Dismiss keyboard when tapping outside
-            focusedField = nil
+            dismissKeyboard()
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -137,6 +152,20 @@ struct SignupView: View {
 
     private var isFormValid: Bool {
         !loginName.isEmpty && !displayName.isEmpty && !password.isEmpty && !passwordConfirm.isEmpty
+    }
+
+    private func dismissKeyboard() {
+        // Force keyboard dismissal on main thread
+        DispatchQueue.main.async {
+            self.focusedField = nil
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
+            // Additional forced dismissal for autofill keyboard
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                window.endEditing(true)
+            }
+        }
     }
 
     private func handleSignup() async {
@@ -159,19 +188,16 @@ struct SignupView: View {
             // Signup successful - user is auto-logged in
             // ContentView will automatically switch to home view due to @Published isAuthenticated change
             await MainActor.run {
-                focusedField = nil // Ensure keyboard is dismissed before navigation
                 isLoading = false
                 dismiss()
             }
         } catch let error as AuthError {
             await MainActor.run {
-                focusedField = nil // Dismiss keyboard when showing error
                 errorMessage = error.localizedDescription
                 isLoading = false
             }
         } catch {
             await MainActor.run {
-                focusedField = nil // Dismiss keyboard when showing error
                 errorMessage = NSLocalizedString("auth.error_unexpected", comment: "An unexpected error occurred")
                 isLoading = false
             }
