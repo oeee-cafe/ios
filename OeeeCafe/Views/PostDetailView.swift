@@ -16,6 +16,7 @@ struct PostDetailView: View {
     @State private var showLogin = false
     @State private var showReplay = false
     @State private var showMoveSheet = false
+    @State private var showEditSheet = false
     @StateObject private var imageSaver = ImageSaver()
     @State private var showSaveSuccess = false
     @State private var showSaveError = false
@@ -32,6 +33,185 @@ struct PostDetailView: View {
     }
 
     private var mainContent: some View {
+        baseView
+            .sheet(item: $draftPostToPublish) { draft in
+                DraftPostView(
+                    postId: draft.postId,
+                    communityId: draft.communityId,
+                    imageUrl: draft.imageUrl,
+                    onPublished: {
+                        draftPostToPublish = nil
+                        // Refresh the current post view to show published state
+                        Task {
+                            await viewModel.refresh()
+                        }
+                    },
+                    onDeleted: {
+                        draftPostToPublish = nil
+                    },
+                    onCancel: {
+                        draftPostToPublish = nil
+                    }
+                )
+            }
+            .refreshable {
+                await Task { @MainActor in
+                    await viewModel.refresh()
+                }.value
+            }
+            .task {
+                await viewModel.loadPostDetails()
+            }
+    }
+
+    private var baseView: some View {
+        navigationView
+            .fullScreenCover(item: $canvasDimensions) { dimensions in
+                if let parentPostId = viewModel.post?.id {
+                    DrawWebView(
+                        width: dimensions.width,
+                        height: dimensions.height,
+                        tool: dimensions.tool,
+                        communityId: viewModel.post?.community?.id,
+                        parentPostId: parentPostId
+                    ) { postId, communityId, imageUrl in
+                        Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
+                        draftPostToPublish = DraftPostIdentifier(
+                            postId: postId,
+                            communityId: communityId,
+                            imageUrl: imageUrl
+                        )
+                        canvasDimensions = nil
+                    }
+                }
+            }
+            .sheet(isPresented: $showOrientationPicker) {
+                OrientationPicker(
+                    onOrientationSelected: { width, height in
+                        showOrientationPicker = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            canvasDimensions = CanvasDimensions(width: width, height: height, tool: .neoCucumberOffline)
+                        }
+                    },
+                    onCancel: {
+                        showOrientationPicker = false
+                    }
+                )
+            }
+            .sheet(isPresented: $showDimensionPicker) {
+                CanvasDimensionPicker(
+                    onDimensionsSelected: { width, height, tool in
+                        showDimensionPicker = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            canvasDimensions = CanvasDimensions(width: width, height: height, tool: tool)
+                        }
+                    },
+                    onCancel: {
+                        showDimensionPicker = false
+                    },
+                    backgroundColor: nil,
+                    foregroundColor: nil
+                )
+            }
+    }
+
+    private var navigationView: some View {
+        sheetsView
+            .fullScreenCover(isPresented: $showReplay) {
+                if let post = viewModel.post {
+                    ReplayWebView(postId: post.id)
+                }
+            }
+    }
+
+    private var sheetsView: some View {
+        alertsView
+            .sheet(isPresented: $showEditSheet) {
+                if let post = viewModel.post {
+                    EditPostView(
+                        postId: post.id,
+                        initialTitle: post.title ?? "",
+                        initialContent: post.content ?? "",
+                        initialHashtags: post.hashtags.joined(separator: ", "),
+                        initialIsSensitive: post.isSensitive,
+                        initialAllowRelay: true, // Default value since it's not in PostDetail
+                        onSaved: {
+                            showEditSheet = false
+                            // Refresh post data
+                            Task {
+                                await viewModel.refresh()
+                            }
+                        },
+                        onCancel: {
+                            showEditSheet = false
+                        }
+                    )
+                }
+            }
+            .sheet(isPresented: $showMoveSheet) {
+                if let post = viewModel.post {
+                    MovePostSheet(postId: post.id)
+                }
+            }
+            .sheet(isPresented: $showLogin) {
+                NavigationView {
+                    LoginView()
+                }
+            }
+            .sheet(item: $showingReactors) { reactionSheet in
+                ReactorsListView(postId: reactionSheet.postId, emoji: reactionSheet.emoji)
+            }
+    }
+
+    private var alertsView: some View {
+        scrollContent
+            .alert("common.error_title".localized, isPresented: $showSaveError) {
+                Button("common.ok".localized) { }
+            } message: {
+                Text(saveErrorMessage)
+            }
+            .alert("common.ok".localized, isPresented: $showSaveSuccess) {
+                Button("common.ok".localized) { }
+            } message: {
+                Text("post.image_saved".localized)
+            }
+            .alert("post.delete_comment_title".localized, isPresented: $showingCommentDeleteConfirmation) {
+                Button("common.cancel".localized, role: .cancel) {
+                    commentToDelete = nil
+                }
+                Button("common.delete".localized, role: .destructive) {
+                    if let comment = commentToDelete {
+                        Task {
+                            isDeletingComment = true
+                            await viewModel.deleteComment(comment)
+                            isDeletingComment = false
+                            commentToDelete = nil
+                        }
+                    }
+                }
+            } message: {
+                Text("post.delete_comment_message".localized)
+            }
+            .alert("post.delete_title".localized, isPresented: $showingDeleteConfirmation) {
+                Button("common.cancel".localized, role: .cancel) { }
+                Button("post.delete_button".localized, role: .destructive) {
+                    Task {
+                        isDeleting = true
+                        do {
+                            try await viewModel.deletePost()
+                            dismiss()
+                        } catch {
+                            viewModel.error = error.localizedDescription
+                            isDeleting = false
+                        }
+                    }
+                }
+            } message: {
+                Text("post.delete_message".localized)
+            }
+    }
+
+    private var scrollContent: some View {
         ScrollView {
             contentView
         }
@@ -39,143 +219,6 @@ struct PostDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             toolbarContent
-        }
-        .alert("post.delete_title".localized, isPresented: $showingDeleteConfirmation) {
-            Button("common.cancel".localized, role: .cancel) { }
-            Button("post.delete_button".localized, role: .destructive) {
-                Task {
-                    isDeleting = true
-                    do {
-                        try await viewModel.deletePost()
-                        dismiss()
-                    } catch {
-                        viewModel.error = error.localizedDescription
-                        isDeleting = false
-                    }
-                }
-            }
-        } message: {
-            Text("post.delete_message".localized)
-        }
-        .alert("post.delete_comment_title".localized, isPresented: $showingCommentDeleteConfirmation) {
-            Button("common.cancel".localized, role: .cancel) {
-                commentToDelete = nil
-            }
-            Button("common.delete".localized, role: .destructive) {
-                if let comment = commentToDelete {
-                    Task {
-                        isDeletingComment = true
-                        await viewModel.deleteComment(comment)
-                        isDeletingComment = false
-                        commentToDelete = nil
-                    }
-                }
-            }
-        } message: {
-            Text("post.delete_comment_message".localized)
-        }
-        .alert("common.ok".localized, isPresented: $showSaveSuccess) {
-            Button("common.ok".localized) { }
-        } message: {
-            Text("post.image_saved".localized)
-        }
-        .alert("common.error_title".localized, isPresented: $showSaveError) {
-            Button("common.ok".localized) { }
-        } message: {
-            Text(saveErrorMessage)
-        }
-        .sheet(item: $showingReactors) { reactionSheet in
-            ReactorsListView(postId: reactionSheet.postId, emoji: reactionSheet.emoji)
-        }
-        .sheet(isPresented: $showLogin) {
-            NavigationView {
-                LoginView()
-            }
-        }
-        .sheet(isPresented: $showMoveSheet) {
-            if let post = viewModel.post {
-                MovePostSheet(postId: post.id)
-            }
-        }
-        .fullScreenCover(isPresented: $showReplay) {
-            if let post = viewModel.post {
-                ReplayWebView(postId: post.id)
-            }
-        }
-        .sheet(isPresented: $showDimensionPicker) {
-            CanvasDimensionPicker(
-                onDimensionsSelected: { width, height, tool in
-                    showDimensionPicker = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        canvasDimensions = CanvasDimensions(width: width, height: height, tool: tool)
-                    }
-                },
-                onCancel: {
-                    showDimensionPicker = false
-                },
-                backgroundColor: nil,
-                foregroundColor: nil
-            )
-        }
-        .sheet(isPresented: $showOrientationPicker) {
-            OrientationPicker(
-                onOrientationSelected: { width, height in
-                    showOrientationPicker = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        canvasDimensions = CanvasDimensions(width: width, height: height, tool: .neoCucumberOffline)
-                    }
-                },
-                onCancel: {
-                    showOrientationPicker = false
-                }
-            )
-        }
-        .fullScreenCover(item: $canvasDimensions) { dimensions in
-            if let parentPostId = viewModel.post?.id {
-                DrawWebView(
-                    width: dimensions.width,
-                    height: dimensions.height,
-                    tool: dimensions.tool,
-                    communityId: viewModel.post?.community?.id,
-                    parentPostId: parentPostId
-                ) { postId, communityId, imageUrl in
-                    Logger.debug("Drawing completed: postId=\(postId), communityId=\(communityId ?? "nil"), imageUrl=\(imageUrl)", category: Logger.app)
-                    draftPostToPublish = DraftPostIdentifier(
-                        postId: postId,
-                        communityId: communityId,
-                        imageUrl: imageUrl
-                    )
-                    canvasDimensions = nil
-                }
-            }
-        }
-        .sheet(item: $draftPostToPublish) { draft in
-            DraftPostView(
-                postId: draft.postId,
-                communityId: draft.communityId,
-                imageUrl: draft.imageUrl,
-                onPublished: {
-                    draftPostToPublish = nil
-                    // Refresh the current post view to show published state
-                    Task {
-                        await viewModel.refresh()
-                    }
-                },
-                onDeleted: {
-                    draftPostToPublish = nil
-                },
-                onCancel: {
-                    draftPostToPublish = nil
-                }
-            )
-        }
-        .refreshable {
-            await Task { @MainActor in
-                await viewModel.refresh()
-            }.value
-        }
-        .task {
-            await viewModel.loadPostDetails()
         }
     }
 
@@ -522,6 +565,16 @@ struct PostDetailView: View {
                         }
                     }) {
                         Label("Reply", systemImage: "arrowshape.turn.up.left.2")
+                    }
+
+                    // Edit button - only visible to post owner
+                    if let currentUser = authService.currentUser,
+                       post.author.id == currentUser.id {
+                        Button(action: {
+                            showEditSheet = true
+                        }) {
+                            Label("post.edit_post".localized, systemImage: "pencil")
+                        }
                     }
 
                     // Move to Community button - only visible to post owner

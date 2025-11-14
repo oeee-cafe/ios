@@ -183,6 +183,9 @@
 "post.image_save_failed" = "保存图片失败";
 "post.image_download_failed" = "下载图片失败";
 "post.image_permission_denied" = "权限被拒绝。请在设置中允许访问相册。";
+"post.edit_post" = "编辑帖子";
+"post.edit_details" = "编辑详情";
+"post.error_editing" = "编辑帖子失败";
 "move.section.unlisted" = "您参与过的社区";
 "move.section.public_participated" = "您参与过的公开社区";
 "move.section.public_other" = "其他公开社区";

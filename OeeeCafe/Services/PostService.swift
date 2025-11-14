@@ -116,6 +116,20 @@ class PostService {
         let _: DeletePostResponse = try await apiClient.delete(path: "/api/v1/posts/\(postId)")
     }
 
+    func editPost(postId: String, title: String, content: String, hashtags: String?, isSensitive: Bool, allowRelay: Bool) async throws {
+        let request = EditPostRequest(
+            title: title,
+            content: content,
+            hashtags: hashtags,
+            isSensitive: isSensitive,
+            allowRelay: allowRelay
+        )
+        try await apiClient.put(
+            path: "/api/v1/posts/\(postId)",
+            body: request
+        )
+    }
+
     func addReaction(postId: String, emoji: String) async throws -> ReactionResponse {
         // URL encode the emoji
         let encodedEmoji = emoji.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? emoji

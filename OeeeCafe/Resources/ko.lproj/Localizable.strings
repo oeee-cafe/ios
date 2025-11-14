@@ -183,6 +183,9 @@
 "post.image_save_failed" = "이미지 저장 실패";
 "post.image_download_failed" = "이미지 다운로드 실패";
 "post.image_permission_denied" = "권한이 거부되었습니다. 설정에서 사진 라이브러리 액세스를 허용해 주세요.";
+"post.edit_post" = "게시물 편집";
+"post.edit_details" = "상세 정보 편집";
+"post.error_editing" = "게시물 편집 실패";
 "move.section.unlisted" = "참여한 커뮤니티";
 "move.section.public_participated" = "참여한 공개 커뮤니티";
 "move.section.public_other" = "다른 공개 커뮤니티";

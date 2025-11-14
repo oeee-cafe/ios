@@ -183,6 +183,9 @@
 "post.image_save_failed" = "画像の保存に失敗しました";
 "post.image_download_failed" = "画像のダウンロードに失敗しました";
 "post.image_permission_denied" = "アクセス拒否されました。設定でフォトライブラリへのアクセスを許可してください。";
+"post.edit_post" = "投稿を編集";
+"post.edit_details" = "詳細を編集";
+"post.error_editing" = "投稿の編集に失敗しました";
 "move.section.unlisted" = "投稿したコミュニティ";
 "move.section.public_participated" = "投稿したパブリックコミュニティ";
 "move.section.public_other" = "その他のパブリックコミュニティ";
