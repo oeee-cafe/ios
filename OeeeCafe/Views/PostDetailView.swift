@@ -28,6 +28,10 @@ struct PostDetailView: View {
     }
 
     var body: some View {
+        mainContent
+    }
+
+    private var mainContent: some View {
         ScrollView {
             contentView
         }
@@ -156,6 +160,9 @@ struct PostDetailView: View {
                     Task {
                         await viewModel.refresh()
                     }
+                },
+                onDeleted: {
+                    draftPostToPublish = nil
                 },
                 onCancel: {
                     draftPostToPublish = nil
@@ -506,8 +513,8 @@ struct PostDetailView: View {
                     // Reply button
                     Button(action: {
                         if let community = post.community,
-                           let backgroundColor = community.backgroundColor,
-                           let foregroundColor = community.foregroundColor {
+                           let _ = community.backgroundColor,
+                           let _ = community.foregroundColor {
                             // Two-tone community: show orientation picker
                             showOrientationPicker = true
                         } else {

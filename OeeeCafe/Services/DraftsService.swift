@@ -51,4 +51,38 @@ class DraftsService {
             throw DraftsServiceError.networkError(error)
         }
     }
+
+    func deleteDraft(postId: String) async throws {
+        guard let url = URL(string: "\(APIConfig.shared.baseURL)/api/v1/posts/\(postId)") else {
+            throw DraftsServiceError.invalidURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+
+        // Add session cookies
+        if let cookies = HTTPCookieStorage.shared.cookies(for: url) {
+            let headers = HTTPCookie.requestHeaderFields(with: cookies)
+            for (name, value) in headers {
+                request.setValue(value, forHTTPHeaderField: name)
+            }
+        }
+
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw DraftsServiceError.invalidResponse
+            }
+
+            guard httpResponse.statusCode == 200 else {
+                throw DraftsServiceError.httpError(httpResponse.statusCode)
+            }
+        } catch let error as DraftsServiceError {
+            throw error
+        } catch {
+            Logger.error("Network error deleting draft post", error: error, category: Logger.network)
+            throw DraftsServiceError.networkError(error)
+        }
+    }
 }

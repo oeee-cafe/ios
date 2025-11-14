@@ -174,6 +174,9 @@ struct CommunityDetailView: View {
                     navigateToPost = draft.postId
                     shouldNavigateToPost = true
                 },
+                onDeleted: {
+                    draftPostToPublish = nil
+                },
                 onCancel: {
                     draftPostToPublish = nil
                 }

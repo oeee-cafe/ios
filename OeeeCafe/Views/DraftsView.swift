@@ -87,6 +87,13 @@ struct DraftsView: View {
                             await viewModel.refresh()
                         }
                     },
+                    onDeleted: {
+                        selectedDraft = nil
+                        // Refresh drafts list
+                        Task {
+                            await viewModel.refresh()
+                        }
+                    },
                     onCancel: {
                         selectedDraft = nil
                     }
@@ -108,29 +115,15 @@ struct DraftGridItem: View {
     let draft: DraftPost
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            KFImage(URL(string: draft.imageUrl))
-                .placeholder {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.2))
-                }
-                .resizable()
-                .aspectRatio(1, contentMode: .fill)
-                .clipped()
-                .cornerRadius(4)
-
-            if let title = draft.title, !title.isEmpty {
-                Text(title)
-                    .font(.caption2)
-                    .lineLimit(2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                Text("drafts.untitled".localized)
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
+        KFImage(URL(string: draft.imageUrl))
+            .placeholder {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.2))
             }
-        }
+            .resizable()
+            .aspectRatio(1, contentMode: .fill)
+            .clipped()
+            .cornerRadius(4)
     }
 }
 

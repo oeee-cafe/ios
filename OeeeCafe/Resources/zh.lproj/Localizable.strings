@@ -193,6 +193,7 @@
 "drafts.empty_title" = "暂无草稿";
 "drafts.empty_message" = "草稿作品会显示在这里";
 "drafts.error_loading" = "加载草稿失败";
+"drafts.error_deleting" = "删除草稿失败";
 "drafts.untitled" = "无标题";
 "drafts.sensitive_content" = "敏感内容";
 "drafts.allow_relay" = "允许中继";
@@ -200,6 +201,8 @@
 "drafts.post_details" = "作品详情";
 "drafts.description_placeholder" = "描述（可选）";
 "drafts.publish_drawing" = "发布作品";
+"drafts.delete_confirmation_title" = "删除草稿";
+"drafts.delete_confirmation_message" = "确定要删除此草稿吗？此操作无法撤销。";
 
 /* Notifications */
 "notifications.title" = "通知";

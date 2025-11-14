@@ -97,6 +97,9 @@ struct SearchView: View {
                             navigateToPost = data.postId
                             shouldNavigateToPost = true
                         },
+                        onDeleted: {
+                            showDraftPost = false
+                        },
                         onCancel: {
                             showDraftPost = false
                         }

@@ -193,6 +193,7 @@
 "drafts.empty_title" = "임시 저장된 게시물 없음";
 "drafts.empty_message" = "임시 저장된 게시물이 여기에 표시됩니다";
 "drafts.error_loading" = "임시 저장 불러오기 실패";
+"drafts.error_deleting" = "임시 저장 삭제 실패";
 "drafts.untitled" = "제목 없음";
 "drafts.sensitive_content" = "민감한 콘텐츠";
 "drafts.allow_relay" = "릴레이 허용";
@@ -200,6 +201,8 @@
 "drafts.post_details" = "게시물 상세";
 "drafts.description_placeholder" = "설명 (선택)";
 "drafts.publish_drawing" = "그림 게시";
+"drafts.delete_confirmation_title" = "임시 저장 삭제";
+"drafts.delete_confirmation_message" = "이 임시 저장을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.";
 
 /* Notifications */
 "notifications.title" = "알림";

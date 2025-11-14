@@ -5,6 +5,7 @@ struct DraftPostView: View {
     let communityId: String?
     let imageUrl: String
     let onPublished: () -> Void
+    let onDeleted: () -> Void
     let onCancel: () -> Void
 
     @State private var title: String = ""
@@ -14,6 +15,9 @@ struct DraftPostView: View {
     @State private var allowRelay: Bool = true
     @State private var isSubmitting: Bool = false
     @State private var errorMessage: String?
+    @State private var showDeleteConfirmation: Bool = false
+
+    private let service = DraftsService()
 
     var body: some View {
         NavigationStack {
@@ -75,14 +79,34 @@ struct DraftPostView: View {
                     .disabled(isSubmitting)
                 }
 
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .primaryAction) {
                     Button("common.publish".localized) {
                         publishPost()
                     }
                     .disabled(title.isEmpty || isSubmitting)
                 }
+
+                ToolbarItem(placement: .destructiveAction) {
+                    Button(role: .destructive) {
+                        showDeleteConfirmation = true
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .disabled(isSubmitting)
+                }
             }
             .disabled(isSubmitting)
+            .alert(
+                "drafts.delete_confirmation_title".localized,
+                isPresented: $showDeleteConfirmation
+            ) {
+                Button("common.cancel".localized, role: .cancel) { }
+                Button("common.delete".localized, role: .destructive) {
+                    deleteDraft()
+                }
+            } message: {
+                Text("drafts.delete_confirmation_message".localized)
+            }
             .overlay(
                 Group {
                     if isSubmitting {
@@ -169,5 +193,24 @@ struct DraftPostView: View {
                 }
             }
         }.resume()
+    }
+
+    private func deleteDraft() {
+        isSubmitting = true
+        errorMessage = nil
+
+        Task {
+            do {
+                try await service.deleteDraft(postId: postId)
+                await MainActor.run {
+                    onDeleted() // Close the view and refresh drafts after deletion
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = "drafts.error_deleting".localized
+                    isSubmitting = false
+                }
+            }
+        }
     }
 }

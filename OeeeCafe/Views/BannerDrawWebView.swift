@@ -91,7 +91,7 @@ struct BannerWebViewContainer: UIViewRepresentable {
             return
         }
 
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
         Logger.debug("BannerDrawWebView: Loading URL=\(url)", category: Logger.network)
         webView.load(request)
     }

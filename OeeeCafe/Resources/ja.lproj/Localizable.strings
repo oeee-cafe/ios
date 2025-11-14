@@ -193,6 +193,7 @@
 "drafts.empty_title" = "下書きはありません";
 "drafts.empty_message" = "下書きの投稿がここに表示されます";
 "drafts.error_loading" = "下書きの読み込みに失敗しました";
+"drafts.error_deleting" = "下書きの削除に失敗しました";
 "drafts.untitled" = "タイトルなし";
 "drafts.sensitive_content" = "センシティブなコンテンツ";
 "drafts.allow_relay" = "リレーを許可";
@@ -200,6 +201,8 @@
 "drafts.post_details" = "投稿の詳細";
 "drafts.description_placeholder" = "説明（任意）";
 "drafts.publish_drawing" = "イラストを公開";
+"drafts.delete_confirmation_title" = "下書きを削除";
+"drafts.delete_confirmation_message" = "この下書きを削除してもよろしいですか？この操作は元に戻せません。";
 
 /* Notifications */
 "notifications.title" = "お知らせ";
