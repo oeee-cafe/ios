@@ -114,7 +114,7 @@ class PushNotificationService: ObservableObject {
         Logger.debug("Attempting to delete push token: \(token)", category: Logger.app)
 
         do {
-            let _: DeletePushTokenResponse = try await apiClient.delete(
+            try await apiClient.delete(
                 path: "/api/v1/push-tokens/\(token)"
             )
 
@@ -158,8 +158,4 @@ struct RegisterPushTokenResponse: Decodable {
     let deviceToken: String
     let platform: String
     let createdAt: Date
-}
-
-struct DeletePushTokenResponse: Decodable {
-    let success: Bool
 }
