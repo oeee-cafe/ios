@@ -70,13 +70,13 @@ class PushNotificationService: ObservableObject {
         }
 
         do {
-            let request = RegisterPushTokenRequest(deviceToken: tokenString, platform: "ios")
-            let response: RegisterPushTokenResponse = try await apiClient.post(
-                path: "/api/v1/push-tokens",
+            let request = RegisterDeviceRequest(deviceToken: tokenString, platform: "ios")
+            let response: RegisterDeviceResponse = try await apiClient.post(
+                path: "/api/v1/devices",
                 body: request
             )
 
-            Logger.info("Successfully registered push token with backend: \(response.id)", category: Logger.app)
+            Logger.info("Successfully registered device with backend: \(response.id)", category: Logger.app)
         } catch {
             Logger.error("Failed to register push token with backend", error: error, category: Logger.app)
         }
@@ -115,10 +115,10 @@ class PushNotificationService: ObservableObject {
 
         do {
             try await apiClient.delete(
-                path: "/api/v1/push-tokens/\(token)"
+                path: "/api/v1/devices/\(token)"
             )
 
-            Logger.info("Successfully deleted push token from backend", category: Logger.app)
+            Logger.info("Successfully deleted device from backend", category: Logger.app)
 
             // Clear the stored token from both memory and keychain after successful deletion
             self.currentDeviceToken = nil
@@ -148,12 +148,12 @@ class PushNotificationService: ObservableObject {
 
 // MARK: - Supporting Types
 
-struct RegisterPushTokenRequest: Encodable {
+struct RegisterDeviceRequest: Encodable {
     let deviceToken: String
     let platform: String
 }
 
-struct RegisterPushTokenResponse: Decodable {
+struct RegisterDeviceResponse: Decodable {
     let id: String
     let deviceToken: String
     let platform: String
