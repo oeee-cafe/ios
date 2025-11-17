@@ -122,10 +122,10 @@ class AuthService: ObservableObject {
             // Continue with local logout even if API call fails
         }
 
-        // Also delete push notification token using the dedicated endpoint as a fallback
+        // Also delete device using the dedicated endpoint as a fallback
         // This ensures cleanup even if the logout API call failed
-        Logger.debug("Attempting fallback push token deletion", category: Logger.auth)
-        await pushService.deletePushToken()
+        Logger.debug("Attempting fallback device deletion", category: Logger.auth)
+        await pushService.deleteDevice()
 
         // Clear state (always execute)
         Logger.debug("Clearing authentication state", category: Logger.auth)

@@ -78,7 +78,7 @@ class PushNotificationService: ObservableObject {
 
             Logger.info("Successfully registered device with backend: \(response.id)", category: Logger.app)
         } catch {
-            Logger.error("Failed to register push token with backend", error: error, category: Logger.app)
+            Logger.error("Failed to register device with backend", error: error, category: Logger.app)
         }
     }
 
@@ -102,16 +102,16 @@ class PushNotificationService: ObservableObject {
         return nil
     }
 
-    /// Delete push token from backend
+    /// Delete device from backend
     /// This should be called during logout
-    func deletePushToken() async {
+    func deleteDevice() async {
         // Try to get token from memory or keychain
         guard let token = getDeviceToken() else {
             Logger.warning("No device token found to delete (checked both memory and keychain)", category: Logger.app)
             return
         }
 
-        Logger.debug("Attempting to delete push token: \(token)", category: Logger.app)
+        Logger.debug("Attempting to delete device: \(token)", category: Logger.app)
 
         do {
             try await apiClient.delete(
@@ -128,7 +128,7 @@ class PushNotificationService: ObservableObject {
                 Logger.warning("Failed to delete device token from keychain", category: Logger.app)
             }
         } catch {
-            Logger.error("Failed to delete push token from backend", error: error, category: Logger.app)
+            Logger.error("Failed to delete device from backend", error: error, category: Logger.app)
         }
     }
 
