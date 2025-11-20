@@ -224,15 +224,15 @@ class AuthService: ObservableObject {
         }
     }
 
-    func verifyEmailCode(challengeId: String, token: String) async throws -> VerifyEmailCodeResponse {
+    func verifyEmailCode(challengeId: String, token: String) async throws {
         let request = VerifyEmailCodeRequest(challengeId: challengeId, token: token)
 
         do {
-            let response: VerifyEmailCodeResponse = try await apiClient.post(
+            // Server returns 204 No Content on success, so use the no-response-body POST method
+            try await apiClient.post(
                 path: "/api/v1/account/verify-email",
                 body: request
             )
-            return response
         } catch {
             throw AuthError.networkError(error)
         }

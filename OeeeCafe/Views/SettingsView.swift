@@ -482,13 +482,9 @@ struct SettingsView: View {
             let response = try await authService.requestEmailVerification(email: email)
 
             await MainActor.run {
-                if response.success, let challengeId = response.challengeId {
-                    self.challengeId = challengeId
-                    self.expiresInSeconds = response.expiresInSeconds ?? 300
-                    self.verificationStep = .enterCode
-                } else {
-                    emailVerificationError = response.error ?? "error.failed_request_verification".localized
-                }
+                self.challengeId = response.challengeId
+                self.expiresInSeconds = response.expiresInSeconds
+                self.verificationStep = .enterCode
                 isRequestingVerification = false
             }
         } catch {
@@ -506,32 +502,28 @@ struct SettingsView: View {
         emailVerificationError = nil
 
         do {
-            let response = try await authService.verifyEmailCode(challengeId: challengeId, token: code)
+            try await authService.verifyEmailCode(challengeId: challengeId, token: code)
 
             await MainActor.run {
-                if response.success {
-                    // Update the current user's email and emailVerifiedAt fields locally
-                    if let user = authService.currentUser {
-                        let updatedUser = CurrentUser(
-                            id: user.id,
-                            loginName: user.loginName,
-                            displayName: user.displayName,
-                            email: self.emailInput,
-                            emailVerifiedAt: ISO8601DateFormatter().string(from: Date()),
-                            bannerId: user.bannerId,
-                            preferredLanguage: user.preferredLanguage
-                        )
-                        authService.currentUser = updatedUser
-                    }
-
-                    self.showEmailVerificationSheet = false
-                    self.challengeId = nil
-                    self.verificationCode = ""
-                    self.verificationStep = .enterEmail
-                    self.showSuccessAlert = true
-                } else {
-                    emailVerificationError = response.error ?? "error.verification_failed".localized
+                // Update the current user's email and emailVerifiedAt fields locally
+                if let user = authService.currentUser {
+                    let updatedUser = CurrentUser(
+                        id: user.id,
+                        loginName: user.loginName,
+                        displayName: user.displayName,
+                        email: self.emailInput,
+                        emailVerifiedAt: ISO8601DateFormatter().string(from: Date()),
+                        bannerId: user.bannerId,
+                        preferredLanguage: user.preferredLanguage
+                    )
+                    authService.currentUser = updatedUser
                 }
+
+                self.showEmailVerificationSheet = false
+                self.challengeId = nil
+                self.verificationCode = ""
+                self.verificationStep = .enterEmail
+                self.showSuccessAlert = true
                 isVerifyingCode = false
             }
         } catch {
@@ -550,12 +542,8 @@ struct SettingsView: View {
             let response = try await authService.requestEmailVerification(email: emailInput)
 
             await MainActor.run {
-                if response.success, let newChallengeId = response.challengeId {
-                    self.challengeId = newChallengeId
-                    self.expiresInSeconds = response.expiresInSeconds ?? 300
-                } else {
-                    emailVerificationError = response.error ?? "error.failed_resend_code".localized
-                }
+                self.challengeId = response.challengeId
+                self.expiresInSeconds = response.expiresInSeconds
                 isResendingCode = false
             }
         } catch {

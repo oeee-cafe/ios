@@ -53,7 +53,8 @@ class NotificationService {
 
     /// Delete a specific notification
     func deleteNotification(notificationId: String) async throws {
-        let _: DeleteNotificationResponse = try await apiClient.delete(
+        // Server returns 204 No Content on success, so use the no-response-body DELETE method
+        try await apiClient.delete(
             path: "/api/v1/notifications/\(notificationId)"
         )
     }
