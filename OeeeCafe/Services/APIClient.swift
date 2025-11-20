@@ -125,6 +125,14 @@ class APIClient {
                 if let responseBody = String(data: data, encoding: .utf8) {
                     Logger.debug("Response body: \(responseBody)", category: Logger.network)
                 }
+
+                // Try to decode as APIErrorResponse
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let errorResponse = try? decoder.decode(APIErrorResponse.self, from: data) {
+                    throw APIError.serverError(code: errorResponse.error.code, message: errorResponse.error.message)
+                }
+
                 throw APIError.invalidResponse
             }
 
@@ -338,15 +346,21 @@ class APIClient {
                 throw APIError.invalidResponse
             }
 
-            // Handle non-success status codes
-            guard (200...299).contains(httpResponse.statusCode) else {
-                Logger.warning("DELETE \(path): Status \(httpResponse.statusCode)", category: Logger.network)
-                throw APIError.invalidResponse
-            }
-
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             decoder.dateDecodingStrategy = Self.customDateDecodingStrategy
+
+            // Handle non-success status codes
+            guard (200...299).contains(httpResponse.statusCode) else {
+                Logger.warning("DELETE \(path): Status \(httpResponse.statusCode)", category: Logger.network)
+
+                // Try to decode as APIErrorResponse
+                if let errorResponse = try? decoder.decode(APIErrorResponse.self, from: data) {
+                    throw APIError.serverError(code: errorResponse.error.code, message: errorResponse.error.message)
+                }
+
+                throw APIError.invalidResponse
+            }
 
             do {
                 let decodedData = try decoder.decode(R.self, from: data)
@@ -449,6 +463,55 @@ class APIClient {
         }
     }
 
+    func delete<T: Encodable>(path: String, body: T) async throws {
+        guard let url = URL(string: baseURL + path) else {
+            throw APIError.invalidURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        // Debug: Log cookies for this request
+        cookieManager.logCookies(for: url, operation: "DELETE")
+
+        do {
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            request.httpBody = try encoder.encode(body)
+        } catch {
+            throw APIError.encodingError(error)
+        }
+
+        do {
+            let (data, response) = try await session.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
+            }
+
+            guard (200...299).contains(httpResponse.statusCode) else {
+                Logger.warning("DELETE \(path): Status \(httpResponse.statusCode)", category: Logger.network)
+
+                // Try to decode as APIErrorResponse
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let errorResponse = try? decoder.decode(APIErrorResponse.self, from: data) {
+                    throw APIError.serverError(code: errorResponse.error.code, message: errorResponse.error.message)
+                }
+
+                throw APIError.invalidResponse
+            }
+
+            Logger.info("DELETE \(path): Success", category: Logger.network)
+        } catch let error as APIError {
+            throw error
+        } catch {
+            throw APIError.networkError(error)
+        }
+    }
+
     func delete(path: String) async throws {
         guard let url = URL(string: baseURL + path) else {
             throw APIError.invalidURL
@@ -462,7 +525,7 @@ class APIClient {
         cookieManager.logCookies(for: url, operation: "DELETE")
 
         do {
-            let (_, response) = try await session.data(for: request)
+            let (data, response) = try await session.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw APIError.invalidResponse
@@ -470,6 +533,14 @@ class APIClient {
 
             guard (200...299).contains(httpResponse.statusCode) else {
                 Logger.warning("DELETE \(path): Status \(httpResponse.statusCode)", category: Logger.network)
+
+                // Try to decode as APIErrorResponse
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let errorResponse = try? decoder.decode(APIErrorResponse.self, from: data) {
+                    throw APIError.serverError(code: errorResponse.error.code, message: errorResponse.error.message)
+                }
+
                 throw APIError.invalidResponse
             }
 

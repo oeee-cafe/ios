@@ -23,38 +23,31 @@ class AuthService: ObservableObject {
     func login(loginName: String, password: String) async throws -> CurrentUser {
         let request = LoginRequest(loginName: loginName, password: password)
 
-        do {
-            let response: LoginResponse = try await apiClient.post(
-                path: "/api/v1/auth/login",
-                body: request
-            )
+        let response: LoginResponse = try await apiClient.post(
+            path: "/api/v1/auth/login",
+            body: request
+        )
 
-            if response.success, let user = response.user {
-                Logger.debug("Login successful - \(user.loginName)", category: Logger.auth)
+        let user = response.user
+        Logger.debug("Login successful - \(user.loginName)", category: Logger.auth)
 
-                // Update state on main thread
-                await MainActor.run {
-                    self.currentUser = user
-                    self.isAuthenticated = true
-                }
-
-                // Save authentication state to keychain
-                let saved = keychainHelper.saveString(key: authStateKey, value: "true")
-                Logger.debug("Saved auth state to keychain: \(saved)", category: Logger.auth)
-
-                // Force save cookies to ensure persistence
-                cookieManager.forceSaveCookies()
-
-                // Request push notification permissions after successful login
-                await pushService.requestPermissionsAndRegister()
-
-                return user
-            } else {
-                throw AuthError.loginFailed(response.error ?? "Unknown error")
-            }
-        } catch {
-            throw AuthError.networkError(error)
+        // Update state on main thread
+        await MainActor.run {
+            self.currentUser = user
+            self.isAuthenticated = true
         }
+
+        // Save authentication state to keychain
+        let saved = keychainHelper.saveString(key: authStateKey, value: "true")
+        Logger.debug("Saved auth state to keychain: \(saved)", category: Logger.auth)
+
+        // Force save cookies to ensure persistence
+        cookieManager.forceSaveCookies()
+
+        // Request push notification permissions after successful login
+        await pushService.requestPermissionsAndRegister()
+
+        return user
     }
 
     func signup(loginName: String, password: String, displayName: String) async throws -> CurrentUser {
@@ -64,38 +57,31 @@ class AuthService: ObservableObject {
             displayName: displayName
         )
 
-        do {
-            let response: SignupResponse = try await apiClient.post(
-                path: "/api/v1/auth/signup",
-                body: request
-            )
+        let response: SignupResponse = try await apiClient.post(
+            path: "/api/v1/auth/signup",
+            body: request
+        )
 
-            if response.success, let user = response.user {
-                Logger.debug("Signup successful - user auto-logged in: \(user.loginName)", category: Logger.auth)
+        let user = response.user
+        Logger.debug("Signup successful - user auto-logged in: \(user.loginName)", category: Logger.auth)
 
-                // Update state on main thread
-                await MainActor.run {
-                    self.currentUser = user
-                    self.isAuthenticated = true
-                }
-
-                // Save authentication state to keychain
-                let saved = keychainHelper.saveString(key: authStateKey, value: "true")
-                Logger.debug("Saved auth state to keychain: \(saved)", category: Logger.auth)
-
-                // Force save cookies to ensure persistence
-                cookieManager.forceSaveCookies()
-
-                // Request push notification permissions after successful signup
-                await pushService.requestPermissionsAndRegister()
-
-                return user
-            } else {
-                throw AuthError.signupFailed(response.error ?? "Unknown error")
-            }
-        } catch {
-            throw AuthError.networkError(error)
+        // Update state on main thread
+        await MainActor.run {
+            self.currentUser = user
+            self.isAuthenticated = true
         }
+
+        // Save authentication state to keychain
+        let saved = keychainHelper.saveString(key: authStateKey, value: "true")
+        Logger.debug("Saved auth state to keychain: \(saved)", category: Logger.auth)
+
+        // Force save cookies to ensure persistence
+        cookieManager.forceSaveCookies()
+
+        // Request push notification permissions after successful signup
+        await pushService.requestPermissionsAndRegister()
+
+        return user
     }
 
     func logout() async {
@@ -112,7 +98,7 @@ class AuthService: ObservableObject {
         // Call logout API with device token (if this fails, we should still try to clear local state)
         do {
             let request = LogoutRequest(deviceToken: deviceToken)
-            let _: LogoutResponse = try await apiClient.post(
+            try await apiClient.post(
                 path: "/api/v1/auth/logout",
                 body: request
             )
@@ -151,32 +137,25 @@ class AuthService: ObservableObject {
     func deleteAccount(password: String) async throws {
         let request = DeleteAccountRequest(password: password)
 
-        do {
-            let response: DeleteAccountResponse = try await apiClient.delete(
-                path: "/api/v1/account",
-                body: request
-            )
+        // Server returns 204 No Content on success, errors are thrown as APIError
+        try await apiClient.delete(
+            path: "/api/v1/account",
+            body: request
+        )
 
-            if response.success {
-                Logger.info("Account deleted successfully", category: Logger.auth)
+        Logger.info("Account deleted successfully", category: Logger.auth)
 
-                // Clear state after successful deletion
-                await MainActor.run {
-                    self.currentUser = nil
-                    self.isAuthenticated = false
-                }
-
-                // Clear keychain
-                _ = keychainHelper.delete(key: authStateKey)
-
-                // Clear cookies
-                cookieManager.clearAllCookies()
-            } else {
-                throw AuthError.deleteAccountFailed(response.error ?? "Unknown error")
-            }
-        } catch {
-            throw AuthError.networkError(error)
+        // Clear state after successful deletion
+        await MainActor.run {
+            self.currentUser = nil
+            self.isAuthenticated = false
         }
+
+        // Clear keychain
+        _ = keychainHelper.delete(key: authStateKey)
+
+        // Clear cookies
+        cookieManager.clearAllCookies()
     }
 
     func checkAuthStatus() async {
@@ -285,9 +264,4 @@ enum AuthError: LocalizedError {
 
 struct DeleteAccountRequest: Codable {
     let password: String
-}
-
-struct DeleteAccountResponse: Codable {
-    let success: Bool
-    let error: String?
 }

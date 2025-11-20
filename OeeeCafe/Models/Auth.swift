@@ -8,9 +8,7 @@ struct LoginRequest: Codable {
 
 // MARK: - Login Response
 struct LoginResponse: Codable {
-    let success: Bool
-    let user: CurrentUser?
-    let error: String?
+    let user: CurrentUser
 }
 
 // MARK: - Current User
@@ -39,31 +37,18 @@ struct LogoutRequest: Codable {
     let deviceToken: String?
 }
 
-// MARK: - Logout Response
-struct LogoutResponse: Codable {
-    let success: Bool
-}
-
 // MARK: - Email Verification
 struct RequestEmailVerificationRequest: Codable {
     let email: String
 }
 
 struct RequestEmailVerificationResponse: Codable {
-    let success: Bool
-    let challengeId: String?
-    let email: String?
-    let expiresInSeconds: Int?
-    let error: String?
+    let challengeId: String
+    let email: String
+    let expiresInSeconds: Int
 }
 
 struct VerifyEmailCodeRequest: Codable {
     let challengeId: String
     let token: String
-}
-
-struct VerifyEmailCodeResponse: Codable {
-    let success: Bool
-    let message: String?
-    let error: String?
 }

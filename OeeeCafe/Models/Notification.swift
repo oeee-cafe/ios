@@ -105,17 +105,10 @@ struct UnreadCountResponse: Codable {
 
 // MARK: - Mark Read Response
 struct MarkReadResponse: Codable {
-    let success: Bool
-    let notification: NotificationItem?
-}
-
-// MARK: - Delete Response
-struct DeleteNotificationResponse: Codable {
-    let success: Bool
+    let notification: NotificationItem
 }
 
 // MARK: - Mark All Read Response
 struct MarkAllReadResponse: Codable {
-    let success: Bool
     let count: Int
 }
