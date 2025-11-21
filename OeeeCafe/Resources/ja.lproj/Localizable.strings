@@ -186,6 +186,25 @@
 "post.edit_post" = "投稿を編集";
 "post.edit_details" = "詳細を編集";
 "post.error_editing" = "投稿の編集に失敗しました";
+"post.report" = "報告";
+"post.report_title" = "この投稿を報告";
+"post.report_description_label" = "報告理由";
+"post.report_description_placeholder" = "この投稿を報告する理由を説明してください...";
+"post.report_submit" = "報告する";
+"post.report_success" = "投稿が報告されました。コミュニティの安全維持にご協力いただきありがとうございます。";
+"post.report_error" = "報告の送信に失敗しました。もう一度お試しください。";
+
+/* Profile */
+"profile.follow" = "フォロー";
+"profile.unfollow" = "フォロー解除";
+"profile.report" = "報告";
+"profile.report_title" = "このプロフィールを報告";
+"profile.report_description_label" = "報告理由";
+"profile.report_description_placeholder" = "このプロフィールを報告する理由を説明してください...";
+"profile.report_submit" = "報告する";
+"profile.report_success" = "プロフィールが報告されました。コミュニティの安全維持にご協力いただきありがとうございます。";
+"profile.report_error" = "報告の送信に失敗しました。もう一度お試しください。";
+
 "move.section.unlisted" = "投稿したコミュニティ";
 "move.section.public_participated" = "投稿したパブリックコミュニティ";
 "move.section.public_other" = "その他のパブリックコミュニティ";

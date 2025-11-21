@@ -105,4 +105,8 @@ class ProfileViewModel: ObservableObject {
             self.error = error.localizedDescription
         }
     }
+
+    func reportProfile(description: String) async throws {
+        try await postService.reportProfile(loginName: loginName, description: description)
+    }
 }

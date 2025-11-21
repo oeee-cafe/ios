@@ -186,6 +186,25 @@
 "post.edit_post" = "게시물 편집";
 "post.edit_details" = "상세 정보 편집";
 "post.error_editing" = "게시물 편집 실패";
+"post.report" = "신고";
+"post.report_title" = "이 게시물 신고하기";
+"post.report_description_label" = "신고 사유";
+"post.report_description_placeholder" = "이 게시물을 신고하는 이유를 설명해주세요...";
+"post.report_submit" = "신고하기";
+"post.report_success" = "게시물이 신고되었습니다. 커뮤니티를 안전하게 유지하는 데 도움을 주셔서 감사합니다.";
+"post.report_error" = "신고 제출에 실패했습니다. 다시 시도해주세요.";
+
+/* Profile */
+"profile.follow" = "팔로우";
+"profile.unfollow" = "언팔로우";
+"profile.report" = "신고";
+"profile.report_title" = "이 프로필 신고하기";
+"profile.report_description_label" = "신고 사유";
+"profile.report_description_placeholder" = "이 프로필을 신고하는 이유를 설명해주세요...";
+"profile.report_submit" = "신고하기";
+"profile.report_success" = "프로필이 신고되었습니다. 커뮤니티를 안전하게 유지하는 데 도움을 주셔서 감사합니다.";
+"profile.report_error" = "신고 제출에 실패했습니다. 다시 시도해주세요.";
+
 "move.section.unlisted" = "참여한 커뮤니티";
 "move.section.public_participated" = "참여한 공개 커뮤니티";
 "move.section.public_other" = "다른 공개 커뮤니티";

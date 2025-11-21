@@ -185,4 +185,35 @@ extension PostService {
             body: request
         )
     }
+
+    // MARK: - Report Methods
+
+    /// Report a post
+    func reportPost(postId: String, description: String) async throws {
+        let request = ReportPostRequest(description: description)
+        struct ReportPostResponse: Codable {
+            let message: String
+        }
+        let _: ReportPostResponse = try await apiClient.post(
+            path: "/api/v1/posts/\(postId)/report",
+            body: request
+        )
+    }
+
+    /// Report a profile
+    func reportProfile(loginName: String, description: String) async throws {
+        let request = ReportPostRequest(description: description)
+        struct ReportProfileResponse: Codable {
+            let message: String
+        }
+        let _: ReportProfileResponse = try await apiClient.post(
+            path: "/api/v1/profiles/\(loginName)/report",
+            body: request
+        )
+    }
+}
+
+// MARK: - Report Request
+struct ReportPostRequest: Codable {
+    let description: String
 }

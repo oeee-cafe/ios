@@ -21,6 +21,11 @@ struct PostDetailView: View {
     @State private var showSaveSuccess = false
     @State private var showSaveError = false
     @State private var saveErrorMessage = ""
+    @State private var showReportAlert = false
+    @State private var reportDescription = ""
+    @State private var isReporting = false
+    @State private var showReportResultAlert = false
+    @State private var reportResultMessage = ""
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authService: AuthService
 
@@ -208,6 +213,26 @@ struct PostDetailView: View {
                 }
             } message: {
                 Text("post.delete_message".localized)
+            }
+            .alert("post.report_title".localized, isPresented: $showReportAlert) {
+                TextField("post.report_description_placeholder".localized, text: $reportDescription, axis: .vertical)
+                    .lineLimit(3...6)
+                Button("common.cancel".localized, role: .cancel) {
+                    reportDescription = ""
+                }
+                Button("post.report_submit".localized) {
+                    Task {
+                        await reportPost()
+                    }
+                }
+                .disabled(reportDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            } message: {
+                Text("post.report_description_label".localized)
+            }
+            .alert("Report", isPresented: $showReportResultAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(reportResultMessage)
             }
     }
 
@@ -587,6 +612,17 @@ struct PostDetailView: View {
                         }
                     }
 
+                    // Report button - visible to non-owners
+                    if let currentUser = authService.currentUser,
+                       post.author.id != currentUser.id {
+                        Button(action: {
+                            reportDescription = ""
+                            showReportAlert = true
+                        }) {
+                            Label("post.report".localized, systemImage: "exclamationmark.triangle")
+                        }
+                    }
+
                     // Delete button - only visible to post owner
                     if let currentUser = authService.currentUser,
                        post.author.id == currentUser.id {
@@ -601,6 +637,30 @@ struct PostDetailView: View {
                     Image(systemName: "ellipsis.circle")
                         .font(.title3)
                 }
+            }
+        }
+    }
+
+    private func reportPost() async {
+        guard let post = viewModel.post else { return }
+        let trimmedDescription = reportDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedDescription.isEmpty else { return }
+
+        isReporting = true
+        defer { isReporting = false }
+
+        do {
+            try await viewModel.reportPost(description: trimmedDescription)
+            reportDescription = ""
+            // Show success message
+            await MainActor.run {
+                reportResultMessage = "post.report_success".localized
+                showReportResultAlert = true
+            }
+        } catch {
+            await MainActor.run {
+                reportResultMessage = error.localizedDescription
+                showReportResultAlert = true
             }
         }
     }

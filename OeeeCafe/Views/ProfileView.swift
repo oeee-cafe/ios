@@ -5,6 +5,10 @@ struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
     @EnvironmentObject var authService: AuthService
     @State private var showSettings = false
+    @State private var showReportAlert = false
+    @State private var reportDescription = ""
+    @State private var showReportResultAlert = false
+    @State private var reportResultMessage = ""
 
     init(loginName: String) {
         _viewModel = StateObject(wrappedValue: ProfileViewModel(loginName: loginName))
@@ -36,15 +40,26 @@ struct ProfileView: View {
                 }
             } else if authService.isAuthenticated, let profile = viewModel.profileDetail {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        Task {
-                            await viewModel.toggleFollow()
+                    Menu {
+                        Button {
+                            Task {
+                                await viewModel.toggleFollow()
+                            }
+                        } label: {
+                            Label(
+                                profile.user.isFollowing ? "profile.unfollow".localized : "profile.follow".localized,
+                                systemImage: profile.user.isFollowing ? "person.fill.checkmark" : "person.badge.plus"
+                            )
+                        }
+
+                        Button {
+                            reportDescription = ""
+                            showReportAlert = true
+                        } label: {
+                            Label("profile.report".localized, systemImage: "exclamationmark.triangle")
                         }
                     } label: {
-                        Label(
-                            profile.user.isFollowing ? "profile.unfollow".localized : "profile.follow".localized,
-                            systemImage: profile.user.isFollowing ? "person.fill.checkmark" : "person.badge.plus"
-                        )
+                        Image(systemName: "ellipsis.circle")
                     }
                 }
             }
@@ -60,6 +75,26 @@ struct ProfileView: View {
         }
         .task {
             await viewModel.loadProfile()
+        }
+        .alert("profile.report_title".localized, isPresented: $showReportAlert) {
+            TextField("profile.report_description_placeholder".localized, text: $reportDescription, axis: .vertical)
+                .lineLimit(3...6)
+            Button("common.cancel".localized, role: .cancel) {
+                reportDescription = ""
+            }
+            Button("profile.report_submit".localized) {
+                Task {
+                    await reportProfile()
+                }
+            }
+            .disabled(reportDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        } message: {
+            Text("profile.report_description_label".localized)
+        }
+        .alert("Report", isPresented: $showReportResultAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(reportResultMessage)
         }
     }
 
@@ -101,6 +136,26 @@ struct ProfileView: View {
                 )
             }
             .padding(.bottom)
+        }
+    }
+
+    private func reportProfile() async {
+        let trimmedDescription = reportDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedDescription.isEmpty else { return }
+
+        do {
+            try await viewModel.reportProfile(description: trimmedDescription)
+            reportDescription = ""
+            // Show success message
+            await MainActor.run {
+                reportResultMessage = "profile.report_success".localized
+                showReportResultAlert = true
+            }
+        } catch {
+            await MainActor.run {
+                reportResultMessage = error.localizedDescription
+                showReportResultAlert = true
+            }
         }
     }
 }

@@ -186,6 +186,25 @@
 "post.edit_post" = "Edit Post";
 "post.edit_details" = "Edit Details";
 "post.error_editing" = "Failed to edit post";
+"post.report" = "Report";
+"post.report_title" = "Report this post";
+"post.report_description_label" = "Reason for reporting";
+"post.report_description_placeholder" = "Please describe why you are reporting this post...";
+"post.report_submit" = "Submit Report";
+"post.report_success" = "Post reported successfully. Thank you for helping keep our community safe.";
+"post.report_error" = "Failed to submit report. Please try again.";
+
+/* Profile */
+"profile.follow" = "Follow";
+"profile.unfollow" = "Unfollow";
+"profile.report" = "Report";
+"profile.report_title" = "Report this profile";
+"profile.report_description_label" = "Reason for reporting";
+"profile.report_description_placeholder" = "Please describe why you are reporting this profile...";
+"profile.report_submit" = "Submit Report";
+"profile.report_success" = "Profile reported successfully. Thank you for helping keep our community safe.";
+"profile.report_error" = "Failed to submit report. Please try again.";
+
 "move.section.unlisted" = "Communities You've Posted In";
 "move.section.public_participated" = "Public Communities You've Posted In";
 "move.section.public_other" = "Other Public Communities";

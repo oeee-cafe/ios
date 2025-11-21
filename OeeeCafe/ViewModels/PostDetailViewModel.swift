@@ -206,4 +206,8 @@ class PostDetailViewModel: ObservableObject {
             self.error = error.localizedDescription
         }
     }
+
+    func reportPost(description: String) async throws {
+        try await postService.reportPost(postId: postId, description: description)
+    }
 }
