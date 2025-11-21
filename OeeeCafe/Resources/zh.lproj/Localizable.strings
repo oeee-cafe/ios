@@ -232,6 +232,10 @@
 "auth.confirm_password" = "确认密码";
 "auth.error_passwords_not_match" = "密码不匹配";
 "auth.error_unexpected" = "发生了意外错误";
+"auth.terms_agreement_prefix" = "我同意：";
+"auth.privacy_policy" = "隐私政策";
+"auth.community_guidelines" = "社区准则";
+"auth.terms_and" = "和";
 
 /* Time Formats */
 "time.just_now" = "刚刚";

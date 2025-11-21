@@ -232,6 +232,10 @@
 "auth.confirm_password" = "Confirm Password";
 "auth.error_passwords_not_match" = "Passwords do not match";
 "auth.error_unexpected" = "An unexpected error occurred";
+"auth.terms_agreement_prefix" = "I agree to the";
+"auth.privacy_policy" = "Privacy Policy";
+"auth.community_guidelines" = "Community Guidelines";
+"auth.terms_and" = "and";
 
 /* Time Formats */
 "time.just_now" = "just now";

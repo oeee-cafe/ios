@@ -232,6 +232,10 @@
 "auth.confirm_password" = "비밀번호 확인";
 "auth.error_passwords_not_match" = "비밀번호가 일치하지 않습니다";
 "auth.error_unexpected" = "예기치 않은 오류가 발생했습니다";
+"auth.terms_agreement_prefix" = "다음에 동의합니다:";
+"auth.privacy_policy" = "개인정보 처리방침";
+"auth.community_guidelines" = "커뮤니티 가이드라인";
+"auth.terms_and" = "및";
 
 /* Time Formats */
 "time.just_now" = "방금";

@@ -8,6 +8,7 @@ struct SignupView: View {
     @State private var displayName = ""
     @State private var password = ""
     @State private var passwordConfirm = ""
+    @State private var agreedToTerms = false
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showSettings = false
@@ -89,6 +90,41 @@ struct SignupView: View {
                     .background(Color(uiColor: .secondarySystemGroupedBackground))
                     .cornerRadius(10)
 
+                // Terms agreement checkbox
+                HStack(alignment: .top, spacing: 8) {
+                    Button(action: {
+                        agreedToTerms.toggle()
+                    }) {
+                        Image(systemName: agreedToTerms ? "checkmark.square.fill" : "square")
+                            .foregroundColor(agreedToTerms ? .accentColor : .gray)
+                            .font(.title3)
+                    }
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(NSLocalizedString("auth.terms_agreement_prefix", comment: "I agree to the"))
+                            .font(.caption)
+                            .foregroundColor(.primary)
+
+                        HStack(spacing: 4) {
+                            if let privacyURL = URL(string: "\(APIConfig.shared.baseURL)/privacy") {
+                                Link(NSLocalizedString("auth.privacy_policy", comment: "Privacy Policy"), destination: privacyURL)
+                                    .font(.caption)
+                            }
+
+                            Text(NSLocalizedString("auth.terms_and", comment: "and"))
+                                .font(.caption)
+                                .foregroundColor(.primary)
+
+                            if let policyURL = URL(string: "\(APIConfig.shared.baseURL)/policy") {
+                                Link(NSLocalizedString("auth.community_guidelines", comment: "Community Guidelines"), destination: policyURL)
+                                    .font(.caption)
+                            }
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 8)
+
                 if let errorMessage = errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
@@ -151,7 +187,7 @@ struct SignupView: View {
     }
 
     private var isFormValid: Bool {
-        !loginName.isEmpty && !displayName.isEmpty && !password.isEmpty && !passwordConfirm.isEmpty
+        !loginName.isEmpty && !displayName.isEmpty && !password.isEmpty && !passwordConfirm.isEmpty && agreedToTerms
     }
 
     private func dismissKeyboard() {

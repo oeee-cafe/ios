@@ -232,6 +232,10 @@
 "auth.confirm_password" = "パスワード確認";
 "auth.error_passwords_not_match" = "パスワードが一致しません";
 "auth.error_unexpected" = "予期しないエラーが発生しました";
+"auth.terms_agreement_prefix" = "以下に同意します：";
+"auth.privacy_policy" = "プライバシーポリシー";
+"auth.community_guidelines" = "コミュニティガイドライン";
+"auth.terms_and" = "および";
 
 /* Time Formats */
 "time.just_now" = "たった今";
