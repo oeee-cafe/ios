@@ -235,6 +235,17 @@
 "notifications.mark_as_read" = "既読にする";
 "notifications.mark_all_read" = "すべて既読にする";
 
+/* Notification Messages */
+"notification.comment" = "%@があなたの投稿にコメントしました";
+"notification.comment_reply" = "%@があなたのコメントに返信しました";
+"notification.reaction" = "%@があなたの投稿にリアクションしました";
+"notification.reaction_emoji" = "%@があなたの投稿に%@でリアクションしました";
+"notification.follow" = "%@があなたをフォローし始めました";
+"notification.post_reply" = "%@があなたの投稿に返信しました";
+"notification.guestbook_entry" = "%@があなたのゲストブックに書き込みました";
+"notification.guestbook_reply" = "%@があなたのゲストブックエントリに返信しました";
+"notification.mention" = "%@がコメントであなたをメンションしました";
+
 /* Reactions */
 "reactions.no_reactions" = "リアクションはまだありません";
 

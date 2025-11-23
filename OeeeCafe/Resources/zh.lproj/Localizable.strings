@@ -235,6 +235,17 @@
 "notifications.mark_as_read" = "标记为已读";
 "notifications.mark_all_read" = "全部标记为已读";
 
+/* Notification Messages */
+"notification.comment" = "%@评论了您的帖子";
+"notification.comment_reply" = "%@回复了您的评论";
+"notification.reaction" = "%@对您的帖子做出了反应";
+"notification.reaction_emoji" = "%@用%@对您的帖子做出了反应";
+"notification.follow" = "%@开始关注您了";
+"notification.post_reply" = "%@回复了您的帖子";
+"notification.guestbook_entry" = "%@在您的留言板上留言了";
+"notification.guestbook_reply" = "%@回复了您的留言板消息";
+"notification.mention" = "%@在评论中提到了您";
+
 /* Reactions */
 "reactions.no_reactions" = "暂无反应";
 

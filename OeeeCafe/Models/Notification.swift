@@ -62,26 +62,26 @@ struct NotificationItem: Codable, Identifiable {
     var displayText: String {
         switch notificationType {
         case .comment:
-            return "\(actorName) commented on your post"
+            return "notification.comment".localized(actorName)
         case .commentReply:
-            return "\(actorName) replied to your comment"
+            return "notification.comment_reply".localized(actorName)
         case .reaction:
             if let emoji = reactionEmoji {
-                return "\(actorName) reacted with \(emoji) to your post"
+                return "notification.reaction_emoji".localized(actorName, emoji)
             }
-            return "\(actorName) reacted to your post"
+            return "notification.reaction".localized(actorName)
         case .follow:
-            return "\(actorName) started following you"
+            return "notification.follow".localized(actorName)
         case .postReply:
-            return "\(actorName) replied to your post"
+            return "notification.post_reply".localized(actorName)
         case .guestbookEntry:
-            return "\(actorName) wrote in your guestbook"
+            return "notification.guestbook_entry".localized(actorName)
         case .guestbookReply:
-            return "\(actorName) replied to your guestbook entry"
+            return "notification.guestbook_reply".localized(actorName)
         case .mention:
-            return "\(actorName) mentioned you in a comment"
+            return "notification.mention".localized(actorName)
         case .unknown:
-            return "\(actorName) performed an action"
+            return "notification.comment".localized(actorName)
         }
     }
 

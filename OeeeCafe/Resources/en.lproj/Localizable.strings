@@ -235,6 +235,17 @@
 "notifications.mark_as_read" = "Mark as Read";
 "notifications.mark_all_read" = "Mark All Read";
 
+/* Notification Messages */
+"notification.comment" = "%@ commented on your post";
+"notification.comment_reply" = "%@ replied to your comment";
+"notification.reaction" = "%@ reacted to your post";
+"notification.reaction_emoji" = "%@ reacted with %@ to your post";
+"notification.follow" = "%@ started following you";
+"notification.post_reply" = "%@ replied to your post";
+"notification.guestbook_entry" = "%@ wrote in your guestbook";
+"notification.guestbook_reply" = "%@ replied to your guestbook entry";
+"notification.mention" = "%@ mentioned you in a comment";
+
 /* Reactions */
 "reactions.no_reactions" = "No reactions yet";
 

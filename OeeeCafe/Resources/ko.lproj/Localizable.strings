@@ -235,6 +235,17 @@
 "notifications.mark_as_read" = "읽음 표시";
 "notifications.mark_all_read" = "모두 읽음 표시";
 
+/* Notification Messages */
+"notification.comment" = "%@님이 회원님의 게시물에 댓글을 달았습니다";
+"notification.comment_reply" = "%@님이 회원님의 댓글에 답글을 달았습니다";
+"notification.reaction" = "%@님이 회원님의 게시물에 반응했습니다";
+"notification.reaction_emoji" = "%@님이 회원님의 게시물에 %@(으)로 반응했습니다";
+"notification.follow" = "%@님이 회원님을 팔로우하기 시작했습니다";
+"notification.post_reply" = "%@님이 회원님의 게시물에 답글을 달았습니다";
+"notification.guestbook_entry" = "%@님이 회원님의 방명록에 글을 남겼습니다";
+"notification.guestbook_reply" = "%@님이 회원님의 방명록 글에 답글을 달았습니다";
+"notification.mention" = "%@님이 댓글에서 회원님을 언급했습니다";
+
 /* Reactions */
 "reactions.no_reactions" = "반응이 없습니다";
 
