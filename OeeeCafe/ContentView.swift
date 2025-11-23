@@ -11,6 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var authService: AuthService
     @StateObject private var notificationsViewModel = NotificationsViewModel()
     @StateObject private var draftsViewModel = DraftsViewModel()
+    @StateObject private var navigationCoordinator = NavigationCoordinator.shared
     @State private var tabSelection: String = "home"
 
     var body: some View {
@@ -118,8 +119,13 @@ struct ContentView: View {
                 draftsViewModel.drafts = []
             }
         }
+        .onChange(of: navigationCoordinator.selectedTab) { _, newTab in
+            // When navigation coordinator changes selected tab, update our tab selection
+            tabSelection = newTab
+        }
         .environmentObject(notificationsViewModel)
         .environmentObject(draftsViewModel)
+        .environmentObject(navigationCoordinator)
     }
 }
 

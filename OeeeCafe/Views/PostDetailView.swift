@@ -642,7 +642,7 @@ struct PostDetailView: View {
     }
 
     private func reportPost() async {
-        guard let post = viewModel.post else { return }
+        guard viewModel.post != nil else { return }
         let trimmedDescription = reportDescription.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedDescription.isEmpty else { return }
 

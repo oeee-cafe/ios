@@ -3,8 +3,10 @@ import SwiftUI
 struct CommunitiesView: View {
     @StateObject private var viewModel = CommunitiesViewModel()
     @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var navigationCoordinator: NavigationCoordinator
     @State private var showCreateCommunity = false
     @State private var navigateToCommunitySlug: String?
+    @State private var showInvitations = false
 
     var body: some View {
         NavigationStack {
@@ -183,6 +185,29 @@ struct CommunitiesView: View {
             }
             .navigationDestination(item: $navigateToCommunitySlug) { slug in
                 CommunityDetailView(slug: slug)
+            }
+            .sheet(isPresented: $showInvitations) {
+                NavigationStack {
+                    CommunityInvitationsView()
+                }
+            }
+            .onChange(of: navigationCoordinator.pendingNavigation) { _, newValue in
+                // Handle deep link navigation from push notifications
+                guard let pending = newValue else { return }
+
+                switch pending {
+                case .community(let slug), .communityMembers(let slug):
+                    // Navigate to community detail (user can access members from there)
+                    navigateToCommunitySlug = slug
+                case .invitations:
+                    showInvitations = true
+                default:
+                    // Other navigation types are handled by other tabs
+                    break
+                }
+
+                // Clear the pending navigation after handling
+                navigationCoordinator.clearPendingNavigation()
             }
         }
         .task {

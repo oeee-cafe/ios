@@ -10,11 +10,14 @@ struct DraftPostIdentifier: Identifiable {
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var navigationCoordinator: NavigationCoordinator
     @State private var showSettings = false
     @State private var showDimensionPicker = false
     @State private var canvasDimensions: CanvasDimensions?
     @State private var shouldNavigateToPost = false
     @State private var navigateToPost: String?
+    @State private var shouldNavigateToProfile = false
+    @State private var navigateToProfile: String?
     @State private var draftPostToPublish: DraftPostIdentifier?
 
     private let columns = Constants.postGridColumns
@@ -172,6 +175,30 @@ struct HomeView: View {
                 if let postId = navigateToPost {
                     PostDetailView(postId: postId)
                 }
+            }
+            .navigationDestination(isPresented: $shouldNavigateToProfile) {
+                if let loginName = navigateToProfile {
+                    ProfileView(loginName: loginName)
+                }
+            }
+            .onChange(of: navigationCoordinator.pendingNavigation) { _, newValue in
+                // Handle deep link navigation from push notifications
+                guard let pending = newValue else { return }
+
+                switch pending {
+                case .post(let id):
+                    navigateToPost = id
+                    shouldNavigateToPost = true
+                case .profile(let loginName):
+                    navigateToProfile = loginName
+                    shouldNavigateToProfile = true
+                default:
+                    // Other navigation types are handled by other tabs
+                    break
+                }
+
+                // Clear the pending navigation after handling
+                navigationCoordinator.clearPendingNavigation()
             }
         }
         .task {

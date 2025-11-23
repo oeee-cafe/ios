@@ -25,6 +25,7 @@ struct OeeeCafeApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     private let pushService = PushNotificationService.shared
+    private let navigationCoordinator = NavigationCoordinator.shared
 
     func application(
         _ application: UIApplication,
@@ -74,8 +75,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     ) {
         let userInfo = response.notification.request.content.userInfo
 
-        // Handle notification tap - could navigate to specific content based on userInfo
-        Logger.debug("User tapped notification with data: \(userInfo)", category: Logger.app)
+        Logger.info("User tapped notification, handling deep link navigation", category: Logger.app)
+
+        // Handle notification tap and navigate to the appropriate screen
+        navigationCoordinator.handleNotificationTap(userInfo: userInfo)
 
         completionHandler()
     }
