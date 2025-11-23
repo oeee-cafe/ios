@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C7D3A1F92EB2D5DB00FB7F92 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C7KINGF12EB22DD8008D4A6F /* Kingfisher */; };
+		09C5DAB0962A488A9425F647 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 0044112E41DC4707B652BA78 /* Sentry */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7D3A1F92EB2D5DB00FB7F92 /* Kingfisher in Frameworks */,
+				09C5DAB0962A488A9425F647 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +62,7 @@
 				C73E61962EB22DD8008D4A6F /* Sources */,
 				C73E61972EB22DD8008D4A6F /* Frameworks */,
 				C73E61982EB22DD8008D4A6F /* Resources */,
+				318D1D8427BA4EC78B28978D /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -71,6 +74,7 @@
 			name = OeeeCafe;
 			packageProductDependencies = (
 				C7KINGF12EB22DD8008D4A6F /* Kingfisher */,
+				0044112E41DC4707B652BA78 /* Sentry */,
 			);
 			productName = OeeeCafe;
 			productReference = C73E619A2EB22DD8008D4A6F /* OeeeCafe.app */;
@@ -105,6 +109,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C7KINGF02EB22DD8008D4A6F /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				DDAB754BECDF433CB6930C19 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C73E619B2EB22DD8008D4A6F /* Products */;
@@ -321,6 +326,8 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 26.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_USER_SCRIPT_SANDBOXING = "NO";
 			};
 			name = Debug;
 		};
@@ -386,6 +393,8 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 26.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_USER_SCRIPT_SANDBOXING = "NO";
 			};
 			name = Release;
 		};
@@ -421,6 +430,14 @@
 				minimumVersion = 8.6.0;
 			};
 		};
+		DDAB754BECDF433CB6930C19 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -429,7 +446,41 @@
 			package = C7KINGF02EB22DD8008D4A6F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
+		0044112E41DC4707B652BA78 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDAB754BECDF433CB6930C19 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		318D1D8427BA4EC78B28978D /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script is responsible for uploading debug symbols and source context for Sentry.
+if which sentry-cli >/dev/null; then
+  export SENTRY_ORG=limeburst
+  export SENTRY_PROJECT=oeee-cafe-ios
+  ERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)
+  if [ ! $? -eq 0 ]; then
+    echo \"warning: sentry-cli - $ERROR\"
+  fi
+else
+  echo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"
+fi
+";
+			name = "Upload Debug Symbols to Sentry";
+		};
+/* End PBXShellScriptBuildPhase section */
 	};
 	rootObject = C73E61922EB22DD8008D4A6F /* Project object */;
 }
