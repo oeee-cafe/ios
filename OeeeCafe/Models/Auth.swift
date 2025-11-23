@@ -4,6 +4,7 @@ import Foundation
 struct LoginRequest: Codable {
     let loginName: String
     let password: String
+    let preferredLanguage: String?
 }
 
 // MARK: - Login Response
@@ -27,6 +28,7 @@ struct SignupRequest: Codable {
     let loginName: String
     let password: String
     let displayName: String
+    let preferredLanguage: String?
 }
 
 // MARK: - Signup Response

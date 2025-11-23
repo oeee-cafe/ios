@@ -21,7 +21,17 @@ class AuthService: ObservableObject {
     // MARK: - Public Methods
 
     func login(loginName: String, password: String) async throws -> CurrentUser {
-        let request = LoginRequest(loginName: loginName, password: password)
+        // Detect device language preference
+        let deviceLanguage = Locale.preferredLanguages.first.map { String($0.prefix(2).lowercased()) }
+        let preferredLanguage = deviceLanguage.flatMap { lang in
+            ["ko", "ja", "en", "zh"].contains(lang) ? lang : nil
+        }
+
+        let request = LoginRequest(
+            loginName: loginName,
+            password: password,
+            preferredLanguage: preferredLanguage
+        )
 
         let response: LoginResponse = try await apiClient.post(
             path: "/api/v1/auth/login",
@@ -51,10 +61,17 @@ class AuthService: ObservableObject {
     }
 
     func signup(loginName: String, password: String, displayName: String) async throws -> CurrentUser {
+        // Detect device language preference
+        let deviceLanguage = Locale.preferredLanguages.first.map { String($0.prefix(2).lowercased()) }
+        let preferredLanguage = deviceLanguage.flatMap { lang in
+            ["ko", "ja", "en", "zh"].contains(lang) ? lang : nil
+        }
+
         let request = SignupRequest(
             loginName: loginName,
             password: password,
-            displayName: displayName
+            displayName: displayName,
+            preferredLanguage: preferredLanguage
         )
 
         let response: SignupResponse = try await apiClient.post(
