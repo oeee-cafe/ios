@@ -103,20 +103,22 @@ struct SettingsView: View {
                     }
                 }
 
-                Section(header: Text("Profile")) {
-                    Button(action: {
-                        showBannerManagement = true
-                    }) {
-                        HStack {
-                            Image(systemName: "photo.on.rectangle.angled")
-                            Text("Banner Management")
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
+                if authService.isAuthenticated {
+                    Section(header: Text("Profile")) {
+                        Button(action: {
+                            showBannerManagement = true
+                        }) {
+                            HStack {
+                                Image(systemName: "photo.on.rectangle.angled")
+                                Text("Banner Management")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                            }
                         }
+                        .foregroundColor(.primary)
                     }
-                    .foregroundColor(.primary)
                 }
 
                 Section(header: Text("settings.storage".localized)) {
@@ -144,15 +146,17 @@ struct SettingsView: View {
                     .foregroundColor(.red)
                 }
 
-                Section(header: Text("settings.account".localized)) {
-                    Button(role: .destructive, action: {
-                        showDeleteAccountConfirmation = true
-                        deleteAccountPassword = ""
-                        deleteError = nil
-                    }) {
-                        HStack {
-                            Image(systemName: "trash")
-                            Text("settings.delete_account".localized)
+                if authService.isAuthenticated {
+                    Section(header: Text("settings.account".localized)) {
+                        Button(role: .destructive, action: {
+                            showDeleteAccountConfirmation = true
+                            deleteAccountPassword = ""
+                            deleteError = nil
+                        }) {
+                            HStack {
+                                Image(systemName: "trash")
+                                Text("settings.delete_account".localized)
+                            }
                         }
                     }
                 }
@@ -205,13 +209,15 @@ struct SettingsView: View {
                     }
                 }
 
-                Section {
-                    Button(role: .destructive, action: {
-                        showLogoutConfirmation = true
-                    }) {
-                        HStack {
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                            Text("settings.sign_out".localized)
+                if authService.isAuthenticated {
+                    Section {
+                        Button(role: .destructive, action: {
+                            showLogoutConfirmation = true
+                        }) {
+                            HStack {
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                Text("settings.sign_out".localized)
+                            }
                         }
                     }
                 }
