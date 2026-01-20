@@ -47,8 +47,8 @@ struct CommunityDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                // New post button - always visible
-                if viewModel.communityDetail != nil {
+                // New post button - only visible when authenticated
+                if viewModel.communityDetail != nil && authService.isAuthenticated {
                     Button(action: {
                         // If community has defined colors, show orientation picker
                         if let community = viewModel.communityDetail?.community,
